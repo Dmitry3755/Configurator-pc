@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Configurator PC</string>
+
+    <string name="authentication_sign_up_button_text_create_account">Создать аккаунт</string>
+    <string name="authentication_sign_up_text_view_create">Создать</string>
+    <string name="authentication_sign_up_edit_text_hint_email">example@gmail.com</string>
+    <string name="authentication_sign_up_edit_text_hint_enter_password">Введите пароль</string>
+    <string name="authentication_sign_up_edit_text_hint_repeat_password">Повторите пароль</string>
+    <string name="authentication_sign_up_text_view_your_email">Ваша почта</string>
+    <string name="authentication_sign_up_text_view_password">Пароль</string>
+    <string name="authentication_sign_up_text_view_сonfirm_your_password">Подтвердите пароль</string>
+    <string name="authentication_sign_up_text_view_already_have_an_account">У вас уже есть аккаунт?</string>
+    <string name="authentication_sign_up_button_text_log_in"><u>Войти</u></string>
+    <string name="authentication_log_in_text_view_log_in">Войти</string>
+    <string name="authentication_log_in_text_view_have_not_account">У вас нет аккаунта?</string>
+    <string name="authentication_log_in_text_view_forgot_password">Забыли пароль?</string>
+    <string name="authentication_log_in_button_text_sing_up"><u>Создать</u></string>
+    <string name="configurator_text_view_title_configurator">Конфигуратор</string>
+    <string name="configurator_text_view_have_not_configurations">У вас пока что нет\nготовых конфигураций (</string>
+    <string name="configurator_text_view_create_configuration">Создать конфигурацию</string>
+    <string name="configurator_text_view_smart_advisor">Умный советник</string>
+    <string name="navigation_bar_text_view_configuration">Конфигуратор</string>
+    <string name="navigation_bar_text_view_favorite">Избранное</string>
+    <string name="navigation_bar_text_view_search">Поиск</string>
+    <string name="navigation_bar_text_view_settings">Настройки</string>
+    <string name="navigation_bar_text_view_account">Аккаунт</string>
+
+</resources>
