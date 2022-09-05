@@ -11,6 +11,11 @@ data class AppTypography (
     val title: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
+        fontSize = 40.sp
+    ),
+    val titleMain: TextStyle = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Bold,
         fontSize = 32.sp
     ),
     val text: TextStyle = TextStyle(
@@ -22,6 +27,11 @@ data class AppTypography (
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp
+    ),
+    val textSingUpOrLogIn: TextStyle = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
     ),
     val buttonAuthenticationText: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,

@@ -11,11 +11,11 @@ import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 
 @Composable
-fun HeadersTextView (text: String) {
+fun AuthorizationHeadersTextView (text: String) {
     Text (
         text = text,
         modifier = Modifier.background(color = Color.Transparent),
-        style = AppTheme.typography.titleMain,
+        style = AppTheme.typography.title,
         color = AppTheme.colors.textMainColor
     )
 }
@@ -24,6 +24,6 @@ fun HeadersTextView (text: String) {
 @Composable
 private fun DefaultPreview() {
     AppTheme{
-        HeadersTextView(stringResource(id = R.string.authentication_log_in_text_view_log_in))
+        AuthorizationHeadersTextView(stringResource(id = R.string.authentication_log_in_text_view_log_in))
     }
 }

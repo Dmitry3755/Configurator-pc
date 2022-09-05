@@ -22,9 +22,8 @@ import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
 
 @Composable
-fun LogInScreen(navController: NavController) {
+fun SingUpScreen(navController: NavController) {
     val viewModel: AppViewModel = viewModel()
-
     Column(
         modifier = Modifier
             .fillMaxSize(1f)
@@ -37,7 +36,7 @@ fun LogInScreen(navController: NavController) {
                 .padding(start = 30.dp, bottom = 10.dp),
             contentAlignment = Alignment.BottomStart
         ) {
-            AuthorizationHeadersTextView(text = stringResource(id = R.string.authentication_log_in_text_view_log_in))
+            AuthorizationHeadersTextView(text = stringResource(id = R.string.authentication_sign_up_text_view_create))
         }
         Box(
             modifier = Modifier
@@ -59,7 +58,7 @@ fun LogInScreen(navController: NavController) {
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                AuthorizationForm(isRegistration = false)
+                AuthorizationForm(isRegistration = true)
             }
         }
     }
@@ -74,27 +73,28 @@ fun LogInScreen(navController: NavController) {
             )
         ) {
             MainButton(
-                stringResource(id = R.string.authentication_log_in_text_view_log_in),
+                stringResource(id = R.string.authentication_sign_up_button_text_create_account),
                 onClick = {
                     navController.navigate(Navigation.MainNavigationScreen.route)
                 }
             )
             LogInOrSingUp(
-                text = stringResource(id = R.string.authentication_log_in_text_view_have_not_account),
-                textButton = stringResource(id = R.string.authentication_log_in_button_text_sing_up),
+                text = stringResource(id = R.string.authentication_sign_up_text_view_already_have_an_account),
+                textButton = stringResource(id = R.string.authentication_sign_up_button_text_log_in),
                 onClick = {
-                    navController.navigate(Navigation.SingUpScreen.route)
+                    navController.navigate(Navigation.LogInScreen.route)
                 }
             )
         }
     }
 }
 
+
 @Preview
 @Composable
 private fun DefaultPreview() {
     AppTheme {
         val navController: NavController = rememberNavController()
-        LogInScreen(navController)
+        SingUpScreen(navController)
     }
 }
