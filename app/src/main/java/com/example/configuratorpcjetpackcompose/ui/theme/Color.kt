@@ -19,6 +19,7 @@ val Red = Color(0xFFFF0000)                              // backgroundDeleteButt
 val White = Color(0xFFFFFFFF)                            // textDeleteButtonColor
 val Cyan = Color(0xFF00BFFF)                             // selectionColor
 val PurpleBlue = Color(0xFF5234A5)                      // buttonPressLight
+val MediumDarkShadeOfRed= Color(0xFF960000)             // backgroundPressDeleteButtonColor
 
 val VeryDarkShadeOfPurplishBlue = Color(0xFF070724) // backgroundMainScreenColor
 val DarkShadeOfBlue = Color(0xFF262C4A)               // backgroundFormColor

@@ -11,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -19,13 +20,24 @@ import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 
 @Composable
-fun MainButton(textButton: String, onClick: () -> Unit = {}) {
+fun MainButton(textButton: String, onClick: () -> Unit = {}, isDelete: Boolean) {
     val intSource = remember { MutableInteractionSource() }
     val colorPressed = intSource.collectIsPressedAsState()
-    var colorButton =
-        if (colorPressed.value) AppTheme.colors.buttonPressedColor else AppTheme.colors.backgroundButtonColor
-    var colorText =
-        if (colorPressed.value) AppTheme.colors.textDeleteButtonColor else AppTheme.colors.textMainColor
+    var colorButton : Color
+    var colorText : Color
+
+    if(isDelete) {
+         colorButton =
+            if (colorPressed.value) AppTheme.colors.backgroundPressDeleteButtonColor else AppTheme.colors.backgroundDeleteButtonColor
+         colorText =
+            if (colorPressed.value) AppTheme.colors.textDeleteButtonColor else AppTheme.colors.textDeleteButtonColor
+    }
+    else {
+         colorButton =
+            if (colorPressed.value) AppTheme.colors.buttonPressedColor else AppTheme.colors.backgroundButtonColor
+         colorText =
+            if (colorPressed.value) AppTheme.colors.textDeleteButtonColor else AppTheme.colors.textMainColor
+    }
 
     Button(
         modifier = Modifier
@@ -56,7 +68,8 @@ private fun DefaultPreview() {
         val navController = rememberNavController()
         MainButton(
             stringResource(id = R.string.authentication_log_in_text_view_log_in),
-            {}
+            {},
+            false
         )
     }
 }

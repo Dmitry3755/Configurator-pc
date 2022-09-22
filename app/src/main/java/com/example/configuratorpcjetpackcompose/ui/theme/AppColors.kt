@@ -5,6 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Blue
+import androidx.compose.ui.graphics.Color.Companion.Green
+import androidx.compose.ui.graphics.Color.Companion.Yellow
 
 class AppColors(
     backgroundMainScreenColor: Color,
@@ -16,7 +19,9 @@ class AppColors(
     backgroundDeleteButtonColor: Color,
     textDeleteButtonColor: Color,
     selectionColor: Color,
+    borderConfigurationColor: Color,
     buttonPressedColor: Color,
+    backgroundPressDeleteButtonColor: Color,
     isLight: Boolean
 ) {
     var backgroundMainScreenColor by mutableStateOf(backgroundMainScreenColor)
@@ -37,7 +42,11 @@ class AppColors(
         private set
     var selectionColor by mutableStateOf(selectionColor)
         private set
+    var borderConfigurationColor by mutableStateOf(borderConfigurationColor)
+        private set
     var buttonPressedColor by mutableStateOf(buttonPressedColor)
+        private set
+    var backgroundPressDeleteButtonColor by mutableStateOf(backgroundPressDeleteButtonColor)
         private set
     var isLight by mutableStateOf(isLight)
         internal set
@@ -52,7 +61,8 @@ class AppColors(
         backgroundDeleteButtonColor: Color = this.backgroundDeleteButtonColor,
         textDeleteButtonColor: Color = this.textDeleteButtonColor,
         selectionColor: Color = this.selectionColor,
-        buttonPressedColor: Color = this.buttonPressedColor,
+        borderConfigurationColor: Color = this.borderConfigurationColor,
+        backgroundPressDeleteButtonColor: Color = this.backgroundPressDeleteButtonColor,
         isLight: Boolean = this.isLight
     ): AppColors = AppColors(
         backgroundMainScreenColor,
@@ -64,7 +74,9 @@ class AppColors(
         backgroundDeleteButtonColor,
         textDeleteButtonColor,
         selectionColor,
+        borderConfigurationColor,
         buttonPressedColor,
+        backgroundPressDeleteButtonColor,
         isLight
     )
 
@@ -79,7 +91,9 @@ class AppColors(
         backgroundDeleteButtonColor = other.backgroundDeleteButtonColor
         textDeleteButtonColor = other.textDeleteButtonColor
         selectionColor = other.selectionColor
+        borderConfigurationColor = other.borderConfigurationColor
         buttonPressedColor = other.buttonPressedColor
+        backgroundPressDeleteButtonColor = other.backgroundPressDeleteButtonColor
     }
 }
 
@@ -93,7 +107,10 @@ fun lightColors(
     backgroundDeleteButtonColor: Color = Red,
     textDeleteButtonColor: Color = White,
     selectionColor: Color = Cyan,
-    buttonPressedColor: Color = PurpleBlue
+    backgroundPressDeleteButtonColor: Color = MediumDarkShadeOfRed,
+    borderConfigurationColor: Color = MediumLightShadeOfPurpleBlue,
+    buttonPressedColor: Color = PurpleBlue,
+
 ): AppColors = AppColors(
     backgroundMainScreenColor = backgroundMainScreenColor,
     textMainColor = textMainColor,
@@ -104,7 +121,9 @@ fun lightColors(
     backgroundDeleteButtonColor = backgroundDeleteButtonColor,
     textDeleteButtonColor = textDeleteButtonColor,
     selectionColor = selectionColor,
+    borderConfigurationColor = borderConfigurationColor,
     buttonPressedColor = buttonPressedColor,
+    backgroundPressDeleteButtonColor = backgroundPressDeleteButtonColor,
     isLight = true
 )
 
@@ -118,6 +137,8 @@ fun darkColors(
     backgroundDeleteButtonColor: Color = Red,
     textDeleteButtonColor: Color = White,
     selectionColor: Color = Cyan,
+    backgroundPressDeleteButtonColor: Color = MediumDarkShadeOfRed,
+    borderConfigurationColor: Color = Cyan,
     buttonPressedColor: Color = ShadePurpleBlue
 ): AppColors = AppColors(
     backgroundMainScreenColor = backgroundMainScreenColor,
@@ -129,7 +150,9 @@ fun darkColors(
     backgroundDeleteButtonColor = backgroundDeleteButtonColor,
     textDeleteButtonColor = textDeleteButtonColor,
     selectionColor = selectionColor,
+    borderConfigurationColor = borderConfigurationColor,
     buttonPressedColor = buttonPressedColor,
+    backgroundPressDeleteButtonColor = backgroundPressDeleteButtonColor,
     isLight = false
 )
 val LocalColors = staticCompositionLocalOf { lightColors() }

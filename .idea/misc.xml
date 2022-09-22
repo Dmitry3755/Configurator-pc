@@ -4,10 +4,23 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/ConfiguratorPCJetpackCompose/app/src/main/res/drawable/ic_account.xml" value="0.2645" />
+        <entry key="..\:/ConfiguratorPCJetpackCompose/app/src/main/res/drawable/ic_checkmark.xml" value="0.259" />
+        <entry key="..\:/ConfiguratorPCJetpackCompose/app/src/main/res/drawable/ic_circle_outline.xml" value="0.259" />
+        <entry key="..\:/ConfiguratorPCJetpackCompose/app/src/main/res/drawable/ic_cooler.xml" value="0.259" />
+        <entry key="..\:/ConfiguratorPCJetpackCompose/app/src/main/res/drawable/ic_data_storage.xml" value="0.259" />
         <entry key="..\:/ConfiguratorPCJetpackCompose/app/src/main/res/drawable/ic_favorite.xml" value="0.2645" />
+        <entry key="..\:/ConfiguratorPCJetpackCompose/app/src/main/res/drawable/ic_mather_board.xml" value="0.259" />
+        <entry key="..\:/ConfiguratorPCJetpackCompose/app/src/main/res/drawable/ic_monitor.xml" value="0.259" />
         <entry key="..\:/ConfiguratorPCJetpackCompose/app/src/main/res/drawable/ic_pc_computer.xml" value="0.2645" />
+        <entry key="..\:/ConfiguratorPCJetpackCompose/app/src/main/res/drawable/ic_plus.xml" value="0.268" />
+        <entry key="..\:/ConfiguratorPCJetpackCompose/app/src/main/res/drawable/ic_power_supply_unit.xml" value="0.259" />
+        <entry key="..\:/ConfiguratorPCJetpackCompose/app/src/main/res/drawable/ic_processor.xml" value="0.259" />
+        <entry key="..\:/ConfiguratorPCJetpackCompose/app/src/main/res/drawable/ic_ram.xml" value="0.259" />
+        <entry key="..\:/ConfiguratorPCJetpackCompose/app/src/main/res/drawable/ic_resource_case.xml" value="0.259" />
         <entry key="..\:/ConfiguratorPCJetpackCompose/app/src/main/res/drawable/ic_search.xml" value="0.2645" />
         <entry key="..\:/ConfiguratorPCJetpackCompose/app/src/main/res/drawable/ic_settings.xml" value="0.2645" />
+        <entry key="..\:/ConfiguratorPCJetpackCompose/app/src/main/res/drawable/ic_sound_card.xml" value="0.259" />
+        <entry key="..\:/ConfiguratorPCJetpackCompose/app/src/main/res/drawable/ic_videocard.xml" value="0.259" />
       </map>
     </option>
   </component>

@@ -76,7 +76,8 @@ fun SingUpScreen(navController: NavController) {
                 stringResource(id = R.string.authentication_sign_up_button_text_create_account),
                 onClick = {
                     navController.navigate(Navigation.MainNavigationScreen.route)
-                }
+                },
+                isDelete = false
             )
             LogInOrSingUp(
                 text = stringResource(id = R.string.authentication_sign_up_text_view_already_have_an_account),

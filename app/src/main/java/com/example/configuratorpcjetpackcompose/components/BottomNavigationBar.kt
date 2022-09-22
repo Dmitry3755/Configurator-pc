@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.configuratorpcjetpackcompose.navigation.BottomNavigationGraph
 import com.example.configuratorpcjetpackcompose.navigation.BottomNavigationItem
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 
@@ -32,7 +33,7 @@ fun BottomNavigationBar(navController: NavController) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         navigationItems.forEach { item ->
-            BottomNavigationItem(
+            BottomNavigationItem( // TODO: Сделать выравнивание по тексту, а не по иконке (чтоб весь текст влезал)
                 icon = {
                     Icon(
                         painterResource(id = item.icon),
@@ -46,7 +47,7 @@ fun BottomNavigationBar(navController: NavController) {
                         overflow = TextOverflow.Ellipsis
                     )
                 },
-                selectedContentColor = AppTheme.colors.buttonPressedColor,
+                selectedContentColor = AppTheme.colors.borderConfigurationColor,
                 unselectedContentColor = AppTheme.colors.textMainColor,
                 alwaysShowLabel = false,
                 selected = currentRoute == item.route,

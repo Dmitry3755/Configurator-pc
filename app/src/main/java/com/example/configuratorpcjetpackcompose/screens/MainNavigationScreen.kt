@@ -1,5 +1,6 @@
 package com.example.configuratorpcjetpackcompose.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -11,6 +12,7 @@ import com.example.configuratorpcjetpackcompose.components.BottomNavigationBar
 import com.example.configuratorpcjetpackcompose.navigation.BottomNavigationGraph
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MainNavigationScreen() {
     val bottomNavigationNavController = rememberNavController()

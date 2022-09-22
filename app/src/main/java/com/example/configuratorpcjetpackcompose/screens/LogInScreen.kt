@@ -77,7 +77,8 @@ fun LogInScreen(navController: NavController) {
                 stringResource(id = R.string.authentication_log_in_text_view_log_in),
                 onClick = {
                     navController.navigate(Navigation.MainNavigationScreen.route)
-                }
+                },
+                isDelete = false
             )
             LogInOrSingUp(
                 text = stringResource(id = R.string.authentication_log_in_text_view_have_not_account),

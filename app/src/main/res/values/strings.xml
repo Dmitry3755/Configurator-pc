@@ -24,5 +24,10 @@
     <string name="navigation_bar_text_view_search">Поиск</string>
     <string name="navigation_bar_text_view_settings">Настройки</string>
     <string name="navigation_bar_text_view_account">Аккаунт</string>
+    <string name="account_text_view_exit_from_account">Выйти из аккаунта</string>
+    <string name="account_text_view_name">Name</string>
+    <string name="settings_button_setting_theme">Настройка темы</string>
+    <string name="settings_button_change_name">Сменить имя</string>
+    <string name="settings_button_change_password">Изменить пароль</string>
 
 </resources>

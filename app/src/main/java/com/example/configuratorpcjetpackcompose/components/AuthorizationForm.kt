@@ -26,7 +26,7 @@ fun AuthorizationForm(isRegistration: Boolean) {
                 id = R.string.authentication_sign_up_edit_text_hint_email
             ), TextInputTypeEnum.Email
         )
-        Spacer(Modifier.padding(top = 10.dp))
+        Spacer(Modifier.padding(top = AppTheme.dimensions.verticalElementsPadding))
         AppTextField(
             stringResource(
                 id = R.string.authentication_sign_up_text_view_password
@@ -35,7 +35,7 @@ fun AuthorizationForm(isRegistration: Boolean) {
             ), TextInputTypeEnum.Password
         )
         if(isRegistration) {
-            Spacer(Modifier.padding(top = 10.dp))
+            Spacer(Modifier.padding(top = AppTheme.dimensions.verticalElementsPadding))
             AppTextField(
                 stringResource(
                     id = R.string.authentication_sign_up_edit_text_hint_repeat_password
