@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Configurator PC</string>
+    <string name="app_name">Конфигуратор ПК</string>
 
     <string name="authentication_sign_up_button_text_create_account">Создать аккаунт</string>
     <string name="authentication_sign_up_text_view_create">Создать</string>

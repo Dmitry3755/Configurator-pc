@@ -10,6 +10,8 @@ import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.graphics.Color.Companion.Yellow
 
 class AppColors(
+    startBackgroundScreen: Color,
+
     backgroundMainScreenColor: Color,
     backgroundFormColor: Color,
     backgroundTextFieldColor: Color,
@@ -29,6 +31,8 @@ class AppColors(
 
     isLight: Boolean
 ) {
+    var startBackgroundScreen by mutableStateOf(startBackgroundScreen)
+        private set
     var backgroundMainScreenColor by mutableStateOf(backgroundMainScreenColor)
         private set
     var textMainColor by mutableStateOf(textMainColor)
@@ -57,6 +61,7 @@ class AppColors(
         internal set
 
     fun copy(
+        startBackgroundScreen: Color = this.startBackgroundScreen,
         backgroundMainScreenColor: Color = this.backgroundMainScreenColor,
         textMainColor: Color = this.textMainColor,
         backgroundFormColor: Color = this.backgroundFormColor,
@@ -70,6 +75,7 @@ class AppColors(
         textButtonColor: Color = this.textButtonColor,
         isLight: Boolean = this.isLight
     ): AppColors = AppColors(
+        startBackgroundScreen,
         backgroundMainScreenColor,
         textMainColor,
         backgroundFormColor,
@@ -86,7 +92,8 @@ class AppColors(
     )
 
     // will be explained later
-  fun updateColorsFrom(other: AppColors) {
+    fun updateColorsFrom(other: AppColors) {
+        startBackgroundScreen = other.startBackgroundScreen
         backgroundMainScreenColor = other.backgroundMainScreenColor
         textMainColor = other.textMainColor
         backgroundFormColor = other.backgroundFormColor
@@ -103,6 +110,7 @@ class AppColors(
 }
 
 fun lightColors(
+    startBackgroundScreen: Color = ShadeOfBlueBlue,
     backgroundMainScreenColor: Color = White,
     textMainColor: Color = Black,
     backgroundFormColor: Color = VeryLightShadeOfRed,
@@ -116,7 +124,8 @@ fun lightColors(
     backgroundPressDeleteButtonColor: Color = MediumDarkShadeOfRed,
     buttonPressedColor: Color = MediumDarkShadeOfBlue,
 
-): AppColors = AppColors(
+    ): AppColors = AppColors(
+    startBackgroundScreen = startBackgroundScreen,
     backgroundMainScreenColor = backgroundMainScreenColor,
     textMainColor = textMainColor,
     backgroundFormColor = backgroundFormColor,
@@ -133,6 +142,7 @@ fun lightColors(
 )
 
 fun darkColors(
+    startBackgroundScreen: Color = ShadeOfBlueBlue,
     backgroundMainScreenColor: Color = VeryDarkShadeOfPurplishBlue,
     textMainColor: Color = White,
     backgroundFormColor: Color = DarkShadeOfPurpleBlue,
@@ -146,6 +156,7 @@ fun darkColors(
     backgroundPressDeleteButtonColor: Color = MediumDarkShadeOfRed,
     buttonPressedColor: Color = MediumDarkShadeOfBlueBlue
 ): AppColors = AppColors(
+    startBackgroundScreen = startBackgroundScreen,
     backgroundMainScreenColor = backgroundMainScreenColor,
     textMainColor = textMainColor,
     backgroundFormColor = backgroundFormColor,
@@ -160,4 +171,5 @@ fun darkColors(
     backgroundPressDeleteButtonColor = backgroundPressDeleteButtonColor,
     isLight = false
 )
+
 val LocalColors = staticCompositionLocalOf { lightColors() }

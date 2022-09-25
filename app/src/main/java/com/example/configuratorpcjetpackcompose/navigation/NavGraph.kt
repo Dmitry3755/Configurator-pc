@@ -7,11 +7,15 @@ import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.screens.LogInScreen
 import com.example.configuratorpcjetpackcompose.screens.MainNavigationScreen
 import com.example.configuratorpcjetpackcompose.screens.SingUpScreen
+import com.example.configuratorpcjetpackcompose.screens.StartMainScreen
 
 @Composable
 fun NavGraph() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Navigation.SingUpScreen.route) {
+    NavHost(navController = navController, startDestination = Navigation.StartMainScreen.route) {
+        composable(route = Navigation.StartMainScreen.route) {
+            StartMainScreen(navController = navController)
+        }
         composable(route = Navigation.SingUpScreen.route) {
             SingUpScreen(navController = navController)
         }

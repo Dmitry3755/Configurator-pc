@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalFontFamilyResolver
+import androidx.compose.ui.text.font.FontFamily
 
 object AppTheme {
 
@@ -20,12 +22,17 @@ object AppTheme {
         @Composable
         @ReadOnlyComposable
         get() = LocalDimensions.current
+    val fontFamily: AppFontFamily
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalFontFamily.current
 }
 
 @Composable
 fun AppTheme(
     typography: AppTypography = AppTheme.typography,
     dimensions: AppDimensions = AppTheme.dimensions,
+    fontFamily: AppFontFamily = AppTheme.fontFamily,
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
@@ -39,6 +46,7 @@ fun AppTheme(
     CompositionLocalProvider(
         LocalColors provides rememberedColors,
         LocalDimensions provides dimensions,
+        LocalFontFamily provides fontFamily,
         LocalTypography provides typography
     ) {
         content()
