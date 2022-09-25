@@ -11,17 +11,22 @@ import androidx.compose.ui.graphics.Color.Companion.Yellow
 
 class AppColors(
     backgroundMainScreenColor: Color,
-    textMainColor: Color,
     backgroundFormColor: Color,
-    backgroundButtonColor: Color,
     backgroundTextFieldColor: Color,
+
+    textMainColor: Color,
+
+    backgroundButtonColor: Color,
+    textButtonColor: Color,
+    buttonPressedColor: Color,
     textLinkColor: Color,
+
     backgroundDeleteButtonColor: Color,
     textDeleteButtonColor: Color,
-    selectionColor: Color,
-    borderConfigurationColor: Color,
-    buttonPressedColor: Color,
     backgroundPressDeleteButtonColor: Color,
+
+    selectionColor: Color,
+
     isLight: Boolean
 ) {
     var backgroundMainScreenColor by mutableStateOf(backgroundMainScreenColor)
@@ -42,11 +47,11 @@ class AppColors(
         private set
     var selectionColor by mutableStateOf(selectionColor)
         private set
-    var borderConfigurationColor by mutableStateOf(borderConfigurationColor)
-        private set
     var buttonPressedColor by mutableStateOf(buttonPressedColor)
         private set
     var backgroundPressDeleteButtonColor by mutableStateOf(backgroundPressDeleteButtonColor)
+        private set
+    var textButtonColor by mutableStateOf(textButtonColor)
         private set
     var isLight by mutableStateOf(isLight)
         internal set
@@ -61,8 +66,8 @@ class AppColors(
         backgroundDeleteButtonColor: Color = this.backgroundDeleteButtonColor,
         textDeleteButtonColor: Color = this.textDeleteButtonColor,
         selectionColor: Color = this.selectionColor,
-        borderConfigurationColor: Color = this.borderConfigurationColor,
         backgroundPressDeleteButtonColor: Color = this.backgroundPressDeleteButtonColor,
+        textButtonColor: Color = this.textButtonColor,
         isLight: Boolean = this.isLight
     ): AppColors = AppColors(
         backgroundMainScreenColor,
@@ -74,8 +79,8 @@ class AppColors(
         backgroundDeleteButtonColor,
         textDeleteButtonColor,
         selectionColor,
-        borderConfigurationColor,
         buttonPressedColor,
+        textButtonColor,
         backgroundPressDeleteButtonColor,
         isLight
     )
@@ -91,25 +96,25 @@ class AppColors(
         backgroundDeleteButtonColor = other.backgroundDeleteButtonColor
         textDeleteButtonColor = other.textDeleteButtonColor
         selectionColor = other.selectionColor
-        borderConfigurationColor = other.borderConfigurationColor
         buttonPressedColor = other.buttonPressedColor
+        textButtonColor = other.textButtonColor
         backgroundPressDeleteButtonColor = other.backgroundPressDeleteButtonColor
     }
 }
 
 fun lightColors(
-    backgroundMainScreenColor: Color = LightShadeOfPurpleBlue,
-    textMainColor: Color = DarkShadeOfPurpleBlue,
-    backgroundFormColor: Color = LightShadeOfBlue,
-    backgroundButtonColor: Color = MediumLightShadeOfPurpleBlue,
-    backgroundTextFieldColor: Color = VeryLightShadeOfBlue,
+    backgroundMainScreenColor: Color = White,
+    textMainColor: Color = Black,
+    backgroundFormColor: Color = VeryLightShadeOfRed,
+    backgroundButtonColor: Color = MediumLightShadeOfBlue,
+    backgroundTextFieldColor: Color = White,
     textLinkColor: Color = MediumLightShadeOfBlue,
     backgroundDeleteButtonColor: Color = Red,
     textDeleteButtonColor: Color = White,
     selectionColor: Color = Cyan,
+    textButtonColor: Color = White,
     backgroundPressDeleteButtonColor: Color = MediumDarkShadeOfRed,
-    borderConfigurationColor: Color = MediumLightShadeOfPurpleBlue,
-    buttonPressedColor: Color = PurpleBlue,
+    buttonPressedColor: Color = MediumDarkShadeOfBlue,
 
 ): AppColors = AppColors(
     backgroundMainScreenColor = backgroundMainScreenColor,
@@ -121,7 +126,7 @@ fun lightColors(
     backgroundDeleteButtonColor = backgroundDeleteButtonColor,
     textDeleteButtonColor = textDeleteButtonColor,
     selectionColor = selectionColor,
-    borderConfigurationColor = borderConfigurationColor,
+    textButtonColor = textButtonColor,
     buttonPressedColor = buttonPressedColor,
     backgroundPressDeleteButtonColor = backgroundPressDeleteButtonColor,
     isLight = true
@@ -130,16 +135,16 @@ fun lightColors(
 fun darkColors(
     backgroundMainScreenColor: Color = VeryDarkShadeOfPurplishBlue,
     textMainColor: Color = White,
-    backgroundFormColor: Color = DarkShadeOfBlue,
-    backgroundButtonColor: Color = MediumShadeOfPurpleBlue,
-    backgroundTextFieldColor: Color = MediumDarkShadeOfBlue,
+    backgroundFormColor: Color = DarkShadeOfPurpleBlue,
+    backgroundButtonColor: Color = ShadeOfBlueBlue,
+    backgroundTextFieldColor: Color = MediumDarkShadeOfPurpleBlue,
     textLinkColor: Color = MediumLightShadeOfBlue,
     backgroundDeleteButtonColor: Color = Red,
     textDeleteButtonColor: Color = White,
     selectionColor: Color = Cyan,
+    textButtonColor: Color = White,
     backgroundPressDeleteButtonColor: Color = MediumDarkShadeOfRed,
-    borderConfigurationColor: Color = Cyan,
-    buttonPressedColor: Color = ShadePurpleBlue
+    buttonPressedColor: Color = MediumDarkShadeOfBlueBlue
 ): AppColors = AppColors(
     backgroundMainScreenColor = backgroundMainScreenColor,
     textMainColor = textMainColor,
@@ -150,8 +155,8 @@ fun darkColors(
     backgroundDeleteButtonColor = backgroundDeleteButtonColor,
     textDeleteButtonColor = textDeleteButtonColor,
     selectionColor = selectionColor,
-    borderConfigurationColor = borderConfigurationColor,
     buttonPressedColor = buttonPressedColor,
+    textButtonColor = textButtonColor,
     backgroundPressDeleteButtonColor = backgroundPressDeleteButtonColor,
     isLight = false
 )

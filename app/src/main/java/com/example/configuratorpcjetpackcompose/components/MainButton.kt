@@ -35,8 +35,7 @@ fun MainButton(textButton: String, onClick: () -> Unit = {}, isDelete: Boolean) 
     else {
          colorButton =
             if (colorPressed.value) AppTheme.colors.buttonPressedColor else AppTheme.colors.backgroundButtonColor
-         colorText =
-            if (colorPressed.value) AppTheme.colors.textDeleteButtonColor else AppTheme.colors.textMainColor
+         colorText = AppTheme.colors.textButtonColor
     }
 
     Button(

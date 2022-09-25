@@ -22,7 +22,7 @@ import com.example.configuratorpcjetpackcompose.R
 
 @Composable
 fun ShortConfigurationElement() {
-    var lineColor = AppTheme.colors.borderConfigurationColor
+    var lineColor = AppTheme.colors.backgroundButtonColor
     val configurationItems = listOf(
         ConfigurationElement.Processor to 0,
         ConfigurationElement.MatherBoard to 1,
@@ -46,7 +46,7 @@ fun ShortConfigurationElement() {
                     color = Color.Transparent
                 )
                 .border(
-                    border = BorderStroke(2.dp, AppTheme.colors.borderConfigurationColor),
+                    border = BorderStroke(2.dp, AppTheme.colors.backgroundButtonColor),
                     shape = RoundedCornerShape(30.dp, 30.dp, 30.dp, 30.dp)
                 )
                 .height(IntrinsicSize.Min)
@@ -91,7 +91,7 @@ fun ShortConfigurationElement() {
                             ),
                         painter = painterResource(id = R.drawable.ic_favorite),
                         contentDescription = "",
-                        tint = AppTheme.colors.borderConfigurationColor
+                        tint = AppTheme.colors.backgroundButtonColor
                     )
                 }
                 Row(

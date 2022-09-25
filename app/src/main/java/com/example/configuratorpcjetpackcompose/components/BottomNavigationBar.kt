@@ -47,7 +47,7 @@ fun BottomNavigationBar(navController: NavController) {
                         overflow = TextOverflow.Ellipsis
                     )
                 },
-                selectedContentColor = AppTheme.colors.borderConfigurationColor,
+                selectedContentColor = AppTheme.colors.backgroundButtonColor,
                 unselectedContentColor = AppTheme.colors.textMainColor,
                 alwaysShowLabel = false,
                 selected = currentRoute == item.route,

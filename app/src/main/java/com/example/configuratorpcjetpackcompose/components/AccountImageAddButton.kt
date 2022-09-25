@@ -31,7 +31,7 @@ fun AccountImageAddButton() {
             .size(50.dp),
         shape = CircleShape,
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = AppTheme.colors.borderConfigurationColor
+            backgroundColor = AppTheme.colors.backgroundButtonColor
         ),
         contentPadding = PaddingValues(10.dp),
         border = BorderStroke(2.dp, AppTheme.colors.textDeleteButtonColor),

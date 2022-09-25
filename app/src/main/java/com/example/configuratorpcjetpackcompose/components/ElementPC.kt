@@ -33,7 +33,7 @@ fun ElementPC(configurationItem: ConfigurationElement) {
         Icon(
             modifier = Modifier
                 .border(
-                    border = BorderStroke(2.dp, AppTheme.colors.borderConfigurationColor),
+                    border = BorderStroke(2.dp, AppTheme.colors.backgroundButtonColor),
                     shape = RoundedCornerShape(10.dp, 10.dp, 10.dp, 10.dp)
                 )
                 .size(60.dp)
@@ -59,7 +59,7 @@ fun ElementPC(configurationItem: ConfigurationElement) {
                     }
                 ),
                 contentDescription = null,
-                tint = AppTheme.colors.borderConfigurationColor
+                tint = AppTheme.colors.backgroundButtonColor
             )
         }
     }
