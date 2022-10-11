@@ -1,2 +1,2 @@
-# ConfiguratorPCJetpackCompose
-![Start Screen](https://user-images.githubusercontent.com/96525915/195092732-803a9af8-2afb-4446-b107-193411f5258c.png)
+# Макет приложения
+![Start Screen](https://user-images.githubusercontent.com/96525915/195094016-39bd64eb-7cf7-491e-940f-b6267c150a9c.png)
