@@ -1,6 +1,6 @@
 # ConfiguratorPCJetpackCompose
 ---
-## Конфигуратор ПК
+<h2 align="center" > Конфигуратор ПК </h2>
 ---
 ### Описание
 
