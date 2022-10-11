@@ -12,5 +12,5 @@
 ### Макет
 1. Стартовое окно
 
-![Start Screen](https://user-images.githubusercontent.com/96525915/195094016-39bd64eb-7cf7-491e-940f-b6267c150a9c.png)
-![XRecorder_Edited_11102022_165719-_online-video-cutter com_](https://user-images.githubusercontent.com/96525915/195111947-12ed1a81-54af-4291-ab2d-81766b667802.gif)
+![XRecorder_Edited_11102022_165719-_online-video-cutter com_-_1_](https://user-images.githubusercontent.com/96525915/195112936-eb03341b-79a9-4c52-9509-b45376515ae0.gif)
+
