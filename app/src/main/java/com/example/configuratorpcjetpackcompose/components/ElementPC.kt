@@ -34,12 +34,12 @@ fun ElementPC(configurationItem: ConfigurationElement) {
             modifier = Modifier
                 .border(
                     border = BorderStroke(2.dp, AppTheme.colors.backgroundButtonColor),
-                    shape = RoundedCornerShape(10.dp, 10.dp, 10.dp, 10.dp)
+                    shape = RoundedCornerShape(10.dp)
                 )
                 .size(60.dp)
                 .background(
                     color = colorResource(id = configurationItem.color),
-                    shape = RoundedCornerShape(12.dp, 12.dp, 12.dp, 12.dp)
+                    shape = RoundedCornerShape(12.dp)
                 ),
             painter = painterResource(id = configurationItem.icon),
             contentDescription = configurationItem.contentDescription,

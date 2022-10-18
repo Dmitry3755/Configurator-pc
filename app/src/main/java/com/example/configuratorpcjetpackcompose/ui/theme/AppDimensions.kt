@@ -9,6 +9,8 @@ data class AppDimensions (
     val buttonPadding: Dp = 30.dp,
     val textViewPadding: Dp = 30.dp,
     val verticalElementsPadding: Dp = 10.dp,
-    val configurationElementsPadding: Dp = 5.dp
+    val configurationElementsPadding: Dp = 5.dp,
+    val roundedCornerShape: Dp = 30.dp
+
 )
 internal val LocalDimensions = staticCompositionLocalOf { AppDimensions() }
