@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.configuratorpcjetpackcompose.SettingsThemeTypeEnum
+import com.example.configuratorpcjetpackcompose.ThemeTypeEnum
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 
 @Composable
@@ -30,11 +31,11 @@ fun SettingsThemeChange() {
                     .fillMaxHeight(1f),
                 horizontalArrangement = Arrangement.SpaceAround
             ){
-                ChangeThemeElement(SettingsThemeTypeEnum.isLight)
-                ChangeThemeElement(SettingsThemeTypeEnum.isDark)
+                ThemeElement(ThemeTypeEnum.Light)
+                ThemeElement(ThemeTypeEnum.Dark)
             }
             Spacer(modifier = Modifier.padding(top = AppTheme.dimensions.verticalElementsPadding))
-            ChangeThemeElement(SettingsThemeTypeEnum.isSystem)
+            ThemeElement(ThemeTypeEnum.System)
         }
     }
 }
