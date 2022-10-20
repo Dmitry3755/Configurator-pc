@@ -29,5 +29,9 @@
     <string name="settings_button_setting_theme">Настройка темы</string>
     <string name="settings_button_change_name">Сменить имя</string>
     <string name="settings_button_change_password">Изменить пароль</string>
+    <string name="settings_theme_change_light">Светлая</string>
+    <string name="settings_theme_change_dark">Темная</string>
+    <string name="settings_theme_change_system">Системная</string>
+    <string name="text">Текст</string>
 
 </resources>

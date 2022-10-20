@@ -54,6 +54,7 @@ fun AppTextField(textTitle: String, hintTextField: String, textInputType: TextIn
                     color = AppTheme.colors.textMainColor
                 )
             },
+            singleLine = true,
             onValueChange = { newText -> email.value = newText },
             keyboardOptions = when (textInputType) {
                 TextInputTypeEnum.Email ->

@@ -38,7 +38,8 @@ fun ShortConfigurationElement() {
 
     Box(
         modifier = Modifier
-            .fillMaxSize(1f)
+            .fillMaxWidth(1f)
+            .height(IntrinsicSize.Min)
     ) {
         Box(
             modifier = Modifier
@@ -47,7 +48,7 @@ fun ShortConfigurationElement() {
                 )
                 .border(
                     border = BorderStroke(2.dp, AppTheme.colors.backgroundButtonColor),
-                    shape = RoundedCornerShape(30.dp, 30.dp, 30.dp, 30.dp)
+                    shape = RoundedCornerShape(AppTheme.dimensions.configurationElementsRoundedCornerShape)
                 )
                 .height(IntrinsicSize.Min)
                 .fillMaxWidth(1f)
