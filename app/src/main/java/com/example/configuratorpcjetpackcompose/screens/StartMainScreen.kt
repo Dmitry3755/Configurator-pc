@@ -53,8 +53,8 @@ fun StartMainScreen(navController: NavController) {
                 visible = isVisible,
                 enter = fadeIn(
                     animationSpec = tween(
-                        durationMillis = 4000,
-                        delayMillis = 0,
+                        durationMillis = 3000,
+                        delayMillis = 300,
                         easing = LinearOutSlowInEasing
                     )
                 ),

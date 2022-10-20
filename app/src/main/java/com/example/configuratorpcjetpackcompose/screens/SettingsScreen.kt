@@ -56,7 +56,9 @@ fun SettingsScreen() {
                 Spacer(Modifier.padding(top = AppTheme.dimensions.verticalElementsPadding))
                 MainButton(
                     stringResource(id = R.string.settings_button_change_password),
-                    onClick = {},
+                    onClick = {
+
+                    },
                     isDelete = false
                 )
             }
