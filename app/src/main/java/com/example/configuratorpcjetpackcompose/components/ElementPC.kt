@@ -48,7 +48,7 @@ fun ElementPC(configurationItem: ConfigurationElement) {
         IconToggleButton(
             checked = selectedItem.value,
             onCheckedChange = { },
-            modifier = Modifier.size(AppTheme.dimensions.iconToggleButtonSize)
+            modifier = Modifier.size(15.dp)
         ) {
             Icon(
                 painter = painterResource(

@@ -76,7 +76,7 @@ fun ThemeElement(isTheme: ThemeTypeEnum) {
         IconToggleButton(
             checked = true,
             onCheckedChange = {},
-            modifier = Modifier.size(AppTheme.dimensions.iconToggleButtonSize)
+            modifier = Modifier.size(15.dp)
         ) {
             Icon(
                 painter = painterResource(

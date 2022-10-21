@@ -48,7 +48,7 @@ fun ShortConfigurationElement() {
                 )
                 .border(
                     border = BorderStroke(2.dp, AppTheme.colors.backgroundButtonColor),
-                    shape = RoundedCornerShape(AppTheme.dimensions.configurationElementsRoundedCornerShape)
+                    shape = RoundedCornerShape(15.dp)
                 )
                 .height(IntrinsicSize.Min)
                 .fillMaxWidth(1f)

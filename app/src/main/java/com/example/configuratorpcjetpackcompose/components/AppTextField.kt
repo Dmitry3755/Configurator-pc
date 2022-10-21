@@ -74,7 +74,6 @@ fun AppTextField(textTitle: String, hintTextField: String, textInputType: TextIn
             } else {
                 VisualTransformation.None
             },
-            singleLine = true,
             trailingIcon = {
                 if (textInputType == TextInputTypeEnum.Password) {
                     IconButton(onClick = { showPassword.value = !showPassword.value }) {
