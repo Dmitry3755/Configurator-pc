@@ -19,12 +19,11 @@ fun ChangeThemeElements() {
     Column(
         modifier = Modifier
             .fillMaxSize(1f)
-            .background(color = AppTheme.colors.backgroundMainScreenColor)
-            .fillMaxSize(1f),
+            .background(color = AppTheme.colors.backgroundMainScreenColor),
         verticalArrangement = Arrangement.Center
     ) {
         Row(
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceEvenly
         ){
             ThemeElement(isTheme = ThemeTypeEnum.Light)
             ThemeElement(isTheme = ThemeTypeEnum.Dark)
