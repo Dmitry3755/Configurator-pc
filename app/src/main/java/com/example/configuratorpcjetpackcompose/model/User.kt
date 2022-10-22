@@ -1,5 +1,6 @@
 package com.example.configuratorpcjetpackcompose.model
 
-class User {
-
-}
+data class User(
+    var email: String = "",
+    var password: String = ""
+)

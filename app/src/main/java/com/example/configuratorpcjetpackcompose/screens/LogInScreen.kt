@@ -59,7 +59,11 @@ fun LogInScreen(navController: NavController) {
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                AuthorizationForm(isRegistration = false)
+                AuthorizationForm(
+                    isRegistration = false,
+                    email = viewModel.email,
+                    password = viewModel.password
+                )
             }
         }
     }

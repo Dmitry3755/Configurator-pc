@@ -23,8 +23,8 @@ import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 fun MainButton(textButton: String, onClick: () -> Unit = {}, isDelete: Boolean) {
     val intSource = remember { MutableInteractionSource() }
     val colorPressed = intSource.collectIsPressedAsState()
-    var colorButton : Color
-    var colorText : Color
+    val colorButton : Color
+    val colorText : Color
 
     if(isDelete) {
          colorButton =

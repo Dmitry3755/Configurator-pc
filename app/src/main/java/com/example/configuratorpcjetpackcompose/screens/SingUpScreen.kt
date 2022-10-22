@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -24,6 +26,7 @@ import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
 @Composable
 fun SingUpScreen(navController: NavController) {
     val viewModel: AppViewModel = viewModel()
+
     Column(
         modifier = Modifier
             .fillMaxSize(1f)
@@ -58,7 +61,12 @@ fun SingUpScreen(navController: NavController) {
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                AuthorizationForm(isRegistration = true)
+                AuthorizationForm(
+                    isRegistration = true,
+                    email = viewModel.email,
+                    password = viewModel.password,
+                    repeatedPassword = viewModel.repeatedPassword
+                )
             }
         }
     }
@@ -76,6 +84,7 @@ fun SingUpScreen(navController: NavController) {
                 stringResource(id = R.string.authentication_sign_up_button_text_create_account),
                 onClick = {
                     navController.navigate(Navigation.MainNavigationScreen.route)
+                    viewModel.createUser()
                 },
                 isDelete = false
             )

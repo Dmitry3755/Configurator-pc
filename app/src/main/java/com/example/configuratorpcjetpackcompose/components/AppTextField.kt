@@ -1,5 +1,6 @@
 package com.example.configuratorpcjetpackcompose.components
 
+import android.provider.ContactsContract
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -27,8 +29,12 @@ import com.example.configuratorpcjetpackcompose.TextInputTypeEnum
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 
 @Composable
-fun AppTextField(textTitle: String, hintTextField: String, textInputType: TextInputTypeEnum) {
-    val email = remember { mutableStateOf("") }
+fun AppTextField(
+    textTitle: String,
+    hintTextField: String,
+    textInputType: TextInputTypeEnum,
+    value: MutableState<String>
+) {
     val showPassword = remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
@@ -44,7 +50,7 @@ fun AppTextField(textTitle: String, hintTextField: String, textInputType: TextIn
 
         )
         TextField(
-            value = email.value,
+            value = value.value,
             textStyle = TextStyle(fontSize = 20.sp),
             modifier = Modifier
                 .fillMaxWidth(1f),
@@ -55,7 +61,7 @@ fun AppTextField(textTitle: String, hintTextField: String, textInputType: TextIn
                 )
             },
             singleLine = true,
-            onValueChange = { newText -> email.value = newText },
+            onValueChange = { newText -> value.value = newText },
             keyboardOptions = when (textInputType) {
                 TextInputTypeEnum.Email ->
                     KeyboardOptions(keyboardType = KeyboardType.Email)
@@ -113,7 +119,8 @@ private fun DefaultPreview() {
                 id = R.string.authentication_sign_up_text_view_your_email
             ), stringResource(
                 id = R.string.authentication_sign_up_edit_text_hint_email
-            ), TextInputTypeEnum.Email
+            ), TextInputTypeEnum.Email,
+            remember { mutableStateOf("") }
         )
     }
 }
