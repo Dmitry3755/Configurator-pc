@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,6 +22,7 @@ import com.example.configuratorpcjetpackcompose.components.LogInOrSingUp
 import com.example.configuratorpcjetpackcompose.components.MainButton
 import com.example.configuratorpcjetpackcompose.navigation.Navigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
+import com.example.configuratorpcjetpackcompose.utils.Error
 import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
 import kotlinx.coroutines.launch
 
@@ -28,6 +31,8 @@ fun LogInScreen(navController: NavController) {
     val viewModel: AppViewModel = viewModel()
 
     val coroutineScope = rememberCoroutineScope()
+
+    val logInResultError = remember { mutableStateOf(Error()) }
 
     Column(
         modifier = Modifier
@@ -66,7 +71,8 @@ fun LogInScreen(navController: NavController) {
                 AuthorizationForm(
                     isRegistration = false,
                     email = viewModel.email,
-                    password = viewModel.password
+                    password = viewModel.password,
+                    authResultError = logInResultError
                 )
             }
         }
@@ -85,7 +91,7 @@ fun LogInScreen(navController: NavController) {
                 stringResource(id = R.string.authentication_log_in_text_view_log_in),
                 onClick = {
                     coroutineScope.launch {
-                        viewModel.loginUser()
+                        viewModel.loginUser(logInResultError)
                         if (viewModel.currentFirebaseUser != null) {
                             navController.navigate(Navigation.MainNavigationScreen.route)
                         }

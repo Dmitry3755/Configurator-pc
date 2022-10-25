@@ -5,7 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.configuratorpcjetpackcompose.model.ConfiguratorRepository
+import com.example.configuratorpcjetpackcompose.services.AuthenticationService
 import com.example.configuratorpcjetpackcompose.services.ValidationService
+import com.example.configuratorpcjetpackcompose.utils.Error
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,27 +23,36 @@ class AppViewModel : ViewModel() {
     var password: MutableState<String> = mutableStateOf("")
     var repeatedPassword: MutableState<String> = mutableStateOf("")
 
-    suspend fun createUser() {
+    suspend fun createUser(resultError: MutableState<Error>) {
         if (ValidationService.isUserCredentialsValid(
                 email = email.value,
                 password = password.value,
                 repeatedPassword = repeatedPassword.value
             )
         ) {
-            //viewModelScope.launch(Dispatchers.IO) {  }
-            currentFirebaseUser = configuratorRepository.createUser(email.value, password.value)
+            resultError.value = configuratorRepository.createUser(email.value, password.value)
+            if (!resultError.value.isError.value) {
+                currentFirebaseUser = configuratorRepository.getCurrentUser()
+            }
         }
     }
 
-    suspend fun loginUser() {
+    suspend fun loginUser(resultError: MutableState<Error>) {
         if (ValidationService.isUserCredentialsValid(
                 email = email.value,
                 password = password.value,
                 repeatedPassword = password.value
             )
         ) {
-            currentFirebaseUser = configuratorRepository.loginUser(email.value, password.value)
+            resultError.value = configuratorRepository.loginUser(email.value, password.value)
+            if (!resultError.value.isError.value) {
+                currentFirebaseUser = configuratorRepository.getCurrentUser()
+            }
         }
+    }
+
+    suspend fun getCurrentUser(): FirebaseUser? {
+        return configuratorRepository.getCurrentUser()
     }
 
 }

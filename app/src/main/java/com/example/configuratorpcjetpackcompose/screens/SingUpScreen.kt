@@ -22,6 +22,7 @@ import com.example.configuratorpcjetpackcompose.components.LogInOrSingUp
 import com.example.configuratorpcjetpackcompose.components.MainButton
 import com.example.configuratorpcjetpackcompose.navigation.Navigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
+import com.example.configuratorpcjetpackcompose.utils.Error
 import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
 import kotlinx.coroutines.launch
 
@@ -30,6 +31,8 @@ fun SingUpScreen(navController: NavController) {
     val viewModel: AppViewModel = viewModel()
 
     val coroutineScope = rememberCoroutineScope()
+
+    val signUpResultError = remember { mutableStateOf(Error()) }
 
     Column(
         modifier = Modifier
@@ -69,7 +72,8 @@ fun SingUpScreen(navController: NavController) {
                     isRegistration = true,
                     email = viewModel.email,
                     password = viewModel.password,
-                    repeatedPassword = viewModel.repeatedPassword
+                    repeatedPassword = viewModel.repeatedPassword,
+                    authResultError = signUpResultError
                 )
             }
         }
@@ -88,7 +92,7 @@ fun SingUpScreen(navController: NavController) {
                 stringResource(id = R.string.authentication_sign_up_button_text_create_account),
                 onClick = {
                     coroutineScope.launch {
-                        viewModel.createUser()
+                        viewModel.createUser(signUpResultError)
                         if (viewModel.currentFirebaseUser != null) {
                             navController.navigate(Navigation.MainNavigationScreen.route)
                         }

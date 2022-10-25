@@ -1,6 +1,6 @@
 package com.example.configuratorpcjetpackcompose.components
 
-import android.provider.ContactsContract
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -27,13 +28,15 @@ import androidx.compose.ui.unit.sp
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.TextInputTypeEnum
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
+import com.example.configuratorpcjetpackcompose.utils.Error
 
 @Composable
 fun AppTextField(
     textTitle: String,
     hintTextField: String,
     textInputType: TextInputTypeEnum,
-    value: MutableState<String>
+    value: MutableState<String>,
+    error: MutableState<Error> = mutableStateOf(Error())
 ) {
     val showPassword = remember { mutableStateOf(false) }
     Column(
@@ -61,12 +64,20 @@ fun AppTextField(
                 )
             },
             singleLine = true,
-            onValueChange = { newText -> value.value = newText },
+            isError = error.value.isError.value,
+            onValueChange = { newText ->
+                run {
+                    value.value = newText
+                    error.value.isError.value = false
+                }
+            },
             keyboardOptions = when (textInputType) {
                 TextInputTypeEnum.Email ->
                     KeyboardOptions(keyboardType = KeyboardType.Email)
+
                 TextInputTypeEnum.Password ->
                     KeyboardOptions(keyboardType = KeyboardType.Password)
+
                 else -> {
                     KeyboardOptions(keyboardType = KeyboardType.Text)
                 }
@@ -107,6 +118,9 @@ fun AppTextField(
                 backgroundColor = AppTheme.colors.backgroundTextFieldColor
             )
         )
+        if (error.value.isError.value) {
+            Toast.makeText(LocalContext.current, error.value.errorMessage.value, Toast.LENGTH_SHORT).show()
+        }
     }
 }
 
