@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -20,10 +21,13 @@ import com.example.configuratorpcjetpackcompose.components.MainButton
 import com.example.configuratorpcjetpackcompose.navigation.Navigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun LogInScreen(navController: NavController) {
     val viewModel: AppViewModel = viewModel()
+
+    val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -80,7 +84,12 @@ fun LogInScreen(navController: NavController) {
             MainButton(
                 stringResource(id = R.string.authentication_log_in_text_view_log_in),
                 onClick = {
-                    navController.navigate(Navigation.MainNavigationScreen.route)
+                    coroutineScope.launch {
+                        viewModel.loginUser()
+                        if (viewModel.currentFirebaseUser != null) {
+                            navController.navigate(Navigation.MainNavigationScreen.route)
+                        }
+                    }
                 },
                 isDelete = false
             )

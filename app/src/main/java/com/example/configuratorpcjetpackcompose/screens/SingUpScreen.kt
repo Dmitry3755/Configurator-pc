@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -22,10 +23,13 @@ import com.example.configuratorpcjetpackcompose.components.MainButton
 import com.example.configuratorpcjetpackcompose.navigation.Navigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun SingUpScreen(navController: NavController) {
     val viewModel: AppViewModel = viewModel()
+
+    val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -83,8 +87,13 @@ fun SingUpScreen(navController: NavController) {
             MainButton(
                 stringResource(id = R.string.authentication_sign_up_button_text_create_account),
                 onClick = {
-                    navController.navigate(Navigation.MainNavigationScreen.route)
-                    viewModel.createUser()
+                    coroutineScope.launch {
+                        viewModel.createUser()
+                        if (viewModel.currentFirebaseUser != null) {
+                            navController.navigate(Navigation.MainNavigationScreen.route)
+                        }
+                    }
+
                 },
                 isDelete = false
             )
