@@ -5,6 +5,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconToggleButton
@@ -19,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.ThemeTypeEnum
@@ -30,7 +32,10 @@ fun ThemeElement(isTheme: ThemeTypeEnum) {
     val selectedItem = remember { mutableStateOf(true) }
 
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize(1f)
+            .padding(5.dp)
     ) {
         Text(
             text = stringResource(
@@ -41,25 +46,26 @@ fun ThemeElement(isTheme: ThemeTypeEnum) {
                 }
             ),
             style = AppTheme.typography.buttonText,
-            color = AppTheme.colors.textMainColor
+            color = AppTheme.colors.textMainColor,
         )
-        Spacer(modifier = Modifier.padding(top = AppTheme.dimensions.verticalElementsPadding))
+
         Box(
             modifier = Modifier
-                .fillMaxWidth(0.45f)
-                .fillMaxHeight(0.2f)
+                .weight(1f, fill = true)
+                .fillMaxWidth(1f)
                 .background(
                     color = when (isTheme) {
                         ThemeTypeEnum.Light -> com.example.configuratorpcjetpackcompose.ui.theme.White
                         ThemeTypeEnum.Dark -> com.example.configuratorpcjetpackcompose.ui.theme.VeryDarkShadeOfPurplishBlue
                         else -> com.example.configuratorpcjetpackcompose.ui.theme.VeryDarkShadeOfPurplishBlue
                     },
-                    shape = RoundedCornerShape(30.dp)
+                    shape = RoundedCornerShape(corner = CornerSize(30.dp))
                 )
                 .border(
-                    shape = RoundedCornerShape(30.dp),
+                    shape = RoundedCornerShape(corner = CornerSize(30.dp)),
                     border = BorderStroke(2.dp, AppTheme.colors.backgroundButtonColor),
-                ),
+                )
+                .padding(5.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -72,7 +78,7 @@ fun ThemeElement(isTheme: ThemeTypeEnum) {
                 }
             )
         }
-        Spacer(modifier = Modifier.padding(top = AppTheme.dimensions.verticalElementsPadding))
+
         IconToggleButton(
             checked = true,
             onCheckedChange = {},
@@ -102,7 +108,8 @@ private fun DefaultPreviewLight() {
             modifier = Modifier.fillMaxSize(1f)
         ) {
             Box(
-                modifier = Modifier.fillMaxHeight(0.3f)
+                modifier = Modifier
+                    .fillMaxHeight(0.3f)
                     .fillMaxWidth(0.45f)
             ) {
                 ThemeElement(ThemeTypeEnum.Light)
