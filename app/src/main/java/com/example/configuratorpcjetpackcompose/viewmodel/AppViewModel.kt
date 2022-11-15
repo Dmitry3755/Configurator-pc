@@ -1,7 +1,10 @@
 package com.example.configuratorpcjetpackcompose.viewmodel
 
+import android.app.Application
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.configuratorpcjetpackcompose.model.ConfiguratorRepository
@@ -13,7 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers.IO
 
-class AppViewModel : ViewModel() {
+class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     private var configuratorRepository: ConfiguratorRepository = ConfiguratorRepository()
 
@@ -24,12 +27,13 @@ class AppViewModel : ViewModel() {
     var repeatedPassword: MutableState<String> = mutableStateOf("")
 
     suspend fun createUser(resultError: MutableState<Error>) {
-        if (ValidationService.isUserCredentialsValid(
-                email = email.value,
-                password = password.value,
-                repeatedPassword = repeatedPassword.value
-            )
-        ) {
+        resultError.value = ValidationService.isUserCredentialsValid(
+            email = email.value,
+            password = password.value,
+            repeatedPassword = repeatedPassword.value,
+            application = getApplication<Application>()
+        )
+        if (!resultError.value.isError.value) {
             resultError.value = configuratorRepository.createUser(email.value, password.value)
             if (!resultError.value.isError.value) {
                 currentFirebaseUser = configuratorRepository.getCurrentUser()
@@ -38,11 +42,13 @@ class AppViewModel : ViewModel() {
     }
 
     suspend fun loginUser(resultError: MutableState<Error>) {
-        if (ValidationService.isUserCredentialsValid(
-                email = email.value,
-                password = password.value,
-                repeatedPassword = password.value
-            )
+        resultError.value = ValidationService.isUserCredentialsValid(
+            email = email.value,
+            password = password.value,
+            repeatedPassword = password.value,
+            application = getApplication<Application>()
+        )
+        if (!resultError.value.isError.value
         ) {
             resultError.value = configuratorRepository.loginUser(email.value, password.value)
             if (!resultError.value.isError.value) {

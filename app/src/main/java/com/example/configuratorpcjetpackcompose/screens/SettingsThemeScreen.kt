@@ -9,10 +9,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.components.ChangeThemeElements
 import com.example.configuratorpcjetpackcompose.components.HeadersTextView
 import com.example.configuratorpcjetpackcompose.components.ThemeElement
+import com.example.configuratorpcjetpackcompose.navigation.SettingsNavigationGraph
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 
 @Composable
@@ -28,6 +30,7 @@ fun SettingsThemeScreen() {
                 end = AppTheme.dimensions.textViewPadding
             )
     ) {
+
         Box(
             modifier = Modifier
                 .fillMaxWidth(1f)

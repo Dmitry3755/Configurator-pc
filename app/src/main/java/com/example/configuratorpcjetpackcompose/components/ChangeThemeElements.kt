@@ -44,13 +44,7 @@ fun ChangeThemeElements() {
 @Composable
 private fun DefaultPreviewLight() {
     AppTheme() {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(0.8f)
-                .fillMaxHeight(0.5f)
-        ) {
             ChangeThemeElements()
-        }
     }
 }
 

@@ -2,6 +2,7 @@ package com.example.configuratorpcjetpackcompose.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -63,6 +64,13 @@ fun AuthorizationForm(
                 textInputType = TextInputTypeEnum.Password,
                 value = repeatedPassword,
                 error = authResultError
+            )
+        }
+        if(authResultError.value.isError.value) {
+            Spacer(Modifier.padding(top = AppTheme.dimensions.verticalElementsPadding))
+            Text(
+                text = authResultError.value.errorMessage.value,
+                color = AppTheme.colors.errorTextColor
             )
         }
     }

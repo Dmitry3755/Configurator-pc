@@ -3,10 +3,10 @@ package com.example.configuratorpcjetpackcompose.screens
 import android.widget.ImageView
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
@@ -15,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -26,18 +27,26 @@ import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.navigation.Navigation
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun StartMainScreen(navController: NavController) {
 
     var isVisible by remember { mutableStateOf(false) }
     var state by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
 
     Box(
         modifier = Modifier
             .fillMaxSize(1f)
             .background(color = AppTheme.colors.startBackgroundScreen)
-            .clickable(onClick = { navController.navigate(Navigation.LogInScreen.route) }),
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) {
+                navController.navigate(Navigation.LogInScreen.route)
+            },
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -48,6 +57,10 @@ fun StartMainScreen(navController: NavController) {
         ) {
             LaunchedEffect(state) {
                 isVisible = !isVisible
+                coroutineScope.launch {
+                    delay(3500)
+                    navController.navigate(Navigation.LogInScreen.route)
+                }
             }
             AnimatedVisibility(
                 visible = isVisible,
@@ -59,7 +72,6 @@ fun StartMainScreen(navController: NavController) {
                     )
                 ),
                 exit = fadeOut(),
-
                 ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally

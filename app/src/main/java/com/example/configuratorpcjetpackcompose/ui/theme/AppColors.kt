@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Blue
 import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.graphics.Color.Companion.Yellow
+import com.example.configuratorpcjetpackcompose.SettingsThemeTypeEnum
 
 class AppColors(
     startBackgroundScreen: Color,
@@ -27,6 +28,7 @@ class AppColors(
     textDeleteButtonColor: Color,
     backgroundPressDeleteButtonColor: Color,
 
+    errorTextColor: Color,
     selectionColor: Color,
 
     isLight: Boolean
@@ -57,6 +59,8 @@ class AppColors(
         private set
     var textButtonColor by mutableStateOf(textButtonColor)
         private set
+    var errorTextColor by mutableStateOf(errorTextColor)
+        private set
     var isLight by mutableStateOf(isLight)
         internal set
 
@@ -73,6 +77,7 @@ class AppColors(
         selectionColor: Color = this.selectionColor,
         backgroundPressDeleteButtonColor: Color = this.backgroundPressDeleteButtonColor,
         textButtonColor: Color = this.textButtonColor,
+        errorTextColor: Color = this.errorTextColor,
         isLight: Boolean = this.isLight
     ): AppColors = AppColors(
         startBackgroundScreen,
@@ -88,6 +93,7 @@ class AppColors(
         buttonPressedColor,
         textButtonColor,
         backgroundPressDeleteButtonColor,
+        errorTextColor,
         isLight
     )
 
@@ -105,6 +111,7 @@ class AppColors(
         selectionColor = other.selectionColor
         buttonPressedColor = other.buttonPressedColor
         textButtonColor = other.textButtonColor
+        errorTextColor = other.errorTextColor
         backgroundPressDeleteButtonColor = other.backgroundPressDeleteButtonColor
     }
 }
@@ -123,6 +130,7 @@ fun lightColors(
     textButtonColor: Color = White,
     backgroundPressDeleteButtonColor: Color = MediumDarkShadeOfRed,
     buttonPressedColor: Color = MediumDarkShadeOfBlue,
+    errorTextColor: Color = Red
 
     ): AppColors = AppColors(
     startBackgroundScreen = startBackgroundScreen,
@@ -138,6 +146,7 @@ fun lightColors(
     textButtonColor = textButtonColor,
     buttonPressedColor = buttonPressedColor,
     backgroundPressDeleteButtonColor = backgroundPressDeleteButtonColor,
+    errorTextColor = errorTextColor,
     isLight = true
 )
 
@@ -154,7 +163,8 @@ fun darkColors(
     selectionColor: Color = Cyan,
     textButtonColor: Color = White,
     backgroundPressDeleteButtonColor: Color = MediumDarkShadeOfRed,
-    buttonPressedColor: Color = MediumDarkShadeOfBlueBlue
+    buttonPressedColor: Color = MediumDarkShadeOfBlueBlue,
+    errorTextColor: Color = Red
 ): AppColors = AppColors(
     startBackgroundScreen = startBackgroundScreen,
     backgroundMainScreenColor = backgroundMainScreenColor,
@@ -169,6 +179,7 @@ fun darkColors(
     buttonPressedColor = buttonPressedColor,
     textButtonColor = textButtonColor,
     backgroundPressDeleteButtonColor = backgroundPressDeleteButtonColor,
+    errorTextColor = errorTextColor,
     isLight = false
 )
 

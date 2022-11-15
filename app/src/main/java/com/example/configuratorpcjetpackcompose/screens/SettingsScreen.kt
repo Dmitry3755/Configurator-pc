@@ -8,13 +8,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.components.HeadersTextView
 import com.example.configuratorpcjetpackcompose.components.MainButton
+import com.example.configuratorpcjetpackcompose.navigation.BottomNavigationGraph
+import com.example.configuratorpcjetpackcompose.navigation.Navigation
+import com.example.configuratorpcjetpackcompose.navigation.SettingsNavigation
+import com.example.configuratorpcjetpackcompose.navigation.SettingsNavigationGraph
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(navController: NavController) {
+
     Column(
         modifier = Modifier
             .background(color = AppTheme.colors.backgroundMainScreenColor)
@@ -44,7 +52,9 @@ fun SettingsScreen() {
             Column() {
                 MainButton(
                     stringResource(id = R.string.settings_button_setting_theme),
-                    onClick = {},
+                    onClick = {
+                        navController.navigate(SettingsNavigation.SettingsThemeScreen.route)
+                    },
                     isDelete = false
                 )
                 Spacer(Modifier.padding(top = AppTheme.dimensions.verticalElementsPadding))
@@ -70,6 +80,7 @@ fun SettingsScreen() {
 @Composable
 private fun DefaultPreview() {
     AppTheme {
-        SettingsScreen()
+        val navController: NavController = rememberNavController()
+        SettingsScreen(navController)
     }
 }

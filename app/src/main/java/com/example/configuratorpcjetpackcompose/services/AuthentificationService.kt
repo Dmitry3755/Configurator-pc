@@ -4,11 +4,11 @@ import androidx.compose.runtime.mutableStateOf
 import com.example.configuratorpcjetpackcompose.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
 import java.lang.ref.WeakReference
 import kotlin.coroutines.resume
 import com.example.configuratorpcjetpackcompose.utils.Error
+import kotlinx.coroutines.*
 
 
 object AuthenticationService {
@@ -21,6 +21,9 @@ object AuthenticationService {
                 firebaseAuthWeakRef.get()!!.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
+                           GlobalScope.launch(Dispatchers.IO) {
+                               FirebaseFireStoreService.addUserInDB(user = User(email = email))
+                           }
                             cancellableContinuation.resume(Error(isError = mutableStateOf(false)))
                         } else {
                             cancellableContinuation.resume(

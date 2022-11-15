@@ -13,7 +13,10 @@ fun SettingsNavigationGraph(navController: NavHostController) {
         startDestination = SettingsNavigation.SettingsScreen.route
     ){
         composable(route = SettingsNavigation.SettingsScreen.route) {
-            SettingsScreen()
+            SettingsScreen(navController)
+        }
+        composable(route = SettingsNavigation.SettingsThemeScreen.route){
+            SettingsThemeScreen()
         }
     }
 }

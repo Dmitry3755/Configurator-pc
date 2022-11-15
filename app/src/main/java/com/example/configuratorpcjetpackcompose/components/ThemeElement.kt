@@ -122,6 +122,6 @@ private fun DefaultPreviewLight() {
 @Composable
 private fun DefaultPreviewDark() {
     AppTheme() {
-        ThemeElement(ThemeTypeEnum.Dark)
+        ThemeElement(ThemeTypeEnum.System)
     }
 }

@@ -118,9 +118,10 @@ fun AppTextField(
                 backgroundColor = AppTheme.colors.backgroundTextFieldColor
             )
         )
-        if (error.value.isError.value) {
+/*        if (error.value.isError.value) {
+
             Toast.makeText(LocalContext.current, error.value.errorMessage.value, Toast.LENGTH_SHORT).show()
-        }
+        }*/
     }
 }
 

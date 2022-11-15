@@ -22,7 +22,7 @@ fun BottomNavigationGraph(navController: NavHostController) {
             SearchScreen()
         }
         composable(route = BottomNavigationItem.SettingsScreen.route) {
-            SettingsScreen()
+            SettingsScreen(navController)
         }
         composable(route = BottomNavigationItem.AccountScreen.route) {
             AccountScreen()

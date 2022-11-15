@@ -64,7 +64,6 @@ fun MainButton(textButton: String, onClick: () -> Unit = {}, isDelete: Boolean) 
 @Composable
 private fun DefaultPreview() {
     AppTheme {
-        val navController = rememberNavController()
         MainButton(
             stringResource(id = R.string.authentication_log_in_text_view_log_in),
             {},
