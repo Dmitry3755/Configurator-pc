@@ -9,16 +9,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.components.ChangeThemeElements
 import com.example.configuratorpcjetpackcompose.components.HeadersTextView
-import com.example.configuratorpcjetpackcompose.components.ThemeElement
-import com.example.configuratorpcjetpackcompose.navigation.SettingsNavigationGraph
+import com.example.configuratorpcjetpackcompose.navigation.SettingsNavigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
+import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
+import com.example.configuratorpcjetpackcompose.viewmodel.AuthenticationViewModel
 
 @Composable
 fun SettingsThemeScreen() {
+
+    val viewModel: AppViewModel = viewModel()
+
     Column(
         modifier = Modifier
             .background(color = AppTheme.colors.backgroundMainScreenColor)
@@ -46,7 +53,12 @@ fun SettingsThemeScreen() {
                 .weight(0.85f),
             contentAlignment = Alignment.Center
         ) {
-            ChangeThemeElements()
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight(0.7f)
+            ){
+                ChangeThemeElements(viewModel.selectedTheme)
+            }
         }
     }
 
@@ -57,6 +69,7 @@ fun SettingsThemeScreen() {
 @Composable
 private fun DefaultPreviewLight() {
     AppTheme() {
+        val settingsNavigation: NavController = rememberNavController()
         SettingsThemeScreen()
     }
 }
@@ -65,6 +78,7 @@ private fun DefaultPreviewLight() {
 @Composable
 private fun DefaultPreviewDark() {
     AppTheme() {
+        val settingsNavigation: NavController = rememberNavController()
         SettingsThemeScreen()
     }
 }

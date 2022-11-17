@@ -23,12 +23,12 @@ import com.example.configuratorpcjetpackcompose.components.MainButton
 import com.example.configuratorpcjetpackcompose.navigation.Navigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.utils.Error
-import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
+import com.example.configuratorpcjetpackcompose.viewmodel.AuthenticationViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun SingUpScreen(navController: NavController) {
-    val viewModel: AppViewModel = viewModel()
+    val viewModel: AuthenticationViewModel = viewModel()
 
     val coroutineScope = rememberCoroutineScope()
 

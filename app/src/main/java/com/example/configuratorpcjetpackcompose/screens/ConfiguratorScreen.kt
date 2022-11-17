@@ -2,7 +2,6 @@ package com.example.configuratorpcjetpackcompose.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,13 +13,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.components.*
-import com.example.configuratorpcjetpackcompose.navigation.Navigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
-import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
+import com.example.configuratorpcjetpackcompose.viewmodel.AuthenticationViewModel
 
 @Composable
 fun ConfiguratorScreen() {
-    val viewModel: AppViewModel = viewModel()
+    val viewModel: AuthenticationViewModel = viewModel()
 
     Column(
         modifier = Modifier

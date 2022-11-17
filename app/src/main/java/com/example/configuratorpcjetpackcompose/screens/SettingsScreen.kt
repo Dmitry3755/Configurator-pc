@@ -14,7 +14,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.components.HeadersTextView
 import com.example.configuratorpcjetpackcompose.components.MainButton
-import com.example.configuratorpcjetpackcompose.navigation.BottomNavigationGraph
 import com.example.configuratorpcjetpackcompose.navigation.Navigation
 import com.example.configuratorpcjetpackcompose.navigation.SettingsNavigation
 import com.example.configuratorpcjetpackcompose.navigation.SettingsNavigationGraph
