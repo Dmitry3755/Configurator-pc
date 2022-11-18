@@ -22,11 +22,11 @@ import com.example.configuratorpcjetpackcompose.R
 
 @Composable
 fun ShortConfigurationElement() {
-    var lineColor = AppTheme.colors.backgroundButtonColor
+    val lineColor = AppTheme.colors.backgroundButtonColor
     val configurationItems = listOf(
         ConfigurationElement.Processor to 0,
-        ConfigurationElement.MatherBoard to 1,
-        ConfigurationElement.RAM to 2,
+        ConfigurationElement.Motherboard to 1,
+        ConfigurationElement.Ram to 2,
         ConfigurationElement.PowerSupplyUnit to 3,
         ConfigurationElement.SoundCard to 4,
         ConfigurationElement.VideoCard to 5,

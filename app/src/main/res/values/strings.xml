@@ -36,5 +36,7 @@
     <string name="settings_theme_change_dark">Темная</string>
     <string name="settings_theme_change_system">Системная</string>
     <string name="text">Текст</string>
+    <string name="btn_text_add">Добавить</string>
+    <string name="btn_text_delete">Удалить</string>
 
 </resources>

@@ -13,7 +13,7 @@ fun BottomNavigationGraph(navController: NavHostController) {
         startDestination = BottomNavigationItem.ConfigurationScreen.route
     ) {
         composable(route = BottomNavigationItem.ConfigurationScreen.route) {
-            ConfiguratorScreen()
+            ConfigurationNavigationScreen()
         }
         composable(route = BottomNavigationItem.FavoriteScreen.route) {
             FavoriteScreen()

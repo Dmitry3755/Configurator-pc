@@ -11,14 +11,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.components.*
+import com.example.configuratorpcjetpackcompose.navigation.ConfigurationNavigation
+import com.example.configuratorpcjetpackcompose.navigation.Navigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.viewmodel.AuthenticationViewModel
 
 @Composable
-fun ConfiguratorScreen() {
-    val viewModel: AuthenticationViewModel = viewModel()
+fun ConfiguratorScreen(navController: NavController) {
+    //val viewModel: AuthenticationViewModel = viewModel()
 
     Column(
         modifier = Modifier
@@ -69,7 +73,7 @@ fun ConfiguratorScreen() {
             MainButton(
                 stringResource(id = R.string.configurator_text_view_create_configuration),
                 onClick = {
-
+                    navController.navigate(ConfigurationNavigation.CreateConfigurationScreen.route)
                 },
                 isDelete = false
             )
@@ -82,6 +86,7 @@ fun ConfiguratorScreen() {
 @Composable
 private fun DefaultPreview() {
     AppTheme {
-        ConfiguratorScreen()
+        val navController: NavController = rememberNavController()
+        ConfiguratorScreen(navController)
     }
 }

@@ -1,6 +1,6 @@
 package com.example.configuratorpcjetpackcompose.model
 
-enum class СategoryAccessoriesEnum(var categoryAccessories: String) {
+enum class CategoryAccessoryEnum(var categoryAccessories: String) {
         VIDEO_CARD("Видеокарта"),
         PROCESSOR("Процессор"),
         MOTHERBOARD("Материнская плата"),
