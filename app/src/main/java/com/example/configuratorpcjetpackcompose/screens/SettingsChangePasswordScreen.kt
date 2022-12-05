@@ -1,14 +1,19 @@
 package com.example.configuratorpcjetpackcompose.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Snackbar
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -16,24 +21,24 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
-import com.example.configuratorpcjetpackcompose.components.AuthorizationForm
-import com.example.configuratorpcjetpackcompose.components.AuthorizationHeadersTextView
-import com.example.configuratorpcjetpackcompose.components.LogInOrSingUp
+import com.example.configuratorpcjetpackcompose.components.ChangePasswordForm
+import com.example.configuratorpcjetpackcompose.components.HeadersTextView
 import com.example.configuratorpcjetpackcompose.components.MainButton
 import com.example.configuratorpcjetpackcompose.navigation.Navigation
+import com.example.configuratorpcjetpackcompose.navigation.SettingsNavigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.utils.ViewError
 import com.example.configuratorpcjetpackcompose.viewmodel.AuthenticationViewModel
+import com.example.configuratorpcjetpackcompose.viewmodel.ChangePasswordViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun LogInScreen(navController: NavController) {
-    val viewModel: AuthenticationViewModel = viewModel()
+fun SettingsChangePasswordScreen() {
 
+    val viewModel: ChangePasswordViewModel = viewModel()
     val coroutineScope = rememberCoroutineScope()
-
-    val logInResultViewError = remember { mutableStateOf(ViewError()) }
-
+    val changePasswordResultViewError = remember { mutableStateOf(ViewError()) }
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize(1f)
@@ -46,7 +51,7 @@ fun LogInScreen(navController: NavController) {
                 .padding(start = 30.dp, bottom = 10.dp),
             contentAlignment = Alignment.BottomStart
         ) {
-            AuthorizationHeadersTextView(text = stringResource(id = R.string.authentication_log_in_text_view_log_in))
+            HeadersTextView(text = stringResource(id = R.string.settings_button_change_password))
         }
         Box(
             modifier = Modifier
@@ -59,8 +64,7 @@ fun LogInScreen(navController: NavController) {
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxHeight(1f)
-                    .fillMaxWidth(1f)
+                    .fillMaxSize(1f)
                     .padding(
                         top = AppTheme.dimensions.textViewPadding,
                         start = AppTheme.dimensions.textViewPadding,
@@ -68,47 +72,36 @@ fun LogInScreen(navController: NavController) {
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                viewModel.email.value = "dsaa8354@gmail.com"
-                viewModel.password.value = "123456"
-                AuthorizationForm(
-                    isRegistration = false,
-                    email = viewModel.email,
-                    password = viewModel.password,
-                    authResultViewError = logInResultViewError
+                ChangePasswordForm(
+                    newPassword = viewModel.newPassword,
+                    oldPassword = viewModel.oldPassword,
+                    repeatedPassword = viewModel.repeatedPassword,
+                    changePasswordResultViewError = changePasswordResultViewError
+
                 )
             }
         }
     }
-
     Box(
-        modifier = Modifier.fillMaxSize(1f),
+        modifier = Modifier
+            .fillMaxSize(1f)
+            .padding(
+                horizontal = AppTheme.dimensions.buttonPadding,
+                vertical = AppTheme.dimensions.configurationElementsPadding
+            ),
         contentAlignment = Alignment.BottomCenter
     ) {
-        Column(
-            modifier = Modifier.padding(
-                horizontal = AppTheme.dimensions.buttonPadding
-            )
-        ) {
-            MainButton(
-                stringResource(id = R.string.authentication_log_in_text_view_log_in),
-                onClick = {
-                    coroutineScope.launch {
-                        viewModel.loginUser(logInResultViewError)
-                        if (viewModel.currentFirebaseUser != null) {
-                            navController.navigate(Navigation.MainNavigationScreen.route)
-                        }
+        MainButton(
+            textButton = stringResource(id = R.string.btn_text_accept_changes),
+            onClick = {
+                coroutineScope.launch {
+                    viewModel.changePassword(changePasswordResultViewError)
+                    if(!changePasswordResultViewError.value.isError.value){
+                        Toast.makeText(context,"Пароль успешно изменен", Toast.LENGTH_LONG).show()
                     }
-                },
-                isDelete = false
-            )
-            LogInOrSingUp(
-                text = stringResource(id = R.string.authentication_log_in_text_view_have_not_account),
-                textButton = stringResource(id = R.string.authentication_log_in_button_text_sing_up),
-                onClick = {
-                    navController.navigate(Navigation.SingUpScreen.route)
                 }
-            )
-        }
+            }
+        )
     }
 }
 
@@ -116,7 +109,6 @@ fun LogInScreen(navController: NavController) {
 @Composable
 private fun DefaultPreview() {
     AppTheme {
-        val navController: NavController = rememberNavController()
-        LogInScreen(navController)
+        SettingsChangePasswordScreen()
     }
 }

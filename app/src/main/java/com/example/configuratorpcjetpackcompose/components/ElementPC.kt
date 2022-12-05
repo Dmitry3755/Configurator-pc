@@ -18,9 +18,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
+import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
 
 @Composable
-fun ElementPC(configurationItem: ConfigurationElement) {
+fun ElementPC(configurationItem: ConfigurationElementEnum) {
     val selectedItem = remember { mutableStateOf(true) }
 
     Column(
@@ -69,6 +70,6 @@ fun ElementPC(configurationItem: ConfigurationElement) {
 @Composable
 private fun DefaultPreviewLight() {
     AppTheme {
-        ElementPC(ConfigurationElement.Processor)
+        ElementPC(ConfigurationElementEnum.Processor)
     }
 }

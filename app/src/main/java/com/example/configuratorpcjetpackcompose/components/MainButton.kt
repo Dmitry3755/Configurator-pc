@@ -12,38 +12,52 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
+import org.checkerframework.checker.units.qual.m
 
 @Composable
-fun MainButton(textButton: String, onClick: () -> Unit = {}, isDelete: Boolean = false) {
+fun MainButton(
+    textButton: String,
+    onClick: () -> Unit = {},
+    isDelete: Boolean = false,
+    isSmall: Boolean = false
+) {
     val intSource = remember { MutableInteractionSource() }
     val colorPressed = intSource.collectIsPressedAsState()
-    val colorButton : Color
-    val colorText : Color
+    val colorButton: Color
+    val colorText: Color
+    var buttonModifier: Modifier = Modifier
+    val buttonShape: Shape
 
-    if(isDelete) {
-         colorButton =
+    if (isDelete) {
+        colorButton =
             if (colorPressed.value) AppTheme.colors.backgroundPressDeleteButtonColor else AppTheme.colors.backgroundDeleteButtonColor
-         colorText =
+        colorText =
             if (colorPressed.value) AppTheme.colors.textDeleteButtonColor else AppTheme.colors.textDeleteButtonColor
-    }
-    else {
-         colorButton =
+    } else {
+        colorButton =
             if (colorPressed.value) AppTheme.colors.buttonPressedColor else AppTheme.colors.backgroundButtonColor
-         colorText = AppTheme.colors.textButtonColor
+        colorText = AppTheme.colors.textButtonColor
+    }
+
+    if (!isSmall) {
+        buttonModifier = buttonModifier.fillMaxWidth(1f)
+        buttonShape = RoundedCornerShape(AppTheme.dimensions.mainButtonCornerRadius)
+    } else {
+        buttonShape = RoundedCornerShape(AppTheme.dimensions.smallButtonCornerRadius)
     }
 
     Button(
-        modifier = Modifier
-            .fillMaxWidth(1f),
+        modifier = buttonModifier,
         interactionSource = intSource,
         onClick = onClick,
-        shape = RoundedCornerShape(15.dp),
+        shape = buttonShape,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = colorButton,
             contentColor = AppTheme.colors.textMainColor

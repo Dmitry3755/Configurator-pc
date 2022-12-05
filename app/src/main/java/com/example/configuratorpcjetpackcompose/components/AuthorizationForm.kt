@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.TextInputTypeEnum
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
-import com.example.configuratorpcjetpackcompose.utils.Error
+import com.example.configuratorpcjetpackcompose.utils.ViewError
 
 @Composable
 fun AuthorizationForm(
@@ -22,7 +22,7 @@ fun AuthorizationForm(
     email: MutableState<String>,
     password: MutableState<String>,
     repeatedPassword: MutableState<String> = remember { mutableStateOf("") },
-    authResultError: MutableState<Error> = remember { mutableStateOf(Error()) }
+    authResultViewError: MutableState<ViewError> = remember { mutableStateOf(ViewError()) }
 ) {
     Column(
         modifier = Modifier
@@ -38,7 +38,7 @@ fun AuthorizationForm(
             ),
             textInputType = TextInputTypeEnum.Email,
             value = email,
-            error = authResultError
+            viewError = authResultViewError
         )
         Spacer(Modifier.padding(top = AppTheme.dimensions.verticalElementsPadding))
         AppTextField(
@@ -50,7 +50,7 @@ fun AuthorizationForm(
             ),
             textInputType = TextInputTypeEnum.Password,
             value = password,
-            error = authResultError
+            viewError = authResultViewError
         )
         if (isRegistration) {
             Spacer(Modifier.padding(top = AppTheme.dimensions.verticalElementsPadding))
@@ -63,13 +63,13 @@ fun AuthorizationForm(
                 ),
                 textInputType = TextInputTypeEnum.Password,
                 value = repeatedPassword,
-                error = authResultError
+                viewError = authResultViewError
             )
         }
-        if(authResultError.value.isError.value) {
+        if(authResultViewError.value.isError.value) {
             Spacer(Modifier.padding(top = AppTheme.dimensions.verticalElementsPadding))
             Text(
-                text = authResultError.value.errorMessage.value,
+                text = authResultViewError.value.errorMessage.value,
                 color = AppTheme.colors.errorTextColor
             )
         }

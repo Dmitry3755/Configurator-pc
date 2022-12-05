@@ -15,9 +15,6 @@
     <string name="authentication_log_in_text_view_have_not_account">У вас нет аккаунта?</string>
     <string name="authentication_log_in_text_view_forgot_password">Забыли пароль?</string>
     <string name="authentication_log_in_button_text_sing_up"><u>Создать</u></string>
-    <string name="authentication_error_email_is_invalid">Адрес электронной почты введён неверно</string>
-    <string name="authentication_error_password_is_too_short">Длина пароля должна быть больше 6 символов</string>
-    <string name="authentication_error_password_does_not_match">Пароли не совпадают</string>
     <string name="configurator_text_view_title_configurator">Конфигуратор</string>
     <string name="configurator_text_view_have_not_configurations">У вас пока что нет\nготовых конфигураций (</string>
     <string name="configurator_text_view_create_configuration">Создать конфигурацию</string>
@@ -35,8 +32,32 @@
     <string name="settings_theme_change_light">Светлая</string>
     <string name="settings_theme_change_dark">Темная</string>
     <string name="settings_theme_change_system">Системная</string>
+    <string name="settings_text_view_new_password">Новый пароль</string>
+    <string name="settings_text_view_old_password">Старый пароль</string>
+    <string name="settings_text_view_confirm_new_password">Повторите новый пароль</string>
     <string name="text">Текст</string>
     <string name="btn_text_add">Добавить</string>
+    <string name="btn_text_accept_changes">Принять изменения</string>
     <string name="btn_text_delete">Удалить</string>
+    <string name="error_authentication_email_is_invalid">Адрес электронной почты введён неверно</string>
+    <string name="error_authentication_password_is_too_short">Длина пароля должна быть больше 6 символов</string>
+    <string name="error_authentication_password_is_invalid">Пароль введен не верно</string>
+    <string name="error_authentication_password_does_not_match">Пароли не совпадают</string>
+    <string name="error_change_password_current_user_does_not_exist">Текущий пользователь не найден</string>
+    <string name="error_change_password_old_password_is_invalid">Вы не правильно ввели старый пароль</string>
+    <string name="error_configuration_processor_socket">Сокет процессора несовместим с сокетом процессора на материнской плате</string>
+    <string name="error_configuration_cpu_is_empty">Процессор является обязательной комплектующей</string>
+    <string name="error_configuration_motherboard_is_empty">Материнская плата является обязательной комплектующей</string>
+    <string name="error_configuration_case_is_empty">Корпус является обязательной комплектующей</string>
+    <string name="error_configuration_cooler_for_cpu_is_empty">Кулер для процессора является обязательной комплектующей</string>
+    <string name="error_configuration_ram_is_empty">Оперативная память является обязательной комплектующей</string>
+    <string name="error_configuration_data_storage_is_empty">Устройство для хранения данных является обязательной комплектующей</string>
+    <string name="error_configuration_power_supply_unit_is_empty">Блок питания является обязательной комплектующей</string>
+    <string name="error_configuration_cpu_without_integrated_graphics_core">Вы выбрали процессор без встроенного графического ядра. Для работоспособности компьютера нужна видеокарта</string>
+    <string name="error_configuration_case_does_not_support_form_factor_of_motherboard">Корпус не поддерживает форм-фактор материнской платы</string>
+    <string name="error_configuration_cpu_cooler_does_not_support_motherboard_socket">Кулер для процессора не поддерживает сокет материнской платы</string>
+    <string name="error_configuration_motherboard_does_not_support_type_of_ram">Материнская плата не поддерживает тип оперативной памяти</string>
+    <string name="error_configuration_pin_cpu_is_not_compatible">Разъем питания для процессора у блока питнания не совместим с разъемами питания процессора</string>
+    <string name="error_configuration_case_does_not_support_size_of_video_card">Выбранный корпус не поддерживает размер выбранной видеокарты</string>
 
 </resources>

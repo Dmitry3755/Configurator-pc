@@ -20,5 +20,8 @@ fun SettingsNavigationGraph(navController: NavHostController) {
         composable(route = SettingsNavigation.SettingsThemeScreen.route){
             SettingsThemeScreen()
         }
+        composable(route = SettingsNavigation.SettingsChangePasswordScreen.route){
+            SettingsChangePasswordScreen()
+        }
     }
 }

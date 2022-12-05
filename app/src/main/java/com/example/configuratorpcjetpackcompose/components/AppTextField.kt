@@ -1,6 +1,5 @@
 package com.example.configuratorpcjetpackcompose.components
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,7 +15,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -28,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.TextInputTypeEnum
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
-import com.example.configuratorpcjetpackcompose.utils.Error
+import com.example.configuratorpcjetpackcompose.utils.ViewError
 
 @Composable
 fun AppTextField(
@@ -36,7 +34,7 @@ fun AppTextField(
     hintTextField: String,
     textInputType: TextInputTypeEnum,
     value: MutableState<String>,
-    error: MutableState<Error> = mutableStateOf(Error())
+    viewError: MutableState<ViewError> = mutableStateOf(ViewError())
 ) {
     val showPassword = remember { mutableStateOf(false) }
     Column(
@@ -64,11 +62,11 @@ fun AppTextField(
                 )
             },
             singleLine = true,
-            isError = error.value.isError.value,
+            isError = viewError.value.isError.value,
             onValueChange = { newText ->
                 run {
                     value.value = newText
-                    error.value.isError.value = false
+                    viewError.value.isError.value = false
                 }
             },
             keyboardOptions = when (textInputType) {

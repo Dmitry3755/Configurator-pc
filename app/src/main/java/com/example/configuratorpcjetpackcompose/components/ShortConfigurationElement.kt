@@ -19,21 +19,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.R
+import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
 
 @Composable
 fun ShortConfigurationElement() {
     val lineColor = AppTheme.colors.backgroundButtonColor
     val configurationItems = listOf(
-        ConfigurationElement.Processor to 0,
-        ConfigurationElement.Motherboard to 1,
-        ConfigurationElement.Ram to 2,
-        ConfigurationElement.PowerSupplyUnit to 3,
-        ConfigurationElement.SoundCard to 4,
-        ConfigurationElement.VideoCard to 5,
-        ConfigurationElement.Cooler to 6,
-        ConfigurationElement.DataStorage to 7,
-        ConfigurationElement.Case to 8,
-        ConfigurationElement.Monitor to 9
+        ConfigurationElementEnum.Processor to 0,
+        ConfigurationElementEnum.Motherboard to 1,
+        ConfigurationElementEnum.Ram to 2,
+        ConfigurationElementEnum.PowerSupplyUnit to 3,
+        ConfigurationElementEnum.SoundCard to 4,
+        ConfigurationElementEnum.VideoCard to 5,
+        ConfigurationElementEnum.Cooler to 6,
+        ConfigurationElementEnum.DataStorage to 7,
+        ConfigurationElementEnum.Case to 8,
+        ConfigurationElementEnum.Monitor to 9
     )
 
     Box(

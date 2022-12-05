@@ -1,8 +1,8 @@
 package com.example.configuratorpcjetpackcompose.model
 
-data class Accessory(
-    var nameAccessory: String,
+open class Accessory(
+    val nameAccessory: String,
     var priceAccessory: Double,
     var descriptionAccessory: String,
-    var categoryAccessoryEnum: CategoryAccessoryEnum
+    val categoryAccessoryEnum: CategoryAccessoryEnum
 )

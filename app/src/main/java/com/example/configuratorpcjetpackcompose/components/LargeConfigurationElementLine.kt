@@ -28,11 +28,12 @@ import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.model.Accessory
 import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
+import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
 import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
 
 @Composable
 fun LargeConfigurationElementLine(
-    lineType: ConfigurationElement,
+    lineType: ConfigurationElementEnum,
     selectedAccessoriesList: List<Accessory>,
     viewModel: AppViewModel
 ) {
@@ -111,11 +112,12 @@ fun LargeConfigurationElementLine(
             )
 
             if (selectedAccessoriesList.isEmpty()) {
-                MainButtonSmall(
+                MainButton(
                     textButton = stringResource(id = R.string.btn_text_add),
                     onClick = {
 
-                    }
+                    },
+                    isSmall = true
                 )
             } else {
                 IconButton(
@@ -154,13 +156,21 @@ fun LargeConfigurationElementLine(
                                     textAlign = TextAlign.Center
                                 )
                             }
-                            MainButtonSmall(
+                            MainButton(
+                                textButton = stringResource(id = R.string.btn_text_delete),
+                                onClick = {
+
+                                },
+                                isDelete = true,
+                                isSmall = true
+                            )
+                            /*MainButtonSmall(
                                 textButton = stringResource(id = R.string.btn_text_delete),
                                 onClick = {
 
                                 },
                                 isDelete = true
-                            )
+                            )*/
                         }
                     }
                     Spacer(modifier = Modifier.height(20.dp))
@@ -184,7 +194,7 @@ fun LargeConfigurationElementLine(
 private fun DefaultPreviewLight() {
     AppTheme() {
         LargeConfigurationElementLine(
-            lineType = ConfigurationElement.Processor,
+            lineType = ConfigurationElementEnum.Processor,
             emptyList(),
             viewModel = viewModel()
         )
@@ -196,7 +206,7 @@ private fun DefaultPreviewLight() {
 private fun DefaultPreviewDark() {
     AppTheme() {
         LargeConfigurationElementLine(
-            lineType = ConfigurationElement.Motherboard,
+            lineType = ConfigurationElementEnum.Motherboard,
             listOf(
                 Accessory(
                     nameAccessory = "qwe",

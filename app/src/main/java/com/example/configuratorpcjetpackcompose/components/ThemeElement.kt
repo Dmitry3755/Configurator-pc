@@ -12,10 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconToggleButton
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,9 +36,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.ThemeTypeEnum
 import com.example.configuratorpcjetpackcompose.navigation.Navigation
-import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
-import com.example.configuratorpcjetpackcompose.ui.theme.AppTypography
-import com.example.configuratorpcjetpackcompose.ui.theme.ConfiguratorPCJetpackComposeTheme
+import com.example.configuratorpcjetpackcompose.ui.theme.*
 import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
 import java.time.format.TextStyle
 
@@ -51,6 +46,7 @@ fun ThemeElement(isTheme: ThemeTypeEnum, selectedTheme: MutableState<ThemeTypeEn
     var darkTheme: Boolean = isSystemInDarkTheme()
     val context = LocalContext.current
     val text = stringResource(id = R.string.text)
+    var viewModel: AppViewModel = viewModel()
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -62,7 +58,19 @@ fun ThemeElement(isTheme: ThemeTypeEnum, selectedTheme: MutableState<ThemeTypeEn
                 interactionSource = remember { MutableInteractionSource() }
             ) {
                 selectedTheme.value = isTheme
+               viewModel.darkTheme.value = when (isTheme) {
+                    ThemeTypeEnum.Light -> false
+                    ThemeTypeEnum.Dark -> true
+                    ThemeTypeEnum.System -> darkTheme
+                }
 
+/*                viewModel.onThemeChanged(
+                    when (isTheme) {
+                        ThemeTypeEnum.Light -> false
+                        ThemeTypeEnum.Dark -> true
+                        ThemeTypeEnum.System -> darkTheme
+                    }
+                )*/
             },
     ) {
         Text(

@@ -12,5 +12,4 @@ object FirebaseFireStoreService {
             fireStoreDatabaseWeakRef.get()!!.collection("Users").add(user)
         }
     }
-
 }

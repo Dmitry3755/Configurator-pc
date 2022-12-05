@@ -78,7 +78,6 @@ private fun DefaultPreviewLight() {
 @Composable
 private fun DefaultPreviewDark() {
     AppTheme() {
-        val settingsNavigation: NavController = rememberNavController()
         SettingsThemeScreen()
     }
 }

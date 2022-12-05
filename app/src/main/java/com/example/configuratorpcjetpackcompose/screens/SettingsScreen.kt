@@ -66,7 +66,7 @@ fun SettingsScreen(navController: NavController) {
                 MainButton(
                     stringResource(id = R.string.settings_button_change_password),
                     onClick = {
-
+                        navController.navigate(SettingsNavigation.SettingsChangePasswordScreen.route)
                     },
                     isDelete = false
                 )

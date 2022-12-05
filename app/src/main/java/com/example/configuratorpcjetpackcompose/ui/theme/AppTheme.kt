@@ -1,12 +1,14 @@
 package com.example.configuratorpcjetpackcompose.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.ReadOnlyComposable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalFontFamilyResolver
 import androidx.compose.ui.text.font.FontFamily
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.configuratorpcjetpackcompose.SettingsThemeTypeEnum
+import com.example.configuratorpcjetpackcompose.ThemeTypeEnum
+import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
+import com.example.configuratorpcjetpackcompose.viewmodel.AuthenticationViewModel
 
 object AppTheme {
 
@@ -33,14 +35,14 @@ fun AppTheme(
     typography: AppTypography = AppTheme.typography,
     dimensions: AppDimensions = AppTheme.dimensions,
     fontFamily: AppFontFamily = AppTheme.fontFamily,
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: MutableState<Boolean> = mutableStateOf(isSystemInDarkTheme()),
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
-        darkColors()
-    } else {
-        lightColors()
-    }
+    val colors = if (darkTheme.value) {
+         darkColors()
+     } else {
+         lightColors()
+     }
 
     val rememberedColors = remember { colors.copy() }.apply { updateColorsFrom(colors) }
     CompositionLocalProvider(

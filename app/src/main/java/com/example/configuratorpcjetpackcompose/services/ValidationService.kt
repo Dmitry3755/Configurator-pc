@@ -5,7 +5,9 @@ import android.content.res.Resources
 import android.util.Patterns
 import androidx.compose.runtime.mutableStateOf
 import com.example.configuratorpcjetpackcompose.R
-import com.example.configuratorpcjetpackcompose.utils.Error
+import com.example.configuratorpcjetpackcompose.model.ConfiguratorRepository
+import com.example.configuratorpcjetpackcompose.utils.DataResult
+import com.example.configuratorpcjetpackcompose.utils.ViewError
 
 object ValidationService {
 
@@ -14,34 +16,70 @@ object ValidationService {
         password: String,
         repeatedPassword: String,
         application: Application
-    ): Error {
+    ): ViewError {
 
         if ((email.isEmpty()) || (!Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
-            return Error(
+            return ViewError(
                 isError = mutableStateOf(true),
                 errorMessage = mutableStateOf(
-                    application.getString(R.string.authentication_error_email_is_invalid)
+                    application.getString(R.string.error_authentication_email_is_invalid)
                 )
             )
         }
 
         if (password.isEmpty() || (password.length < 6)) {
-            return Error(
+            return ViewError(
                 isError = mutableStateOf(true),
                 errorMessage = mutableStateOf(
-                    application.getString(R.string.authentication_error_password_is_too_short)
+                    application.getString(R.string.error_authentication_password_is_too_short)
                 )
             )
         }
 
         if (password != repeatedPassword) {
-            return Error(
+            return ViewError(
                 isError = mutableStateOf(true),
                 errorMessage = mutableStateOf(
-                    application.getString(R.string.authentication_error_password_does_not_match)
+                    application.getString(R.string.error_authentication_password_does_not_match)
                 )
             )
         }
-        return Error(isError = mutableStateOf(false))
+        return ViewError(isError = mutableStateOf(false))
+    }
+
+    fun isUserChangePassword(
+        oldPassword: String,
+        newPassword: String,
+        repeatedPassword: String,
+        application: Application
+    ): ViewError {
+
+        if (oldPassword.isEmpty()) {
+            return ViewError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(
+                    application.getString(R.string.error_authentication_password_is_too_short)
+                )
+            )
+        }
+
+        if (newPassword.isEmpty() || (newPassword.length < 6)) {
+            return ViewError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(
+                    application.getString(R.string.error_authentication_password_is_too_short)
+                )
+            )
+        }
+
+        if (newPassword != repeatedPassword) {
+            return ViewError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(
+                    application.getString(R.string.error_authentication_password_does_not_match)
+                )
+            )
+        }
+        return ViewError(isError = mutableStateOf(false))
     }
 }

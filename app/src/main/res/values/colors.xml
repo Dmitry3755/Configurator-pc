@@ -7,8 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name = "pCYellowElementColor">#FFfcfaaf</color>
-    <color name = "pCGreenElementColor">#FFc0fffe</color>
-    <color name = "pCPinkElementColor">#FFffeaff</color>
-    <color name = "pCBlueElementColor">#FF5cf5f5</color>
+    <color name = "pc_element_yellow">#FFfcfaaf</color>
+    <color name = "pc_element_green">#FFc0fffe</color>
+    <color name = "pc_element_pink">#FFffeaff</color>
+    <color name = "pc_element_blue">#FF5cf5f5</color>
 </resources>
