@@ -1,7 +1,9 @@
 package com.example.configuratorpcjetpackcompose.model
 
+import java.util.TreeSet
+
 open class Accessory(
-    val nameAccessory: String,
+    var nameAccessory: String,
     var priceAccessory: Double,
     var descriptionAccessory: String,
     val categoryAccessoryEnum: CategoryAccessoryEnum

@@ -1,9 +1,7 @@
 package com.example.configuratorpcjetpackcompose.model
 
-import android.content.res.Resources
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.configuratorpcjetpackcompose.R
-import com.example.configuratorpcjetpackcompose.utils.DataResult
+import androidx.compose.runtime.mutableStateOf
+import com.example.configuratorpcjetpackcompose.utils.ConfigurationError
 
 data class Configuration(
     var cpu: Cpu? = null,
@@ -18,10 +16,10 @@ data class Configuration(
     var case: Case? = null,
     var monitorList: List<Monitor> = emptyList(),
     var hardDriveList: List<HardDrive> = emptyList(),
-    var ssdStoreList: List<SsdStore> = emptyList(),
+    var ssdList: List<Ssd> = emptyList(),
     var userOwner: User
 ) {
-    fun checkingCompatibility() {
+    fun checkingCompatibility(): ConfigurationError {
         /*TODO: 1) Проверка на совместимость сокетов (cpu  и motherboard) +
          TODO:  2) Проверка на совместимость форм-фактора мат.платы  и корпуса +
          TODO:  3) Проверка на совместимость сокетов (motherboard and coolerForCpu) +
@@ -31,153 +29,154 @@ data class Configuration(
          TODO:  7)
          TODO:  8)
          TODO:  9)
+
          */
-        var energy = 0
+        return ConfigurationError(
+            isError = mutableStateOf(false),
+            errorMessage = mutableStateOf("success")
+        )
+    }
 
-        checkingTheRequiredComponents()
-        energy = calcEnergy()
+    /*    if (checkingTheRequiredComponents().isError.value) {
+            return checkingTheRequiredComponents()
+        }
 
-        if (cpu?.socketCpu != motherboard?.socketMotherboard) {
+        var energy = calcEnergy()
+
+        if (cpu?._socket!= motherboard?.socket) {
             DataResult.Error(
                 exception = Exception(
-                    Resources.getSystem()
-                        .getString(R.string.error_configuration_processor_socket)
+                    AppResources.getString(R.string.error_configuration_processor_socket)
                 )
             )
         }
-        if (motherboard?.formFactorMotherboard != case?.formFactorOfCompatibleBoardsCase) {
-            DataResult.Error(
-                exception = Exception(
-                    Resources.getSystem()
-                        .getString(R.string.error_configuration_case_does_not_support_form_factor_of_motherboard)
-                )
-            )
-        }
-        if (coolerForCpu?.socketCoolerForCpu != motherboard?.socketMotherboard) {
-            DataResult.Error(
-                exception = Exception(
-                    Resources.getSystem()
-                        .getString(R.string.error_configuration_cpu_cooler_does_not_support_motherboard_socket)
-                )
-            )
-        }
-        for (ram in dimmRamList) {
-            if (motherboard?.typeOfSupportedMemoryMotherboard != ram.memoryTypeDimmRam) {
+       /* for (caseFormFactor in case?.formFactorOfCompatibleBoards!!) {
+            if (motherboard?.formFactor != caseFormFactor) {
                 DataResult.Error(
                     exception = Exception(
-                        Resources.getSystem()
-                            .getString(R.string.error_configuration_motherboard_does_not_support_type_of_ram)
+                        AppResources.getString(R.string.error_configuration_case_does_not_support_form_factor_of_motherboard)
+                    )
+                )
+            }
+        }*/
+        for (coolerSocket in coolerForCpu?.socket!!) {
+            if (coolerSocket != motherboard?.socket) {
+                DataResult.Error(
+                    exception = Exception(
+                        AppResources.getString(R.string.error_configuration_cpu_cooler_does_not_support_motherboard_socket)
+                    )
+                )
+            }
+        }
+
+        for (ram in dimmRamList) {
+            if (motherboard?.typeOfSupportedMemory != ram.memoryType) {
+                DataResult.Error(
+                    exception = Exception(
+                        AppResources.getString(R.string.error_configuration_motherboard_does_not_support_type_of_ram)
                     )
                 )
             }
         }
         for (ram in soDimmRamList) {
-            if (motherboard?.typeOfSupportedMemoryMotherboard != ram.memoryTypeSoDimmRam) {
+            if (motherboard?.typeOfSupportedMemory != ram.memoryType) {
                 DataResult.Error(
                     exception = Exception(
-                        Resources.getSystem()
-                            .getString(R.string.error_configuration_motherboard_does_not_support_type_of_ram)
+                        AppResources.getString(R.string.error_configuration_motherboard_does_not_support_type_of_ram)
                     )
                 )
             }
         }
-        if (powerSupplyUnit?.connectorsForCpuPowerSupplyUnit != cpu?.pinConnectorCpu) {
+        if (powerSupplyUnit?.connectorsForCpu != cpu?._pinConnector) {
             DataResult.Error(
                 exception = Exception(
-                    Resources.getSystem()
-                        .getString(R.string.error_configuration_pin_cpu_is_not_compatible)
+                    AppResources.getString(R.string.error_configuration_pin_cpu_is_not_compatible)
                 )
             )
         }
         for (videoCard in videoCardList) {
-            if (videoCard.lengthVideoCard > case?.lengthMaxOfVideoCardCase!!) {
+            if (videoCard.length > case?.lengthMaxOfVideoCard!!) {
                 DataResult.Error(
                     exception = Exception(
-                        Resources.getSystem()
-                            .getString(R.string.error_configuration_case_does_not_support_size_of_video_card)
+                        AppResources.getString(R.string.error_configuration_case_does_not_support_size_of_video_card)
                     )
                 )
             }
-            energy += videoCard.energyConsumptionMaxVideoCard
-            if (energy >= powerSupplyUnit?.powerCapacityPowerSupplyUnit!!) {
+            energy += videoCard.energyConsumptionMax
+            if (energy >= powerSupplyUnit?.powerCapacity!!) {
                 DataResult.Error(
                     exception = Exception(
-                        Resources.getSystem()
-                            .getString(R.string.error_configuration_case_does_not_support_size_of_video_card)
+                        AppResources.getString(R.string.error_configuration_case_does_not_support_size_of_video_card)
                     )
                 )
             }
         }
+        return ConfigurationError(
+            isError = mutableStateOf(false),
+            errorMessage = mutableStateOf("success")
+        )
     }
 
-    private fun calcEnergy(): Int {
+    fun calcEnergy(): Int {
         var energy = 0
-        energy = cpu?.heatDissipationCpu!! + motherboard?.energyConsumptionMaxMotherboard!! + 50
+        energy = cpu?._heatDissipation!! + motherboard?.energyConsumptionMax!! + 50
         return energy
     }
 
-    private fun checkingTheRequiredComponents() {
+    fun checkingTheRequiredComponents(): ConfigurationError {
         if (cpu == null) {
-            DataResult.Error(
-                exception = Exception(
-                    Resources.getSystem().getString(R.string.error_configuration_cpu_is_empty)
-                )
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_cpu_is_empty))
             )
         }
         if (motherboard == null) {
-            DataResult.Error(
-                exception = Exception(
-                    Resources.getSystem().getString(R.string.error_configuration_cpu_is_empty)
-                )
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_cpu_is_empty))
             )
         }
         if (case == null) {
-            DataResult.Error(
-                exception = Exception(
-                    Resources.getSystem().getString(R.string.error_configuration_case_is_empty)
-                )
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_case_is_empty))
             )
         }
         if (coolerForCpu == null) {
-            DataResult.Error(
-                exception = Exception(
-                    Resources.getSystem()
-                        .getString(R.string.error_configuration_cooler_for_cpu_is_empty)
-                )
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_cooler_for_cpu_is_empty))
             )
         }
         if ((dimmRamList.isEmpty()) && (soDimmRamList.isEmpty())) {
-            DataResult.Error(
-                exception = Exception(
-                    Resources.getSystem().getString(R.string.error_configuration_ram_is_empty)
-                )
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_ram_is_empty))
             )
         }
         if ((ssdStoreList.isEmpty()) && (hardDriveList.isEmpty())) {
-            DataResult.Error(
-                exception = Exception(
-                    Resources.getSystem()
-                        .getString(R.string.error_configuration_data_storage_is_empty)
-                )
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_data_storage_is_empty))
             )
         }
         if (powerSupplyUnit == null) {
-            DataResult.Error(
-                exception = Exception(
-                    Resources.getSystem()
-                        .getString(R.string.error_configuration_power_supply_unit_is_empty)
-                )
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_power_supply_unit_is_empty))
             )
         }
         if (videoCardList.isEmpty()) {
-            if (cpu?.integratedGraphicsCoreCpu == false) {
-                DataResult.Error(
-                    exception = Exception(
-                        Resources.getSystem()
-                            .getString(R.string.error_configuration_cpu_without_integrated_graphics_core)
-                    )
+            if (cpu?._integratedGraphicsCore == false) {
+                return ConfigurationError(
+                    isError = mutableStateOf(true),
+                    errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_cpu_without_integrated_graphics_core))
                 )
             }
         }
-    }
+        return ConfigurationError(
+            isError = mutableStateOf(false),
+            errorMessage = mutableStateOf("success")
+        )
+    } */
 }

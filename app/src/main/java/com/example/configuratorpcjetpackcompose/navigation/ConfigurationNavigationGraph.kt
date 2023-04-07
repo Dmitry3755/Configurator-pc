@@ -5,10 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.configuratorpcjetpackcompose.screens.AddUpdateConfigurationScreen
-import com.example.configuratorpcjetpackcompose.screens.ConfiguratorScreen
-import com.example.configuratorpcjetpackcompose.screens.SettingsScreen
-import com.example.configuratorpcjetpackcompose.screens.SettingsThemeScreen
+import com.example.configuratorpcjetpackcompose.screens.*
 
 @Composable
 fun ConfigurationNavigationGraph(navController: NavHostController) {
@@ -20,7 +17,7 @@ fun ConfigurationNavigationGraph(navController: NavHostController) {
             ConfiguratorScreen(navController = navController)
         }
         composable(route = ConfigurationNavigation.CreateConfigurationScreen.route){
-            AddUpdateConfigurationScreen()
+            AccessoryNavigationScreen()
         }
         composable(route = ConfigurationNavigation.SmartAdvisorScreen.route){
 

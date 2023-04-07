@@ -18,6 +18,8 @@
     <string name="configurator_text_view_title_configurator">Конфигуратор</string>
     <string name="configurator_text_view_have_not_configurations">У вас пока что нет\nготовых конфигураций (</string>
     <string name="configurator_text_view_create_configuration">Создать конфигурацию</string>
+    <string name="configurator_text_view_new_configuration">Новая конфигурация</string>
+    <string name="configurator_text_view_save_configuration">Сохранить конфигурацию</string>
     <string name="configurator_text_view_smart_advisor">Умный советник</string>
     <string name="navigation_bar_text_view_configuration">Конфигуратор</string>
     <string name="navigation_bar_text_view_favorite">Избранное</string>

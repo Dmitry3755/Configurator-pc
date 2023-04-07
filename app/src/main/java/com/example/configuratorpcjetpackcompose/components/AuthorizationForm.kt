@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.configuratorpcjetpackcompose.R
-import com.example.configuratorpcjetpackcompose.TextInputTypeEnum
+import com.example.configuratorpcjetpackcompose.utils.TextInputTypeEnum
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.utils.ViewError
 

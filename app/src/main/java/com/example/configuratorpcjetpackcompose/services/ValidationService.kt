@@ -4,8 +4,10 @@ import android.app.Application
 import android.content.res.Resources
 import android.util.Patterns
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.util.PatternsCompat
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.model.ConfiguratorRepository
+import com.example.configuratorpcjetpackcompose.utils.AppResources
 import com.example.configuratorpcjetpackcompose.utils.DataResult
 import com.example.configuratorpcjetpackcompose.utils.ViewError
 
@@ -14,15 +16,14 @@ object ValidationService {
     fun isUserCredentialsValid(
         email: String,
         password: String,
-        repeatedPassword: String,
-        application: Application
+        repeatedPassword: String
     ): ViewError {
 
-        if ((email.isEmpty()) || (!Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
+        if ((email.isEmpty()) || (!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches())) {
             return ViewError(
                 isError = mutableStateOf(true),
                 errorMessage = mutableStateOf(
-                    application.getString(R.string.error_authentication_email_is_invalid)
+                    AppResources.getString(R.string.error_authentication_email_is_invalid)
                 )
             )
         }
@@ -31,7 +32,7 @@ object ValidationService {
             return ViewError(
                 isError = mutableStateOf(true),
                 errorMessage = mutableStateOf(
-                    application.getString(R.string.error_authentication_password_is_too_short)
+                    AppResources.getString(R.string.error_authentication_password_is_too_short)
                 )
             )
         }
@@ -40,7 +41,7 @@ object ValidationService {
             return ViewError(
                 isError = mutableStateOf(true),
                 errorMessage = mutableStateOf(
-                    application.getString(R.string.error_authentication_password_does_not_match)
+                    AppResources.getString(R.string.error_authentication_password_does_not_match)
                 )
             )
         }
@@ -50,36 +51,35 @@ object ValidationService {
     fun isUserChangePassword(
         oldPassword: String,
         newPassword: String,
-        repeatedPassword: String,
-        application: Application
-    ): ViewError {
+        repeatedPassword: String
+    ): ViewError { // 1
 
-        if (oldPassword.isEmpty()) {
-            return ViewError(
+        if (oldPassword.isEmpty()) { // 2
+            return ViewError( //6
                 isError = mutableStateOf(true),
                 errorMessage = mutableStateOf(
-                    application.getString(R.string.error_authentication_password_is_too_short)
+                    AppResources.getString(R.string.error_authentication_password_is_too_short)
                 )
             )
         }
 
-        if (newPassword.isEmpty() || (newPassword.length < 6)) {
-            return ViewError(
+        if (newPassword.isEmpty() || (newPassword.length < 6)) {    //3 //4
+            return ViewError(   //5
                 isError = mutableStateOf(true),
                 errorMessage = mutableStateOf(
-                    application.getString(R.string.error_authentication_password_is_too_short)
+                    AppResources.getString(R.string.error_authentication_password_is_too_short)
                 )
             )
         }
 
-        if (newPassword != repeatedPassword) {
-            return ViewError(
+        if (newPassword != repeatedPassword) {  // 5
+            return ViewError(   // 6
                 isError = mutableStateOf(true),
                 errorMessage = mutableStateOf(
-                    application.getString(R.string.error_authentication_password_does_not_match)
+                    AppResources.getString(R.string.error_authentication_password_does_not_match)
                 )
             )
         }
-        return ViewError(isError = mutableStateOf(false))
+        return ViewError(isError = mutableStateOf(false))   //6
     }
 }

@@ -1,44 +1,32 @@
 package com.example.configuratorpcjetpackcompose.components
 
 import android.content.res.Configuration
-import android.content.res.Resources.Theme
-import android.graphics.Paint.Style
-import android.graphics.Typeface
 import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.IconToggleButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.*
-import androidx.compose.ui.graphics.PaintingStyle.Companion.Fill
-import androidx.compose.ui.graphics.PaintingStyle.Companion.Stroke
 import androidx.compose.ui.graphics.drawscope.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.LineHeightStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.configuratorpcjetpackcompose.R
-import com.example.configuratorpcjetpackcompose.ThemeTypeEnum
-import com.example.configuratorpcjetpackcompose.navigation.Navigation
+import com.example.configuratorpcjetpackcompose.utils.ThemeTypeEnum
 import com.example.configuratorpcjetpackcompose.ui.theme.*
 import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
-import java.time.format.TextStyle
 
 @Composable
 fun ThemeElement(isTheme: ThemeTypeEnum, selectedTheme: MutableState<ThemeTypeEnum>) {

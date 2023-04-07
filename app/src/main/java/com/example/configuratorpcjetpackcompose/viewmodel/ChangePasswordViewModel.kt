@@ -23,8 +23,7 @@ class ChangePasswordViewModel(application: Application) : AndroidViewModel(appli
         resultViewError.value = ValidationService.isUserChangePassword(
             oldPassword = oldPassword.value,
             newPassword = newPassword.value,
-            repeatedPassword = repeatedPassword.value,
-            application = getApplication<Application>()
+            repeatedPassword = repeatedPassword.value
         )
         if (!resultViewError.value.isError.value
         ) {

@@ -12,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -24,20 +25,28 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.model.Accessory
 import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
+import com.example.configuratorpcjetpackcompose.navigation.AccessoryNavigation
+import com.example.configuratorpcjetpackcompose.navigation.ConfigurationNavigation
+import com.example.configuratorpcjetpackcompose.navigation.Navigation
+import com.example.configuratorpcjetpackcompose.screens.AccessoryNavigationScreen
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
+import com.example.configuratorpcjetpackcompose.viewmodel.AccessoryViewModel
 import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun LargeConfigurationElementLine(
     lineType: ConfigurationElementEnum,
     selectedAccessoriesList: List<Accessory>,
-    viewModel: AppViewModel
+    navController: NavController
 ) {
-
     val lineColor = AppTheme.colors.backgroundButtonColor
     val isCollapsed = remember {
         mutableStateOf(true)
@@ -115,7 +124,7 @@ fun LargeConfigurationElementLine(
                 MainButton(
                     textButton = stringResource(id = R.string.btn_text_add),
                     onClick = {
-
+                        navController.navigate(AccessoryNavigation.AccessoryScreen.route + "/${lineType.name}")
                     },
                     isSmall = true
                 )
@@ -164,13 +173,6 @@ fun LargeConfigurationElementLine(
                                 isDelete = true,
                                 isSmall = true
                             )
-                            /*MainButtonSmall(
-                                textButton = stringResource(id = R.string.btn_text_delete),
-                                onClick = {
-
-                                },
-                                isDelete = true
-                            )*/
                         }
                     }
                     Spacer(modifier = Modifier.height(20.dp))
@@ -193,10 +195,11 @@ fun LargeConfigurationElementLine(
 @Composable
 private fun DefaultPreviewLight() {
     AppTheme() {
+        val accessoryNavController = rememberNavController()
         LargeConfigurationElementLine(
             lineType = ConfigurationElementEnum.Processor,
             emptyList(),
-            viewModel = viewModel()
+            accessoryNavController
         )
     }
 }
@@ -205,6 +208,7 @@ private fun DefaultPreviewLight() {
 @Composable
 private fun DefaultPreviewDark() {
     AppTheme() {
+        val accessoryNavController = rememberNavController()
         LargeConfigurationElementLine(
             lineType = ConfigurationElementEnum.Motherboard,
             listOf(
@@ -215,7 +219,7 @@ private fun DefaultPreviewDark() {
                     categoryAccessoryEnum = CategoryAccessoryEnum.MOTHERBOARD
                 )
             ),
-            viewModel = viewModel()
+            accessoryNavController
         )
     }
 }

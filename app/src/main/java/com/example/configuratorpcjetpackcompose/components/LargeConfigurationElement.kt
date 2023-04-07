@@ -1,26 +1,40 @@
 package com.example.configuratorpcjetpackcompose.components
 
 import android.content.res.Configuration
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.configuratorpcjetpackcompose.navigation.Navigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
+import com.example.configuratorpcjetpackcompose.viewmodel.AccessoryViewModel
 import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
 
 @Composable
-fun LargeConfigurationElement(viewModel: AppViewModel) {
+fun LargeConfigurationElement(
+    viewModel: AccessoryViewModel,
+    navController: NavController
+) {
 
     Column(
-        modifier = Modifier.border(
-            width = 2.dp,
-            color = AppTheme.colors.backgroundButtonColor
-        )
+        modifier = Modifier
+            .border(
+                width = 2.dp,
+                color = AppTheme.colors.backgroundButtonColor
+            )
+            .verticalScroll(
+                rememberScrollState()
+            )
     ) {
         for ((index, elementType) in ConfigurationElementEnum.values()
             .withIndex()) {
@@ -28,7 +42,7 @@ fun LargeConfigurationElement(viewModel: AppViewModel) {
                 LargeConfigurationElementLine(
                     lineType = elementType,
                     selectedAccessoriesList = viewModel.configurationPc[index],
-                    viewModel = viewModel
+                    navController = navController
                 )
             }
         }
@@ -39,7 +53,8 @@ fun LargeConfigurationElement(viewModel: AppViewModel) {
 @Composable
 private fun DefaultPreviewLight() {
     AppTheme() {
-        LargeConfigurationElement(viewModel = viewModel())
+        val accessoryNavController = rememberNavController()
+        LargeConfigurationElement(viewModel = viewModel(), accessoryNavController)
     }
 }
 
@@ -47,6 +62,7 @@ private fun DefaultPreviewLight() {
 @Composable
 private fun DefaultPreviewDark() {
     AppTheme() {
-        LargeConfigurationElement(viewModel = viewModel())
+        val accessoryNavController = rememberNavController()
+        LargeConfigurationElement(viewModel = viewModel(), accessoryNavController)
     }
 }

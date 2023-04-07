@@ -24,7 +24,7 @@ class AuthenticationViewModel(application: Application) : AndroidViewModel(appli
             email = email.value,
             password = password.value,
             repeatedPassword = repeatedPassword.value,
-            application = getApplication<Application>()
+           // application = getApplication<Application>()
         )
         if (!resultViewError.value.isError.value) {
             resultViewError.value = configuratorRepository.createUser(email.value, password.value)
@@ -39,7 +39,7 @@ class AuthenticationViewModel(application: Application) : AndroidViewModel(appli
             email = email.value,
             password = password.value,
             repeatedPassword = password.value,
-            application = getApplication<Application>()
+           // application = getApplication<Application>()
         )
         if (!resultViewError.value.isError.value
         ) {

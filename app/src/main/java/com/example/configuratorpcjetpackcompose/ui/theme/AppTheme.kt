@@ -2,13 +2,6 @@ package com.example.configuratorpcjetpackcompose.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.*
-import androidx.compose.ui.platform.LocalFontFamilyResolver
-import androidx.compose.ui.text.font.FontFamily
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.configuratorpcjetpackcompose.SettingsThemeTypeEnum
-import com.example.configuratorpcjetpackcompose.ThemeTypeEnum
-import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
-import com.example.configuratorpcjetpackcompose.viewmodel.AuthenticationViewModel
 
 object AppTheme {
 
