@@ -6,8 +6,8 @@ import com.example.configuratorpcjetpackcompose.utils.ConfigurationError
 data class Configuration(
     var cpu: Cpu? = null,
     var motherboard: Motherboard? = null,
-    var dimmRamList: List<DimmRam> = emptyList(),
-    var soDimmRamList: List<SoDimmRam> = emptyList(),
+    var dimmList: List<Dimm> = emptyList(),
+    var soDimmList: List<SoDimm> = emptyList(),
     var powerSupplyUnit: PowerSupplyUnit? = null,
     var soundCard: SoundCard? = null,
     var videoCardList: List<VideoCard> = emptyList(),
