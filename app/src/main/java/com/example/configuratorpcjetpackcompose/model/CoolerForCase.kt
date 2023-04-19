@@ -1,5 +1,6 @@
 package com.example.configuratorpcjetpackcompose.model
 
+import android.net.Uri
 import com.google.firebase.firestore.PropertyName
 
 data class CoolerForCase(
@@ -28,13 +29,16 @@ data class CoolerForCase(
     @PropertyName("hub_controller_included")
     val _hubControllerIncluded: Boolean = false,
     @PropertyName("type_backlight_power_connector")
-    val _typeOfBacklightPowerConnector: String =""
+    val _typeOfBacklightPowerConnector: String ="",
+    @JvmField @PropertyName("uri")
+    val _uri: String = ""
 ) : Cooler(
     nameCooler = _name,
     priceCooler = _price,
     descriptionCooler = _description,
     manufacturerCooler = _manufacturer,
-    typeOfIlluminationCooler = _typeOfBearing
+    typeOfIlluminationCooler = _typeOfBearing,
+    uriCooler = _uri
 ) {
     var name: String
         get() = _name

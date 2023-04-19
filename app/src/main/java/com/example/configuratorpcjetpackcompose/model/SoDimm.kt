@@ -1,5 +1,6 @@
 package com.example.configuratorpcjetpackcompose.model
 
+import android.net.Uri
 import com.google.firebase.firestore.PropertyName
 
 data class SoDimm(
@@ -22,7 +23,9 @@ data class SoDimm(
     @PropertyName("cas_latency")
     val _casLatency: Double =0.0,
     @PropertyName("radiator")
-    val _radiator: Boolean = false
+    val _radiator: Boolean = false,
+    @PropertyName("uri")
+    val _uri: String = ""
 ) : Ram(
     nameRam = _name,
     priceRam = _price,
@@ -31,7 +34,8 @@ data class SoDimm(
     memoryTypeRam = _memoryType,
     memoryModuleCapacityRam = _memoryModuleCapacity,
     frequencyRam = _frequency,
-    casLatencyRam = _casLatency
+    casLatencyRam = _casLatency,
+    uriRam = _uri
 )
 {
     var name: String

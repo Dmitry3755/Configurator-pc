@@ -1,5 +1,6 @@
 package com.example.configuratorpcjetpackcompose.model
 
+import android.net.Uri
 import com.google.firebase.firestore.PropertyName
 import com.google.j2objc.annotations.Property
 
@@ -33,12 +34,15 @@ data class Cpu(
     @JvmField @PropertyName("pin_connector")
     val _pinConnector: String = "",
     @JvmField @PropertyName("maximum_supported_memory_capacity")
-    val _maximumSupportedMemoryCapacity: Int = 0
+    val _maximumSupportedMemoryCapacity: Int = 0,
+    @PropertyName("uri")
+    var _uri: String = ""
 ) : Accessory(
     nameAccessory = _name,
     priceAccessory = _price,
     descriptionAccessory = _description,
-    categoryAccessoryEnum = CategoryAccessoryEnum.PROCESSOR
+    categoryAccessoryEnum = CategoryAccessoryEnum.PROCESSOR,
+    uriAccessory = _uri
 ) {
     var name: String
         get() = _name
@@ -51,5 +55,11 @@ data class Cpu(
         set(value) {
             _price = value
             priceAccessory = value
+        }
+    var uri: String
+        get() = _uri
+        set(value) {
+            _uri = value
+            uriAccessory = value
         }
 }

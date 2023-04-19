@@ -1,5 +1,6 @@
 package com.example.configuratorpcjetpackcompose.model
 
+import android.net.Uri
 import com.google.firebase.firestore.PropertyName
 
 data class SoundCard(
@@ -32,12 +33,15 @@ data class SoundCard(
     @PropertyName("maximum_dac_frequency")
     val _maximumDacFrequency: Double =0.0,
     @PropertyName("instrumental_input")
-    val _instrumentalInput: Boolean = false
+    val _instrumentalInput: Boolean = false,
+    @PropertyName("uri")
+    val _uri: String = ""
 ) : Accessory(
     nameAccessory = _name,
     priceAccessory = _price,
     descriptionAccessory = _description,
-    categoryAccessoryEnum = CategoryAccessoryEnum.SOUND_CARD
+    categoryAccessoryEnum = CategoryAccessoryEnum.SOUND_CARD,
+    uriAccessory = _uri
 )
 {
     var name: String

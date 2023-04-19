@@ -1,6 +1,7 @@
 package com.example.configuratorpcjetpackcompose.components
 
 import android.content.res.Configuration
+import android.net.Uri
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -89,11 +90,13 @@ fun LargeConfigurationElementLine(
         ) {
             Text(
                 text = lineType.contentDescription,
-                modifier = Modifier.fillMaxWidth(0.25f),
-                textAlign = TextAlign.Center
+                modifier = Modifier.fillMaxWidth(0.3f),
+                textAlign = TextAlign.Center,
+                style = AppTheme.typography.text
             )
             Icon(
                 modifier = Modifier
+                    .padding(vertical = AppTheme.dimensions.configurationElementsPadding)
                     .border(
                         border = BorderStroke(2.dp, AppTheme.colors.backgroundButtonColor),
                         shape = RoundedCornerShape(10.dp)
@@ -216,7 +219,8 @@ private fun DefaultPreviewDark() {
                     nameAccessory = "qwe",
                     priceAccessory = 123.0,
                     descriptionAccessory = "qwe",
-                    categoryAccessoryEnum = CategoryAccessoryEnum.MOTHERBOARD
+                    categoryAccessoryEnum = CategoryAccessoryEnum.MOTHERBOARD,
+                    uriAccessory = Uri.EMPTY
                 )
             ),
             accessoryNavController

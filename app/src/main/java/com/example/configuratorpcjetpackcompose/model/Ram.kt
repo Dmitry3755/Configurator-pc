@@ -1,5 +1,7 @@
 package com.example.configuratorpcjetpackcompose.model
 
+import android.net.Uri
+
 open class Ram (
      nameRam: String,
      priceRam: Double,
@@ -9,9 +11,11 @@ open class Ram (
      memoryModuleCapacityRam: Int,
      frequencyRam: Int,
      casLatencyRam: Double,
+     uriRam: String
         ) : Accessory(
     nameAccessory = nameRam,
     priceAccessory = priceRam,
     descriptionAccessory = descriptionRam,
-    categoryAccessoryEnum = CategoryAccessoryEnum.RAM
+    categoryAccessoryEnum = CategoryAccessoryEnum.RAM,
+    uriAccessory = uriRam
 )

@@ -1,5 +1,6 @@
 package com.example.configuratorpcjetpackcompose.model
 
+import android.net.Uri
 import com.google.firebase.firestore.PropertyName
 
 data class CoolerForCpu(
@@ -30,13 +31,16 @@ data class CoolerForCpu(
     @PropertyName("height")
     val _height: Double = 0.0,
     @PropertyName("maximum_noise_level")
-    val _maximumNoiseLevel: Double = 0.0
+    val _maximumNoiseLevel: Double = 0.0,
+    @JvmField @PropertyName("uri")
+    val _uri: String = ""
 ) : Cooler(
     nameCooler = _name,
     priceCooler = _price,
     descriptionCooler = _description,
     manufacturerCooler = _manufacturer,
-    typeOfIlluminationCooler = _typeOfIllumination
+    typeOfIlluminationCooler = _typeOfIllumination,
+    uriCooler = _uri
 ) {
     var name: String
         get() = _name

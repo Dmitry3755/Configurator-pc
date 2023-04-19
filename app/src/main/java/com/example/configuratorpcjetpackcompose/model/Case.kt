@@ -1,5 +1,6 @@
 package com.example.configuratorpcjetpackcompose.model
 
+import android.net.Uri
 import com.google.firebase.firestore.PropertyName
 
 data class Case(
@@ -34,12 +35,15 @@ data class Case(
     @PropertyName("length_max_video_card")
     val _lengthMaxOfVideoCard : Int=0,
     @PropertyName("max_length_power_supply")
-    val _maxLengthOfThePowerSupply : Int =0
+    val _maxLengthOfThePowerSupply : Int =0,
+    @JvmField @PropertyName("uri")
+    val _uri: String = ""
 ) : Accessory(
     nameAccessory = _name,
     priceAccessory = _price,
     descriptionAccessory = _description,
-    categoryAccessoryEnum = CategoryAccessoryEnum.CASE
+    categoryAccessoryEnum = CategoryAccessoryEnum.CASE,
+    uriAccessory = _uri
 ) {
     var name: String
         get() = _name

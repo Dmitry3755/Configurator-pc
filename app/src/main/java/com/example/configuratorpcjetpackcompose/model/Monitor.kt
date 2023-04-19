@@ -1,5 +1,6 @@
 package com.example.configuratorpcjetpackcompose.model
 
+import android.net.Uri
 import com.google.firebase.firestore.PropertyName
 
 data class Monitor(
@@ -30,12 +31,15 @@ data class Monitor(
     @PropertyName("dynamic_screen_refresh_technology")
     val _dynamicScreenRefreshTechnology: String ="",
     @PropertyName("display_port_connector")
-    val _displayPortConnector: Boolean = false
+    val _displayPortConnector: Boolean = false,
+    @JvmField @PropertyName("uri")
+    val _uri: String = ""
 ) : Accessory(
     nameAccessory = _name,
     priceAccessory = _price,
     descriptionAccessory = _description,
-    categoryAccessoryEnum = CategoryAccessoryEnum.DISPLAY
+    categoryAccessoryEnum = CategoryAccessoryEnum.DISPLAY,
+    uriAccessory = _uri
 )
 {
     var name: String

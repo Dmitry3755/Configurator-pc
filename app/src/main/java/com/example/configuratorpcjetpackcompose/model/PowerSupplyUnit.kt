@@ -1,5 +1,6 @@
 package com.example.configuratorpcjetpackcompose.model
 
+import android.net.Uri
 import com.google.firebase.firestore.PropertyName
 
 data class PowerSupplyUnit(
@@ -30,12 +31,15 @@ data class PowerSupplyUnit(
     @PropertyName("type_illumination")
     val _typeOfIllumination: String ="",
     @PropertyName("pin15_sata_connectors_counts")
-    val _pin15SataConnectorsCounts: Int =0
+    val _pin15SataConnectorsCounts: Int =0,
+    @PropertyName("uri")
+    val _uri: String = ""
 ) : Accessory(
     nameAccessory = _name,
     priceAccessory = _price,
     descriptionAccessory = _description,
-    categoryAccessoryEnum = CategoryAccessoryEnum.POWER_SUPPLY_UNIT
+    categoryAccessoryEnum = CategoryAccessoryEnum.POWER_SUPPLY_UNIT,
+    uriAccessory = _uri
 )
 {
     var name: String

@@ -1,5 +1,6 @@
 package com.example.configuratorpcjetpackcompose.model
 
+import android.net.Uri
 import com.google.firebase.firestore.PropertyName
 
 data class HardDrive(
@@ -30,14 +31,17 @@ data class HardDrive(
     @PropertyName("number_positioning_parking_cycles")
     val _numberOfPositioningParkingCycles: Int = 0,
     @PropertyName("thickness")
-    val _thickness: Double = 0.0
+    val _thickness: Double = 0.0,
+    @JvmField @PropertyName("uri")
+    val _uri: String = ""
 ) : DataStorage(
     nameDataStorage = _name,
     priceDataStorage = _price,
     descriptionDataStorage = _description,
     manufacturerDataStorage = _manufacturer,
     thicknessDataStorage = _thickness,
-    memoryCapacity = _memoryCapacity
+    memoryCapacity = _memoryCapacity,
+    uriMemory = _uri
 ) {
     var name: String
         get() = _name

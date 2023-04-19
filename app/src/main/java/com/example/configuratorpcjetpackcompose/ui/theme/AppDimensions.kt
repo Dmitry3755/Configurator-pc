@@ -12,5 +12,6 @@ data class AppDimensions (
 
     val smallButtonCornerRadius: Dp = 20.dp,
     val mainButtonCornerRadius: Dp = 15.dp,
+
 )
 internal val LocalDimensions = staticCompositionLocalOf { AppDimensions() }

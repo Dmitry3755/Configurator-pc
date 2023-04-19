@@ -1,5 +1,6 @@
 package com.example.configuratorpcjetpackcompose.components
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -48,8 +49,10 @@ fun ChangeThemeElements(selectedTheme: MutableState<ThemeTypeEnum>) {
     }
 }
 
+@SuppressLint("SuspiciousIndentation")
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
+
 private fun DefaultPreviewLight() {
     AppTheme() {
         val viewModel: AppViewModel = viewModel()
