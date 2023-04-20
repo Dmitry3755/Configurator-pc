@@ -220,7 +220,7 @@ private fun DefaultPreviewDark() {
                     priceAccessory = 123.0,
                     descriptionAccessory = "qwe",
                     categoryAccessoryEnum = CategoryAccessoryEnum.MOTHERBOARD,
-                    uriAccessory = Uri.EMPTY
+                    uriAccessory = ""
                 )
             ),
             accessoryNavController

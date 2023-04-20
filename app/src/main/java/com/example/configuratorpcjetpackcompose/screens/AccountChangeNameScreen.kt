@@ -2,7 +2,11 @@ package com.example.configuratorpcjetpackcompose.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -25,12 +29,13 @@ import com.example.configuratorpcjetpackcompose.viewmodel.ChangePasswordViewMode
 import kotlinx.coroutines.launch
 
 @Composable
-fun SettingsChangePasswordScreen() {
+fun AccountChangeNameScreen() {
 
     val viewModel: ChangePasswordViewModel = viewModel()
     val coroutineScope = rememberCoroutineScope()
     val changePasswordResultViewError = remember { mutableStateOf(ViewError()) }
     val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize(1f)
@@ -101,6 +106,6 @@ fun SettingsChangePasswordScreen() {
 @Composable
 private fun DefaultPreview() {
     AppTheme {
-        SettingsChangePasswordScreen()
+        AccountChangeNameScreen()
     }
 }

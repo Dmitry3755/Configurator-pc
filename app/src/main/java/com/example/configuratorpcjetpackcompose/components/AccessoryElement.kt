@@ -26,12 +26,14 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.model.Accessory
 import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
@@ -75,8 +77,8 @@ fun AccessoryElement(accessory: Accessory) {
                 modifier = Modifier
                     .padding(AppTheme.dimensions.configurationElementsPadding)
                     .size(imageSize.dp),
-                placeholder = null, //TODO Казлануть по дефолту картинку
-                contentScale = ContentScale.Inside,
+                placeholder = painterResource( id = R.drawable.placeholder_image),
+                contentScale = ContentScale.FillBounds,
                 alignment = Alignment.Center,
                 filterQuality = FilterQuality.None
             )

@@ -11,15 +11,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.components.ChangeThemeElements
 import com.example.configuratorpcjetpackcompose.components.HeadersTextView
-import com.example.configuratorpcjetpackcompose.navigation.SettingsNavigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
-import com.example.configuratorpcjetpackcompose.viewmodel.AuthenticationViewModel
 
 @Composable
 fun SettingsThemeScreen() {

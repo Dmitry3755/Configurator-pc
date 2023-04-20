@@ -8,7 +8,6 @@ import androidx.navigation.compose.composable
 import com.example.configuratorpcjetpackcompose.screens.AccessoryNavigationScreen
 import com.example.configuratorpcjetpackcompose.screens.AccessoryScreen
 import com.example.configuratorpcjetpackcompose.screens.AddUpdateConfigurationScreen
-import com.example.configuratorpcjetpackcompose.screens.SettingsScreen
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
 import com.example.configuratorpcjetpackcompose.viewmodel.AccessoryViewModel
 

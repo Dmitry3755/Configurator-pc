@@ -26,7 +26,7 @@ object AuthenticationService {
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
                             GlobalScope.launch(Dispatchers.IO) {
-                                FirebaseFireStoreService.addUserInDb(user = User(email = email))
+                                FirebaseFireStoreService.addUserInDb(user = User(_email = email))
                             }
                             cancellableContinuation.resume(ViewError(isError = mutableStateOf(false)))
                         } else {

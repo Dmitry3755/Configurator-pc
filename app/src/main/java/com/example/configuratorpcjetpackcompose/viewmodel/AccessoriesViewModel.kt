@@ -20,7 +20,6 @@ class AccessoryViewModel() : ViewModel() {
         return getAccessoriesImage(uriAccessory)
     }
 
-
     init {
         for (elementType in ConfigurationElementEnum.values()) {
             configurationPc.add(mutableListOf())

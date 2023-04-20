@@ -5,6 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -16,17 +20,33 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.components.AccountImageAddButton
 import com.example.configuratorpcjetpackcompose.components.HeadersTextView
 import com.example.configuratorpcjetpackcompose.components.MainButton
+import com.example.configuratorpcjetpackcompose.components.UserNameTextField
+import com.example.configuratorpcjetpackcompose.navigation.AccountSettingsNavigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
+import com.example.configuratorpcjetpackcompose.viewmodel.UserNameViewModel
+import kotlinx.coroutines.launch
 
 
 @Composable
-fun AccountScreen() {
+fun AccountScreen(navController: NavController) {
 
+    val viewModel: UserNameViewModel = viewModel()
     var avatarSize = LocalConfiguration.current.screenWidthDp * 0.5
+    var name = remember { mutableStateOf("")}
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(coroutineScope) {
+        coroutineScope.launch() {
+            name.value = viewModel.getUserName()
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -72,12 +92,20 @@ fun AccountScreen() {
                     )
                     AccountImageAddButton()
                 }
-                HeadersTextView(text = stringResource(id = R.string.account_text_view_name))
+                UserNameTextField(
+                    text = name
+                )
             }
         }
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .weight(0.65f))
+        Spacer(Modifier.padding(top = AppTheme.dimensions.verticalElementsPadding))
+        MainButton(
+            stringResource(id = R.string.settings_button_change_password),
+            onClick = {
+                navController.navigate(AccountSettingsNavigation.SettingsChangePasswordScreen.route)
+            },
+            isDelete = false
+        )
+        Spacer(modifier = Modifier.weight(0.5f))
         Box(
             modifier = Modifier
                 .fillMaxWidth(1f)
@@ -97,6 +125,7 @@ fun AccountScreen() {
 @Composable
 private fun DefaultPreview() {
     AppTheme {
-        AccountScreen()
+        val navController: NavController = rememberNavController()
+        AccountScreen(navController)
     }
 }

@@ -1,10 +1,28 @@
 package com.example.configuratorpcjetpackcompose.model
 
+import com.google.firebase.firestore.PropertyName
+
 data class User(
-    var email: String = "",
-    var name: String = "",
-    var avatarPath : String = ""
-) /*TODO: Добавить поля User (name, avatar path) +
-    TODO: changePassword() - изменение пароля (ввести старый пароль (relogin), потом новый 2 раза)
-    TODO: фотокарточки грузить в storage (указывать на них ссылку в User)
-*/
+    @PropertyName("email")
+    var _email: String = "",
+    @PropertyName("name")
+    var _name: String = "",
+   @PropertyName("avatar_path")
+    var _avatarPath : String = ""
+) {
+    var name: String
+        get() = _name
+        set(value) {
+            _name = value
+        }
+    var email: String
+        get() = _email
+        set(value) {
+            _email = value
+        }
+    var avatarPath: String
+        get() = _avatarPath
+        set(value) {
+            _avatarPath = value
+        }
+}
