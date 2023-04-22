@@ -16,8 +16,9 @@ class AccessoryViewModel() : ViewModel() {
     suspend fun loadAccessory(classAccessoryType: Class<out Accessory>): List<Accessory> {
         return getListAccessoryFromDB(classAccessoryType)
     }
-   suspend  fun getAccessoriesUri(uriAccessory: String): Uri {
-        return getAccessoriesImage(uriAccessory)
+
+    suspend fun getAccessoriesUri(uriAccessory: String): Uri {
+            return getAccessoriesImage(uriAccessory)
     }
 
     init {

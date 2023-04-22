@@ -9,12 +9,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.*
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -45,20 +47,21 @@ fun ThemeElement(isTheme: ThemeTypeEnum, selectedTheme: MutableState<ThemeTypeEn
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() }
             ) {
-                selectedTheme.value = isTheme
-               viewModel.darkTheme.value = when (isTheme) {
-                    ThemeTypeEnum.Light -> false
-                    ThemeTypeEnum.Dark -> true
-                    ThemeTypeEnum.System -> darkTheme
-                }
 
-/*                viewModel.onThemeChanged(
+                selectedTheme.value = isTheme
+                      /*          viewModel.darkTheme.value = when (isTheme) {
+                                    ThemeTypeEnum.Light -> false
+                                    ThemeTypeEnum.Dark -> true
+                                    ThemeTypeEnum.System -> darkTheme
+                                }*/
+
+                viewModel.onThemeChanged(
                     when (isTheme) {
                         ThemeTypeEnum.Light -> false
                         ThemeTypeEnum.Dark -> true
                         ThemeTypeEnum.System -> darkTheme
                     }
-                )*/
+                )
             },
     ) {
         Text(
@@ -79,9 +82,9 @@ fun ThemeElement(isTheme: ThemeTypeEnum, selectedTheme: MutableState<ThemeTypeEn
                 .fillMaxWidth(1f)
                 .background(
                     color = when (isTheme) {
-                        ThemeTypeEnum.Light -> com.example.configuratorpcjetpackcompose.ui.theme.White
-                        ThemeTypeEnum.Dark -> com.example.configuratorpcjetpackcompose.ui.theme.VeryDarkShadeOfPurplishBlue
-                        else -> com.example.configuratorpcjetpackcompose.ui.theme.VeryDarkShadeOfPurplishBlue
+                        ThemeTypeEnum.Light -> White
+                        ThemeTypeEnum.Dark -> VeryDarkShadeOfPurplishBlue
+                        else -> VeryDarkShadeOfPurplishBlue
                     },
                     shape = RoundedCornerShape(corner = CornerSize(30.dp))
                 )
@@ -116,7 +119,7 @@ fun ThemeElement(isTheme: ThemeTypeEnum, selectedTheme: MutableState<ThemeTypeEn
                                         lineTo(0.dp.toPx(), 0.dp.toPx())
                                         close()
                                     },
-                                    color = com.example.configuratorpcjetpackcompose.ui.theme.White
+                                    color = White
                                 )
                                 drawPath(
                                     path = Path().apply {
@@ -125,12 +128,12 @@ fun ThemeElement(isTheme: ThemeTypeEnum, selectedTheme: MutableState<ThemeTypeEn
                                         lineTo(size.width, size.height)
                                         close()
                                     },
-                                    color = com.example.configuratorpcjetpackcompose.ui.theme.VeryDarkShadeOfPurplishBlue
+                                    color = VeryDarkShadeOfPurplishBlue
                                 )
                                 drawLine(
                                     color = when (darkTheme) {
-                                        true -> com.example.configuratorpcjetpackcompose.ui.theme.ShadeOfBlueBlue
-                                        false -> com.example.configuratorpcjetpackcompose.ui.theme.MediumLightShadeOfBlue
+                                        true -> ShadeOfBlueBlue
+                                        false -> MediumLightShadeOfBlue
                                     },
                                     start = Offset(0f, size.height),
                                     end = Offset(size.width, 0f),
@@ -143,7 +146,7 @@ fun ThemeElement(isTheme: ThemeTypeEnum, selectedTheme: MutableState<ThemeTypeEn
                                             isAntiAlias = true
                                             textSize = 18.sp.toPx()
                                             color =
-                                                com.example.configuratorpcjetpackcompose.ui.theme.White.toArgb()
+                                                White.toArgb()
                                             typeface = ResourcesCompat.getFont(
                                                 context,
                                                 R.font.poppins_bold
@@ -165,7 +168,7 @@ fun ThemeElement(isTheme: ThemeTypeEnum, selectedTheme: MutableState<ThemeTypeEn
                                             isAntiAlias = true
                                             textSize = 18.sp.toPx()
                                             color =
-                                                com.example.configuratorpcjetpackcompose.ui.theme.Black.toArgb()
+                                                Black.toArgb()
                                             typeface = ResourcesCompat.getFont(
                                                 context,
                                                 R.font.poppins_bold

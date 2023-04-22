@@ -2,6 +2,8 @@ package com.example.configuratorpcjetpackcompose.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.*
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
 
 object AppTheme {
 
@@ -28,10 +30,10 @@ fun AppTheme(
     typography: AppTypography = AppTheme.typography,
     dimensions: AppDimensions = AppTheme.dimensions,
     fontFamily: AppFontFamily = AppTheme.fontFamily,
-    darkTheme: MutableState<Boolean> = mutableStateOf(isSystemInDarkTheme()),
+    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme.value) {
+    val colors = if (darkTheme) {
          darkColors()
      } else {
          lightColors()
@@ -43,6 +45,7 @@ fun AppTheme(
         LocalDimensions provides dimensions,
         LocalFontFamily provides fontFamily,
         LocalTypography provides typography
+
     ) {
         content()
     }

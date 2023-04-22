@@ -38,6 +38,7 @@ import com.example.configuratorpcjetpackcompose.model.Accessory
 import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.viewmodel.AccessoryViewModel
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
 
 @Composable
@@ -47,6 +48,7 @@ fun AccessoryElement(accessory: Accessory) {
     val viewModel: AccessoryViewModel = viewModel()
     val accessoryUri = remember { mutableStateOf(Uri.EMPTY) }
     var imageSize = LocalConfiguration.current.screenWidthDp * 0.4
+
 
     LaunchedEffect(coroutineScope) {
         coroutineScope.launch {
@@ -68,20 +70,7 @@ fun AccessoryElement(accessory: Accessory) {
         Column(
             verticalArrangement = Arrangement.Center
         ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(accessoryUri.value)
-                    .crossfade(true)
-                    .build(),
-                contentDescription = "",
-                modifier = Modifier
-                    .padding(AppTheme.dimensions.configurationElementsPadding)
-                    .size(imageSize.dp),
-                placeholder = painterResource( id = R.drawable.placeholder_image),
-                contentScale = ContentScale.FillBounds,
-                alignment = Alignment.Center,
-                filterQuality = FilterQuality.None
-            )
+            NetworkImage(accessoryUri)
             Text(
                 text = accessory.nameAccessory,
                 modifier = Modifier

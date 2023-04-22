@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.configuratorpcjetpackcompose.utils.ThemeTypeEnum
+import android.content.res.Configuration
 
 class AppViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -13,7 +14,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     var darkTheme = mutableStateOf(false)
 
     private val _theme = MutableLiveData(false)
-    val theme: LiveData<Boolean> = _theme
+    val theme: MutableLiveData<Boolean> = _theme
 
     fun onThemeChanged(newTheme: Boolean) {
         _theme.value = newTheme
