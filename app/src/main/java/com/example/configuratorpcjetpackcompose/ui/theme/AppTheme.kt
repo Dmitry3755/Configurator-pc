@@ -34,10 +34,10 @@ fun AppTheme(
     content: @Composable () -> Unit
 ) {
     val colors = if (darkTheme) {
-         darkColors()
-     } else {
-         lightColors()
-     }
+        darkColors()
+    } else {
+        lightColors()
+    }
 
     val rememberedColors = remember { colors.copy() }.apply { updateColorsFrom(colors) }
     CompositionLocalProvider(

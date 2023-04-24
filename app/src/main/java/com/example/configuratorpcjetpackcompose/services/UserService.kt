@@ -6,6 +6,6 @@ import com.example.configuratorpcjetpackcompose.model.Accessory
 suspend fun getUserNameDb() : String {
     return FirebaseFireStoreService.getUserNameFromDb()
 }
-fun updateUserName(userName: String) {
+suspend fun updateUserName(userName: String) {
      FirebaseFireStoreService.changeUserNameUpdate(userName = userName)
 }

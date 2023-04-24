@@ -12,29 +12,29 @@ data class Cpu(
     @PropertyName("description")
     var _description: String = "",
     @PropertyName("manufacturer")
-    val _manufacturer: String = "",
+    var _manufacturer: String = "",
     @PropertyName("socket")
-    val _socket: String = "",
+    var _socket: String = "",
     @PropertyName("family")
-    val _family: String = "",
+    var _family: String = "",
     @JvmField @PropertyName("productive_cores_count")
-    val _productiveCoresCount: Int = 0,
+    var _productiveCoresCount: Int = 0,
     @JvmField @PropertyName("integrated_graphics_core")
-    val _integratedGraphicsCore: Boolean = false,
+    var _integratedGraphicsCore: Boolean = false,
     @JvmField @PropertyName("release_year")
-    val _releaseYear: Int = 0,
+    var _releaseYear: Int = 0,
     @JvmField @PropertyName("memory_type")
-    val _memoryType: String = "",
+    var _memoryType: String = "",
     @JvmField @PropertyName("base_frequency")
-    val _baseFrequency: Double = 0.0,
+    var _baseFrequency: Double = 0.0,
     @JvmField @PropertyName("heat_dissipation")
-    val _heatDissipation: Int = 0,
+    var _heatDissipation: Int = 0,
     @JvmField @PropertyName("technical_process")
-    val _technicalProcess: String = "",
+    var _technicalProcess: String = "",
     @JvmField @PropertyName("pin_connector")
-    val _pinConnector: String = "",
+    var _pinConnector: String = "",
     @JvmField @PropertyName("maximum_supported_memory_capacity")
-    val _maximumSupportedMemoryCapacity: Int = 0,
+    var _maximumSupportedMemoryCapacity: Int = 0,
     @PropertyName("uri")
     var _uri: String = ""
 ) : Accessory(
@@ -61,5 +61,65 @@ data class Cpu(
         set(value) {
             _uri = value
             uriAccessory = value
+        }
+    var manufacturer: String
+        get() = _manufacturer
+        set(value) {
+            _manufacturer = value
+        }
+    var socket: String
+        get() = _socket
+        set(value) {
+            _socket = value
+        }
+    var family: String
+        get() = _family
+        set(value) {
+            _family = value
+        }
+    var productiveCoresCount: Int
+        get() = _productiveCoresCount
+        set(value) {
+            _productiveCoresCount = value
+        }
+    var integratedGraphicsCore: Boolean
+        get() = _integratedGraphicsCore
+        set(value) {
+            _integratedGraphicsCore = value
+        }
+    var releaseYear: Int
+        get() = _releaseYear
+        set(value) {
+            _releaseYear = value
+        }
+    var memoryType: String
+        get() = _memoryType
+        set(value) {
+            _memoryType = value
+        }
+    var baseFrequency: Double
+        get() = _baseFrequency
+        set(value) {
+            _baseFrequency = value
+        }
+    var heatDissipation: Int
+        get() = _heatDissipation
+        set(value) {
+            _heatDissipation = value
+        }
+    var technicalProcess: String
+        get() = _technicalProcess
+        set(value) {
+            _technicalProcess = value
+        }
+    var pinConnector: String
+        get() = _pinConnector
+        set(value) {
+            _pinConnector = value
+        }
+    var maximumSupportedMemoryCapacity: Int
+        get() = _maximumSupportedMemoryCapacity
+        set(value) {
+            _maximumSupportedMemoryCapacity = value
         }
 }

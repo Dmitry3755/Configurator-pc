@@ -41,6 +41,9 @@
     <string name="btn_text_add">Добавить</string>
     <string name="btn_text_accept_changes">Принять изменения</string>
     <string name="btn_text_delete">Удалить</string>
+    <string name="btn_text_price_up">↑</string>
+    <string name="btn_text_price_down">↓</string>
+    <string name="btn_text_price">Цена</string>
     <string name="error_authentication_email_is_invalid">Адрес электронной почты введён неверно</string>
     <string name="error_authentication_password_is_too_short">Длина пароля должна быть больше 6 символов</string>
     <string name="error_authentication_password_is_invalid">Пароль введен не верно</string>

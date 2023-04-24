@@ -6,7 +6,7 @@ import com.example.configuratorpcjetpackcompose.services.updateUserName
 
 class UserNameViewModel() : ViewModel() {
 
-    fun userNameChange(userName: String) {
+    suspend fun userNameChange(userName: String) {
         if(userName != "")
         updateUserName(userName)
     }

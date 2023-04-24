@@ -33,10 +33,18 @@ object FirebaseFireStoreService {
         }
     }
 
-    fun changeUserNameUpdate(userName: String) {
+    suspend  fun changeUserNameUpdate(userName: String) {
+
+        val userID = suspendCancellableCoroutine { cancellableContinuation ->
+            fireStoreDatabaseWeakRef.get()!!.collection("Users")
+                .whereEqualTo("email", firebaseAuthWeakRef.get()!!.currentUser!!.email!!).get()
+                .addOnSuccessListener {
+                    cancellableContinuation.resume(it.documents[0].id)
+                }
+        }
 
         if (fireStoreDatabaseWeakRef.get() != null) {
-            fireStoreDatabaseWeakRef.get()!!.collection("Users").document("j3ja8FbZZAETv9Ntb0w4")
+            fireStoreDatabaseWeakRef.get()!!.collection("Users").document(userID)
                 .update("name", userName)
         }
     }

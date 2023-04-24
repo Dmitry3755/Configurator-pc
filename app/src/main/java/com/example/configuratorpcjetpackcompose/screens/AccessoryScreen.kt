@@ -1,8 +1,10 @@
 package com.example.configuratorpcjetpackcompose.screens
 
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
@@ -17,6 +19,7 @@ import com.example.configuratorpcjetpackcompose.model.Accessory
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
 import com.example.configuratorpcjetpackcompose.viewmodel.AccessoryViewModel
+import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -61,7 +64,7 @@ fun AccessoryScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth(1f)
-                .weight(0.05f)
+                .weight(0.1f)
                 .padding(
                     start =
                     AppTheme.dimensions.textViewPadding,
@@ -74,7 +77,7 @@ fun AccessoryScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth(1f)
-                .weight(0.80f)
+                .weight(0.75f)
                 .padding(
                     start =
                     AppTheme.dimensions.textViewPadding,

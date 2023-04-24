@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.configuratorpcjetpackcompose.R
+import com.example.configuratorpcjetpackcompose.navigation.NavGraph
 import com.example.configuratorpcjetpackcompose.utils.ThemeTypeEnum
 import com.example.configuratorpcjetpackcompose.ui.theme.*
 import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
@@ -49,7 +50,7 @@ fun ThemeElement(isTheme: ThemeTypeEnum, selectedTheme: MutableState<ThemeTypeEn
             ) {
 
                 selectedTheme.value = isTheme
-                      /*          viewModel.darkTheme.value = when (isTheme) {
+                /*                                viewModel.darkTheme.value = when (isTheme) {
                                     ThemeTypeEnum.Light -> false
                                     ThemeTypeEnum.Dark -> true
                                     ThemeTypeEnum.System -> darkTheme
