@@ -1,4 +1,4 @@
-package com.example.configuratorpcjetpackcompose.model
+package com.example.configuratorpcjetpackcompose.model.dataclass
 
 import androidx.compose.runtime.mutableStateOf
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationError

@@ -1,16 +1,10 @@
-package com.example.configuratorpcjetpackcompose.model
+package com.example.configuratorpcjetpackcompose.model.dataclass
 
-import android.net.Uri
+import com.example.configuratorpcjetpackcompose.model.Accessory
+import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
 import com.google.firebase.firestore.PropertyName
-import com.google.j2objc.annotations.Property
 
 data class Cpu(
-    @PropertyName("name")
-    var _name: String = "",
-    @PropertyName("price")
-    var _price: Double = 0.0,
-    @PropertyName("description")
-    var _description: String = "",
     @PropertyName("manufacturer")
     var _manufacturer: String = "",
     @PropertyName("socket")
@@ -35,33 +29,9 @@ data class Cpu(
     var _pinConnector: String = "",
     @JvmField @PropertyName("maximum_supported_memory_capacity")
     var _maximumSupportedMemoryCapacity: Int = 0,
-    @PropertyName("uri")
-    var _uri: String = ""
 ) : Accessory(
-    nameAccessory = _name,
-    priceAccessory = _price,
-    descriptionAccessory = _description,
-    categoryAccessoryEnum = CategoryAccessoryEnum.PROCESSOR,
-    uriAccessory = _uri
+    _categoryAccessoryEnum = CategoryAccessoryEnum.PROCESSOR
 ) {
-    var name: String
-        get() = _name
-        set(value) {
-            _name = value
-            nameAccessory = value
-        }
-    var price: Double
-        get() = _price
-        set(value) {
-            _price = value
-            priceAccessory = value
-        }
-    var uri: String
-        get() = _uri
-        set(value) {
-            _uri = value
-            uriAccessory = value
-        }
     var manufacturer: String
         get() = _manufacturer
         set(value) {

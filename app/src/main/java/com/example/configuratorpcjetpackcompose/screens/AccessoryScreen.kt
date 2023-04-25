@@ -1,25 +1,25 @@
 package com.example.configuratorpcjetpackcompose.screens
 
-import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
-
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.components.AccessoryLazyColumn
 import com.example.configuratorpcjetpackcompose.components.FilterForAccessorySearchableDropdownMenu
 import com.example.configuratorpcjetpackcompose.components.HeadersTextView
-import com.example.configuratorpcjetpackcompose.model.Accessory
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
 import com.example.configuratorpcjetpackcompose.viewmodel.AccessoryViewModel
-import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -30,14 +30,12 @@ fun AccessoryScreen(
     val viewModel: AccessoryViewModel = viewModel()
     val coroutineScope = rememberCoroutineScope()
     var state by remember { mutableStateOf(false) }
-    var loadAccessory: MutableState<List<Accessory>> = remember {
-        mutableStateOf(mutableStateListOf())
-    }
+    val loadAccessory = viewModel.listAccessory
 
     LaunchedEffect(state) {
         coroutineScope.launch() {
             for (accessoriesTypes in lineType.classAccessoriesTypesList) {
-                loadAccessory.value += viewModel.loadAccessory(accessoriesTypes)
+                loadAccessory.addAll(viewModel.loadAccessory(accessoriesTypes))
             }
         }
     }
@@ -86,11 +84,10 @@ fun AccessoryScreen(
                 ),
             contentAlignment = Alignment.BottomStart
         ) {
-                AccessoryLazyColumn(loadAccessory.value)
+            AccessoryLazyColumn(loadAccessory)
         }
     }
 }
-
 
 @Preview
 @Composable

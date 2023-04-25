@@ -216,6 +216,7 @@ private fun DefaultPreviewDark() {
             lineType = ConfigurationElementEnum.Motherboard,
             listOf(
                 Accessory(
+                    idAccessory = "",
                     nameAccessory = "qwe",
                     priceAccessory = 123.0,
                     descriptionAccessory = "qwe",

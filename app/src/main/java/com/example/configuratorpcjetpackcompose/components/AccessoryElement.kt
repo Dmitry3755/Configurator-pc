@@ -16,6 +16,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -47,13 +48,11 @@ fun AccessoryElement(accessory: Accessory) {
     val coroutineScope = rememberCoroutineScope()
     val viewModel: AccessoryViewModel = viewModel()
     val accessoryUri = remember { mutableStateOf(Uri.EMPTY) }
-    var imageSize = LocalConfiguration.current.screenWidthDp * 0.4
 
-
-    LaunchedEffect(coroutineScope) {
+    SideEffect {
         coroutineScope.launch {
-            if(accessory.uriAccessory != ""){
-                accessoryUri.value = viewModel.getAccessoriesUri(accessory.uriAccessory)
+            if(accessory.uri != "") {
+                accessoryUri.value = viewModel.getAccessoriesUri(accessory.uri)
             }
         }
     }
@@ -72,7 +71,7 @@ fun AccessoryElement(accessory: Accessory) {
         ) {
             NetworkImage(accessoryUri)
             Text(
-                text = accessory.nameAccessory,
+                text = accessory.name,
                 modifier = Modifier
                     .fillMaxWidth(1f)
                     .padding(horizontal = AppTheme.dimensions.configurationElementsPadding),
@@ -81,7 +80,7 @@ fun AccessoryElement(accessory: Accessory) {
                 softWrap = false
             )
             Text(
-                text = accessory.priceAccessory.toString() + " ₽",
+                text = accessory._priceAccessory.toString() + " ₽",
                 modifier = Modifier
                     .fillMaxWidth(1f)
                     .padding(horizontal = AppTheme.dimensions .configurationElementsPadding),
@@ -98,11 +97,11 @@ private fun AccessoryElementPreview() {
     AppTheme() {
         AccessoryElement(
             Accessory(
-                nameAccessory = "i7",
-                priceAccessory = 1923.0,
-                descriptionAccessory = "12dsfert",
-                categoryAccessoryEnum = CategoryAccessoryEnum.PROCESSOR,
-                uriAccessory = ""
+                _nameAccessory = "i7",
+                _priceAccessory = 1923.0,
+                _descriptionAccessory = "12dsfert",
+                _categoryAccessoryEnum = CategoryAccessoryEnum.PROCESSOR,
+                _uriAccessory = ""
             )
         )
     }

@@ -1,4 +1,4 @@
-package com.example.configuratorpcjetpackcompose.model
+package com.example.configuratorpcjetpackcompose.model.dataclass
 
 import com.google.firebase.firestore.PropertyName
 

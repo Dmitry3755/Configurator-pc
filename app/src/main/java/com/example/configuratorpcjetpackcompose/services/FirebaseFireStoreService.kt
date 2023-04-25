@@ -1,15 +1,11 @@
 package com.example.configuratorpcjetpackcompose.services
 
-import android.content.ContentValues.TAG
 import android.net.Uri
-import android.util.Log
 import com.example.configuratorpcjetpackcompose.model.Accessory
-import com.example.configuratorpcjetpackcompose.model.User
+import com.example.configuratorpcjetpackcompose.model.dataclass.User
 import com.example.configuratorpcjetpackcompose.services.AuthenticationService.getCurrentUser
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
@@ -33,7 +29,7 @@ object FirebaseFireStoreService {
         }
     }
 
-    suspend  fun changeUserNameUpdate(userName: String) {
+    suspend fun changeUserNameUpdate(userName: String) {
 
         val userID = suspendCancellableCoroutine { cancellableContinuation ->
             fireStoreDatabaseWeakRef.get()!!.collection("Users")
@@ -60,13 +56,17 @@ object FirebaseFireStoreService {
     }
 
     suspend fun getAccessoriesListFromDb(classAccessoryType: Class<out Accessory>): List<Accessory> {
-        val collectionPath: String = classAccessoryType.simpleName
-
-        var listAccessories: List<Accessory> =
-            fireStoreDatabaseWeakRef.get()!!.collection(collectionPath).get().await().map {
-                it.toObject(classAccessoryType)
+        return fireStoreDatabaseWeakRef.get()!!.collection(classAccessoryType.simpleName).get()
+            .await()
+            .map { snapshot ->
+                snapshot.toObject(classAccessoryType).also { accessory ->
+                    accessory._idAccessory = snapshot.id
+                    accessory._nameAccessory = accessory.name
+                    accessory._priceAccessory = accessory.price
+                    accessory._descriptionAccessory = accessory.description
+                    accessory._uriAccessory = accessory.uri
+                }
             }
-        return listAccessories
     }
 
     suspend fun getAccessoriesImageFromStorage(uriAccessory: String): Uri {

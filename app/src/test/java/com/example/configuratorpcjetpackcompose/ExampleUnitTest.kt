@@ -1,7 +1,7 @@
 package com.example.configuratorpcjetpackcompose
 
-import com.example.configuratorpcjetpackcompose.model.Configuration
-import com.example.configuratorpcjetpackcompose.model.User
+import com.example.configuratorpcjetpackcompose.model.dataclass.Configuration
+import com.example.configuratorpcjetpackcompose.model.dataclass.User
 import com.example.configuratorpcjetpackcompose.services.ValidationService
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationError
 import org.junit.After

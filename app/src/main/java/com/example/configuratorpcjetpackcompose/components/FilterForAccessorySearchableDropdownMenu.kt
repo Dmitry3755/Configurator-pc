@@ -25,7 +25,6 @@ import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
 import com.example.configuratorpcjetpackcompose.utils.TextInputTypeEnum
 import com.example.configuratorpcjetpackcompose.utils.ViewError
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FilterForAccessorySearchableDropdownMenu() {
 
@@ -44,9 +43,9 @@ fun FilterForAccessorySearchableDropdownMenu() {
                 onDismissRequest = { expanded = false },
                 offset = DpOffset.Zero
             ) {
-
+                
             }
-
+            FilterPriceButton()
         }
     }
 }

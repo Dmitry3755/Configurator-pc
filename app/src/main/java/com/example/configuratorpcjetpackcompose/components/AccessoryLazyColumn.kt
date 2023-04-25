@@ -40,6 +40,7 @@ private fun AccessoryLazyColumnPreview() {
         AccessoryLazyColumn(
             listOf(
                 Accessory(
+                    idAccessory = "",
                     nameAccessory = "i7",
                     priceAccessory = 1923.0,
                     descriptionAccessory = "12dsfert",

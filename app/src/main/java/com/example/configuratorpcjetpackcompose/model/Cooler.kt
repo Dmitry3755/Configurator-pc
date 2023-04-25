@@ -1,19 +1,25 @@
 package com.example.configuratorpcjetpackcompose.model
 
 import android.net.Uri
+import com.google.firebase.firestore.PropertyName
 
 open class Cooler(
-    nameCooler: String,
-    priceCooler: Double,
-    descriptionCooler: String,
-    manufacturerCooler: String,
-    typeOfIlluminationCooler: String,
-    uriCooler: String
+    @PropertyName("manufacturer")
+    var _manufacturerCooler: String = "",
+    @PropertyName("type_illumination")
+    var _typeOfIlluminationCooler: String = ""
 
 ) : Accessory(
-    nameAccessory = nameCooler,
-    priceAccessory = priceCooler,
-    descriptionAccessory = descriptionCooler,
-    categoryAccessoryEnum = CategoryAccessoryEnum.COOLER,
-    uriAccessory = uriCooler
-)
+    _categoryAccessoryEnum = CategoryAccessoryEnum.COOLER,
+) {
+    var manufacturer: String
+        get() = _manufacturerCooler
+        set(value) {
+            _manufacturerCooler = value
+        }
+    var typeIllumination: String
+        get() = _typeOfIlluminationCooler
+        set(value) {
+            _typeOfIlluminationCooler = value
+        }
+}
