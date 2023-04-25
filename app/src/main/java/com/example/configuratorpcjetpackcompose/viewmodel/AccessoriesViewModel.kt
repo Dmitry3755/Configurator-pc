@@ -25,9 +25,9 @@ class AccessoryViewModel() : ViewModel() {
     fun filterPriceAccessories(list: List<Accessory>, filterPriceUpDown: Boolean) {
         listAccessory.clear()
         if (filterPriceUpDown)
-            listAccessory.addAll(list.sortedByDescending { it.priceAccessory })
+            listAccessory.addAll(list.sortedByDescending { it.price })
         else
-            listAccessory.addAll(list.sortedBy { it.priceAccessory })
+            listAccessory.addAll(list.sortedBy { it.price })
     }
 
     init {
