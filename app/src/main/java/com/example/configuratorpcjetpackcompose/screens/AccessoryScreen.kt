@@ -1,68 +1,61 @@
 package com.example.configuratorpcjetpackcompose.screens
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.getValue
+import android.content.res.Configuration.UI_MODE_NIGHT_NO
+import android.net.Uri
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.configuratorpcjetpackcompose.R
-import com.example.configuratorpcjetpackcompose.components.AccessoryLazyColumn
-import com.example.configuratorpcjetpackcompose.components.FilterForAccessorySearchableDropdownMenu
+import androidx.navigation.compose.rememberNavController
+import com.example.configuratorpcjetpackcompose.components.AccessoryElement
 import com.example.configuratorpcjetpackcompose.components.HeadersTextView
+import com.example.configuratorpcjetpackcompose.components.NetworkImage
+import com.example.configuratorpcjetpackcompose.model.Accessory
+import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
 import com.example.configuratorpcjetpackcompose.viewmodel.AccessoryViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun AccessoryScreen(
-    lineType: ConfigurationElementEnum
-) {
+fun AccessoryScreen(idAccessory: String, lineType: ConfigurationElementEnum, simpleName: String) {
 
-    val viewModel: AccessoryViewModel = viewModel()
     val coroutineScope = rememberCoroutineScope()
-    var state by remember { mutableStateOf(false) }
-    val loadAccessory = viewModel.listAccessory
+    val accessoryViewModel: AccessoryViewModel = viewModel()
+    var accessory: MutableState<Accessory> = remember {
+        mutableStateOf(Accessory(_categoryAccessoryEnum = CategoryAccessoryEnum.PROCESSOR))
+    }
+    val accessoryNavController = rememberNavController()
 
-    LaunchedEffect(state) {
-        coroutineScope.launch() {
+    SideEffect {
+        coroutineScope.launch {
             for (accessoriesTypes in lineType.classAccessoriesTypesList) {
-                loadAccessory.addAll(viewModel.loadAccessory(accessoriesTypes))
+                if (simpleName == accessoriesTypes.simpleName) {
+                    accessory.value = accessoryViewModel.getAccessory(
+                        idAccessory = idAccessory,
+                        classAccessoryType = accessoriesTypes
+                    )
+                }
             }
         }
     }
-
-    Column(
-        modifier = Modifier
-            .background(color = AppTheme.colors.backgroundMainScreenColor)
-            .fillMaxSize(1f)
-    ) {
+    Column() {
         Box(
             modifier = Modifier
                 .fillMaxWidth(1f)
-                .weight(0.15f)
-                .padding(
-                    start =
-                    AppTheme.dimensions.textViewPadding,
-                    bottom = 10.dp,
-                    end = AppTheme.dimensions.textViewPadding
-                ),
-            contentAlignment = Alignment.BottomStart
-        ) {
-            HeadersTextView(text = lineType.contentDescription)
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(1f)
-                .weight(0.1f)
+                .fillMaxHeight(0.45f)
                 .padding(
                     start =
                     AppTheme.dimensions.textViewPadding,
@@ -70,32 +63,24 @@ fun AccessoryScreen(
                     end = AppTheme.dimensions.textViewPadding
                 ),
         ) {
-            FilterForAccessorySearchableDropdownMenu()
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(1f)
-                .weight(0.75f)
-                .padding(
-                    start =
-                    AppTheme.dimensions.textViewPadding,
-                    bottom = 10.dp,
-                    end = AppTheme.dimensions.textViewPadding
-                ),
-            contentAlignment = Alignment.BottomStart
-        ) {
-            AccessoryLazyColumn(loadAccessory)
+            AccessoryElement(
+                accessory = accessory.value,
+                navController = accessoryNavController,
+                lineType = lineType,
+                isFullInformationAboutAccessory = true
+            )
         }
     }
 }
 
-@Preview
+@Preview(uiMode = UI_MODE_NIGHT_NO)
 @Composable
-private fun AccessoryScreenDefaultPreview() {
+fun AccessoryScreenPreviewIsLight() {
     AppTheme() {
-        // val viewModel: AccessoryViewModel = viewModel()
         AccessoryScreen(
-            ConfigurationElementEnum.Case
+            idAccessory = "B2kRyh5s5CLFVv53O717",
+            lineType = ConfigurationElementEnum.Processor,
+            simpleName = ""
         )
     }
 }

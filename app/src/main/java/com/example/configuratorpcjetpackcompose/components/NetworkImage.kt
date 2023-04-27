@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role.Companion.Image
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
@@ -33,17 +34,15 @@ import com.squareup.picasso.Picasso
 
 
 @Composable
-fun NetworkImage(url: MutableState<Uri>) {
-
-    var imageSize = LocalConfiguration.current.screenWidthDp * 0.4
+fun NetworkImage(url: MutableState<Uri>, imageSize: Double) {
 
     SubcomposeAsyncImage(
-        model = url.value,
-        contentDescription = null,
         modifier = Modifier
             .padding(AppTheme.dimensions.configurationElementsPadding)
             .size(imageSize.dp),
         alignment = Alignment.Center,
+        model = url.value,
+        contentDescription = null,
     ) {
         val state = painter.state
         if (state is AsyncImagePainter.State.Loading || state is AsyncImagePainter.State.Error) {
@@ -51,5 +50,17 @@ fun NetworkImage(url: MutableState<Uri>) {
         } else {
             SubcomposeAsyncImage(model = url.value, contentDescription = "")
         }
+    }
+}
+
+
+@Preview
+@Composable
+fun NetworkImagePreview() {
+    AppTheme() {
+        val a = remember {
+            mutableStateOf(Uri.EMPTY)
+        }
+        NetworkImage(a, LocalConfiguration.current.screenWidthDp * 0.4)
     }
 }

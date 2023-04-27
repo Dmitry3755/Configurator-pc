@@ -77,4 +77,17 @@ object FirebaseFireStoreService {
                 }
         }
     }
+
+    suspend fun getAccessory(
+        idAccessory: String,
+        classAccessoryType: Class<out Accessory>
+    ): Accessory {
+        return  suspendCancellableCoroutine { cancellableContinuation ->
+            fireStoreDatabaseWeakRef.get()!!.collection(classAccessoryType.simpleName)
+                .document(idAccessory).get().addOnSuccessListener { document ->
+                    cancellableContinuation.resume(document.toObject(classAccessoryType)!!)
+                }
+        }
+    }
 }
+

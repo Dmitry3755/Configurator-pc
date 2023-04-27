@@ -127,7 +127,7 @@ fun LargeConfigurationElementLine(
                 MainButton(
                     textButton = stringResource(id = R.string.btn_text_add),
                     onClick = {
-                        navController.navigate(AccessoryNavigation.AccessoryScreen.route + "/${lineType.name}")
+                        navController.navigate(AccessoryNavigation.AllSelectedComponentsScreen.route + "/${lineType.name}")
                     },
                     isSmall = true
                 )
@@ -164,7 +164,7 @@ fun LargeConfigurationElementLine(
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
-                                    text = item.nameAccessory,
+                                    text = item.name,
                                     textAlign = TextAlign.Center
                                 )
                             }
@@ -216,12 +216,12 @@ private fun DefaultPreviewDark() {
             lineType = ConfigurationElementEnum.Motherboard,
             listOf(
                 Accessory(
-                    idAccessory = "",
-                    nameAccessory = "qwe",
-                    priceAccessory = 123.0,
-                    descriptionAccessory = "qwe",
-                    categoryAccessoryEnum = CategoryAccessoryEnum.MOTHERBOARD,
-                    uriAccessory = ""
+                    _idAccessory = "",
+                    _nameAccessory = "qwe",
+                    _priceAccessory = 123.0,
+                    _descriptionAccessory = "qwe",
+                    _categoryAccessoryEnum = CategoryAccessoryEnum.MOTHERBOARD,
+                    _uriAccessory = ""
                 )
             ),
             accessoryNavController

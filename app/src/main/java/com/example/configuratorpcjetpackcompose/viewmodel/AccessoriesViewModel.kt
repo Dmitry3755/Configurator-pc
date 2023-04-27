@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.example.configuratorpcjetpackcompose.model.Accessory
 import com.example.configuratorpcjetpackcompose.services.getAccessoriesImage
+import com.example.configuratorpcjetpackcompose.services.getAccessoryFromDB
 import com.example.configuratorpcjetpackcompose.services.getListAccessoryFromDB
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
 
@@ -28,6 +29,10 @@ class AccessoryViewModel() : ViewModel() {
             listAccessory.addAll(list.sortedByDescending { it.price })
         else
             listAccessory.addAll(list.sortedBy { it.price })
+    }
+
+    suspend fun getAccessory(idAccessory: String, classAccessoryType: Class<out Accessory>): Accessory {
+        return getAccessoryFromDB(idAccessory = idAccessory, classAccessoryType = classAccessoryType)
     }
 
     init {
