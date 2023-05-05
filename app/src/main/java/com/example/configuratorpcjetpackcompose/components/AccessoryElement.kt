@@ -34,6 +34,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -58,16 +59,15 @@ fun AccessoryElement(
     accessory: Accessory,
     navController: NavController,
     lineType: ConfigurationElementEnum,
-    isFullInformationAboutAccessory: Boolean
+    isFullInformationAboutAccessory: Boolean,
 ) {
 
     val coroutineScope = rememberCoroutineScope()
     val viewModel: AccessoryViewModel = viewModel()
     val accessoryUri = remember { mutableStateOf(Uri.EMPTY) }
-    var imageSize : Double = if (!isFullInformationAboutAccessory) {
+    var imageSize: Double = if (!isFullInformationAboutAccessory) {
         LocalConfiguration.current.screenWidthDp * 0.4
-    }
-    else{
+    } else {
         LocalConfiguration.current.screenHeightDp * 1.0
     }
 
@@ -114,7 +114,9 @@ fun AccessoryElement(
                     softWrap = false
                 )
                 Text(
-                    text = accessory._priceAccessory.toString() + " ₽",
+                    text = accessory._priceAccessory.toString() + stringResource(
+                        id = R.string.ruble_symbol
+                    ),
                     modifier = Modifier
                         .fillMaxWidth(1f)
                         .padding(horizontal = AppTheme.dimensions.configurationElementsPadding),
@@ -161,7 +163,7 @@ private fun AccessoryElementPreviewDark() {
             ),
             navController = accessoryNavController,
             lineType = ConfigurationElementEnum.Processor,
-            isFullInformationAboutAccessory = true
+            isFullInformationAboutAccessory = true,
         )
     }
 }

@@ -10,17 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
-import com.example.configuratorpcjetpackcompose.viewmodel.AccessoryViewModel
 
 @Composable
 fun LargeConfigurationElement(
-    viewModel: AccessoryViewModel,
-    navController: NavController
+    navController: NavController,
+    configuration: com.example.configuratorpcjetpackcompose.model.dataclass.Configuration
 ) {
 
     Column(
@@ -33,13 +31,12 @@ fun LargeConfigurationElement(
                 rememberScrollState()
             )
     ) {
-        for ((index, elementType) in ConfigurationElementEnum.values()
-            .withIndex()) {
+        for (elementType in ConfigurationElementEnum.values()) {
             Row() {
                 LargeConfigurationElementLine(
-                    lineType = elementType,
-                    selectedAccessoriesList = viewModel.configurationPc[index],
-                    navController = navController
+                    configurationElement = elementType,
+                    navController = navController,
+                   isAccessoryAdded = configuration.checkAccessoryInConfiguration(elementType.classAccessoriesTypesList)
                 )
             }
         }
@@ -51,7 +48,10 @@ fun LargeConfigurationElement(
 private fun DefaultPreviewLight() {
     AppTheme() {
         val accessoryNavController = rememberNavController()
-        LargeConfigurationElement(viewModel = viewModel(), accessoryNavController)
+        LargeConfigurationElement(
+            accessoryNavController,
+            com.example.configuratorpcjetpackcompose.model.dataclass.Configuration()
+        )
     }
 }
 
@@ -60,6 +60,9 @@ private fun DefaultPreviewLight() {
 private fun DefaultPreviewDark() {
     AppTheme() {
         val accessoryNavController = rememberNavController()
-        LargeConfigurationElement(viewModel = viewModel(), accessoryNavController)
+        LargeConfigurationElement(
+            accessoryNavController,
+            com.example.configuratorpcjetpackcompose.model.dataclass.Configuration()
+        )
     }
 }

@@ -1,24 +1,61 @@
 package com.example.configuratorpcjetpackcompose.model.dataclass
 
 import androidx.compose.runtime.mutableStateOf
+import com.example.configuratorpcjetpackcompose.model.Accessory
+import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationError
+import com.google.firebase.firestore.PropertyName
 
 data class Configuration(
+    @PropertyName("cpu")
     var cpu: Cpu? = null,
+    @PropertyName("motherboard")
     var motherboard: Motherboard? = null,
-    var dimmList: List<Dimm> = emptyList(),
-    var soDimmList: List<SoDimm> = emptyList(),
+    @PropertyName("dimm_list")
+    var dimmList: ArrayList<Dimm> = arrayListOf(),
+    @PropertyName("sodimm_list")
+    var soDimmList: ArrayList<SoDimm> = arrayListOf(),
+    @PropertyName("power_supply_unit")
     var powerSupplyUnit: PowerSupplyUnit? = null,
+    @PropertyName("sound_card")
     var soundCard: SoundCard? = null,
-    var videoCardList: List<VideoCard> = emptyList(),
-    var coolerForCaseList: List<CoolerForCase> = emptyList(),
+    @PropertyName("video_card_list")
+    var videoCardList: ArrayList<VideoCard> = arrayListOf(),
+    @PropertyName("cooler_for_case_list")
+    var coolerForCaseList: ArrayList<CoolerForCase> = arrayListOf(),
+    @PropertyName("cooler_for_cpu")
     var coolerForCpu: CoolerForCpu? = null,
+    @PropertyName("case")
     var case: Case? = null,
-    var monitorList: List<Monitor> = emptyList(),
-    var hardDriveList: List<HardDrive> = emptyList(),
-    var ssdList: List<Ssd> = emptyList(),
-    var userOwner: User
+    @PropertyName("monitor_list")
+    var monitorList: ArrayList<Monitor> = arrayListOf(),
+    @PropertyName("hard_drive_list")
+    var hardDriveList: ArrayList<HardDrive> = arrayListOf(),
+    @PropertyName("ssd_list")
+    var ssdList: ArrayList<Ssd> = arrayListOf(),
+    @PropertyName("user_owner")
+    var userOwner: User? = null
 ) {
+    fun checkAccessoryInConfiguration(configurationElementList: List<Class<out Accessory>>): Boolean {
+        for (element in configurationElementList) {
+            when (element) {
+                Cpu::class.java -> if (cpu != null) return true
+                Motherboard::class.java -> if (motherboard != null) return true
+                PowerSupplyUnit::class.java -> if (powerSupplyUnit != null) return true
+                SoundCard::class.java -> if (soundCard != null) return true
+                Case::class.java -> if (case != null) return true
+                VideoCard::class.java -> if (videoCardList.isNotEmpty()) return true
+                Ssd::class.java -> if (ssdList.isNotEmpty()) return true
+                HardDrive::class.java -> if (hardDriveList.isNotEmpty()) return true
+                SoDimm::class.java -> if (soDimmList.isNotEmpty()) return true
+                CoolerForCase::class.java -> if (coolerForCaseList.isNotEmpty()) return true
+                CoolerForCpu::class.java -> if (coolerForCpu != null) return true
+                Monitor::class.java -> if (monitorList.isNotEmpty()) return true
+            }
+        }
+        return false
+    }
+
     fun checkingCompatibility(): ConfigurationError {
         /*TODO: 1) Проверка на совместимость сокетов (cpu  и motherboard) +
          TODO:  2) Проверка на совместимость форм-фактора мат.платы  и корпуса +

@@ -17,10 +17,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
-import org.checkerframework.checker.units.qual.m
 
 @Composable
 fun MainButton(
@@ -48,7 +46,9 @@ fun MainButton(
     }
 
     if (!isSmall) {
-        buttonModifier = buttonModifier.fillMaxWidth(1f).testTag("Button")
+        buttonModifier = buttonModifier
+            .fillMaxWidth(1f)
+            .testTag("Button")
         buttonShape = RoundedCornerShape(AppTheme.dimensions.mainButtonCornerRadius)
     } else {
         buttonShape = RoundedCornerShape(AppTheme.dimensions.mainButtonCornerRadius)

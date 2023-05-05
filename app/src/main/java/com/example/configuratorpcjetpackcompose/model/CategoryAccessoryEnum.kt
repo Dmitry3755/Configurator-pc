@@ -10,5 +10,5 @@ enum class CategoryAccessoryEnum(var categoryAccessories: String) {
         SOUND_CARD("Звуковая карта"),
         CASE("Корпус"),
         DISPLAY("Монитор"),
-        COOLER("Охлаждение")
+        COOLER("Охлаждение"),
 }

@@ -1,7 +1,12 @@
 package com.example.configuratorpcjetpackcompose.services
 
 import android.net.Uri
+import android.provider.Contacts.Intents.UI
 import com.example.configuratorpcjetpackcompose.model.Accessory
+import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
+import com.example.configuratorpcjetpackcompose.model.dataclass.Case
+import com.example.configuratorpcjetpackcompose.model.dataclass.Configuration
+import com.example.configuratorpcjetpackcompose.model.dataclass.Cpu
 import com.example.configuratorpcjetpackcompose.model.dataclass.User
 import com.example.configuratorpcjetpackcompose.services.AuthenticationService.getCurrentUser
 import com.google.firebase.auth.FirebaseAuth
@@ -9,6 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
+import org.w3c.dom.Document
 import java.lang.ref.WeakReference
 import kotlin.coroutines.resume
 
@@ -29,18 +35,19 @@ object FirebaseFireStoreService {
         }
     }
 
-    suspend fun changeUserNameUpdate(userName: String) {
-
-        val userID = suspendCancellableCoroutine { cancellableContinuation ->
+    private suspend fun getUserId(): String {
+        return suspendCancellableCoroutine { cancellableContinuation ->
             fireStoreDatabaseWeakRef.get()!!.collection("Users")
                 .whereEqualTo("email", firebaseAuthWeakRef.get()!!.currentUser!!.email!!).get()
                 .addOnSuccessListener {
                     cancellableContinuation.resume(it.documents[0].id)
                 }
         }
+    }
 
+    suspend fun changeUserNameUpdate(userName: String) {
         if (fireStoreDatabaseWeakRef.get() != null) {
-            fireStoreDatabaseWeakRef.get()!!.collection("Users").document(userID)
+            fireStoreDatabaseWeakRef.get()!!.collection("Users").document(getUserId())
                 .update("name", userName)
         }
     }
@@ -82,11 +89,24 @@ object FirebaseFireStoreService {
         idAccessory: String,
         classAccessoryType: Class<out Accessory>
     ): Accessory {
-        return  suspendCancellableCoroutine { cancellableContinuation ->
+        return suspendCancellableCoroutine { cancellableContinuation ->
             fireStoreDatabaseWeakRef.get()!!.collection(classAccessoryType.simpleName)
                 .document(idAccessory).get().addOnSuccessListener { document ->
-                    cancellableContinuation.resume(document.toObject(classAccessoryType)!!)
+                    cancellableContinuation.resume(document.toObject(classAccessoryType)!!.also {accessory ->
+                        accessory._idAccessory = document.id
+                        accessory._nameAccessory = accessory.name
+                        accessory._priceAccessory = accessory.price
+                        accessory._descriptionAccessory = accessory.description
+                        accessory._uriAccessory = accessory.uri
+                    })
                 }
+        }
+    }
+
+    suspend fun saveConfiguration(configuration: Configuration) {
+        if (fireStoreDatabaseWeakRef.get() != null) {
+            fireStoreDatabaseWeakRef.get()!!.collection("Users").document(getUserId())
+                .collection("Configurations").document().set(configuration)
         }
     }
 }

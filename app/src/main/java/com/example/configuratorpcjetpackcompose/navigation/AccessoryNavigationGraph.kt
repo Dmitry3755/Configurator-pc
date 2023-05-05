@@ -1,12 +1,12 @@
 package com.example.configuratorpcjetpackcompose.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.configuratorpcjetpackcompose.model.Accessory
-import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
 import com.example.configuratorpcjetpackcompose.screens.AccessoryNavigationScreen
 import com.example.configuratorpcjetpackcompose.screens.AccessoryScreen
 import com.example.configuratorpcjetpackcompose.screens.AddUpdateConfigurationScreen
@@ -20,9 +20,8 @@ fun AccessoryNavigationGraph(navController: NavHostController) {
         navController = navController,
         startDestination = AccessoryNavigation.AddUpdateConfigurationScreen.route
     ) {
-        composable(route = AccessoryNavigation.AddUpdateConfigurationScreen.route) { backStackEntry ->
-            val viewModel: AccessoryViewModel = viewModel(backStackEntry)
-            AddUpdateConfigurationScreen(navController, viewModel)
+        composable(route = AccessoryNavigation.AddUpdateConfigurationScreen.route) {
+            AddUpdateConfigurationScreen(navController)
         }
         composable(route = AccessoryNavigation.AccessoryNavigationScreen.route) {
             AccessoryNavigationScreen()
@@ -31,11 +30,14 @@ fun AccessoryNavigationGraph(navController: NavHostController) {
             val lineType = backStackEntry.arguments?.getString("lineTypeName")
                 ?.let { ConfigurationElementEnum.valueOf(it) }
             if (lineType != null) {
-                AllSelectedComponentsScreen(lineType = lineType, navController)
+                AllSelectedComponentsScreen(
+                    lineType = lineType,
+                    navController = navController,
+                )
             } else {
                 AllSelectedComponentsScreen(
                     lineType = ConfigurationElementEnum.Processor,
-                    navController
+                    navController,
                 )
             }
         }
@@ -45,11 +47,16 @@ fun AccessoryNavigationGraph(navController: NavHostController) {
                 ?.let { ConfigurationElementEnum.valueOf(it) }
             val simpleName = backStackEntry.arguments?.getString("simpleName")!!
             if (lineType != null) {
-                AccessoryScreen(idAccessory = idAccessory, lineType = lineType, simpleName = simpleName)
+                AccessoryScreen(
+                    idAccessory = idAccessory, lineType = lineType, simpleName = simpleName,
+                    navController = navController
+                )
             } else {
-                AllSelectedComponentsScreen(
+                AccessoryScreen(
+                    idAccessory = "",
                     lineType = ConfigurationElementEnum.Processor,
-                    navController
+                    simpleName = "",
+                    navController = navController
                 )
             }
         }

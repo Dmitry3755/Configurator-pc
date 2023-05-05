@@ -1,7 +1,6 @@
 package com.example.configuratorpcjetpackcompose.components
 
 import android.content.res.Configuration
-import android.net.Uri
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -13,7 +12,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -25,28 +23,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
-import com.example.configuratorpcjetpackcompose.model.Accessory
-import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
 import com.example.configuratorpcjetpackcompose.navigation.AccessoryNavigation
-import com.example.configuratorpcjetpackcompose.navigation.ConfigurationNavigation
-import com.example.configuratorpcjetpackcompose.navigation.Navigation
-import com.example.configuratorpcjetpackcompose.screens.AccessoryNavigationScreen
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
-import com.example.configuratorpcjetpackcompose.viewmodel.AccessoryViewModel
-import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 
 @Composable
 fun LargeConfigurationElementLine(
-    lineType: ConfigurationElementEnum,
-    selectedAccessoriesList: List<Accessory>,
-    navController: NavController
+    configurationElement: ConfigurationElementEnum,
+    navController: NavController,
+    isAccessoryAdded: Boolean
 ) {
     val lineColor = AppTheme.colors.backgroundButtonColor
     val isCollapsed = remember {
@@ -89,7 +77,7 @@ fun LargeConfigurationElementLine(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = lineType.contentDescription,
+                text = configurationElement.contentDescription,
                 modifier = Modifier.fillMaxWidth(0.3f),
                 textAlign = TextAlign.Center,
                 style = AppTheme.typography.text
@@ -103,17 +91,17 @@ fun LargeConfigurationElementLine(
                     )
                     .size(60.dp)
                     .background(
-                        color = colorResource(id = lineType.color),
+                        color = colorResource(id = configurationElement.color),
                         shape = RoundedCornerShape(12.dp)
                     ),
-                painter = painterResource(id = lineType.icon),
-                contentDescription = lineType.contentDescription,
+                painter = painterResource(id = configurationElement.icon),
+                contentDescription = configurationElement.contentDescription,
                 tint = Color.Unspecified
             )
             Icon(
                 modifier = Modifier.height(20.dp),
                 painter = painterResource(
-                    if (selectedAccessoriesList.isNotEmpty()) {
+                    if (isAccessoryAdded) {
                         R.drawable.ic_checkmark //TODO: Заменить иконку в соответствии с дизайном
                     } else {
                         R.drawable.ic_circle_outline
@@ -123,11 +111,11 @@ fun LargeConfigurationElementLine(
                 tint = AppTheme.colors.backgroundButtonColor
             )
 
-            if (selectedAccessoriesList.isEmpty()) {
+            if (!isAccessoryAdded) {
                 MainButton(
                     textButton = stringResource(id = R.string.btn_text_add),
                     onClick = {
-                        navController.navigate(AccessoryNavigation.AllSelectedComponentsScreen.route + "/${lineType.name}")
+                        navController.navigate(AccessoryNavigation.AllSelectedComponentsScreen.route + "/${configurationElement.name}")
                     },
                     isSmall = true
                 )
@@ -146,12 +134,12 @@ fun LargeConfigurationElementLine(
         }
 
         Row {
-            if (selectedAccessoriesList.isNotEmpty() && !isCollapsed.value) {
+            if (isAccessoryAdded && !isCollapsed.value) {
                 Column(
                     modifier = Modifier.background(AppTheme.colors.backgroundFormColor),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    for (item in selectedAccessoriesList) {
+                    for (item in configurationElement.classAccessoriesTypesList) {
                         Spacer(modifier = Modifier.height(20.dp))
                         Row(
                             modifier = Modifier
@@ -182,9 +170,7 @@ fun LargeConfigurationElementLine(
                     Row(modifier = Modifier.fillMaxWidth(0.8f)) {
                         MainButton(
                             textButton = stringResource(id = R.string.btn_text_add),
-                            onClick = {
-
-                            }
+                            onClick = {}
                         )
                     }
                     Spacer(modifier = Modifier.height(20.dp))
@@ -200,9 +186,9 @@ private fun DefaultPreviewLight() {
     AppTheme() {
         val accessoryNavController = rememberNavController()
         LargeConfigurationElementLine(
-            lineType = ConfigurationElementEnum.Processor,
-            emptyList(),
-            accessoryNavController
+            configurationElement = ConfigurationElementEnum.Processor,
+            accessoryNavController,
+            false
         )
     }
 }
@@ -213,18 +199,9 @@ private fun DefaultPreviewDark() {
     AppTheme() {
         val accessoryNavController = rememberNavController()
         LargeConfigurationElementLine(
-            lineType = ConfigurationElementEnum.Motherboard,
-            listOf(
-                Accessory(
-                    _idAccessory = "",
-                    _nameAccessory = "qwe",
-                    _priceAccessory = 123.0,
-                    _descriptionAccessory = "qwe",
-                    _categoryAccessoryEnum = CategoryAccessoryEnum.MOTHERBOARD,
-                    _uriAccessory = ""
-                )
-            ),
-            accessoryNavController
+            configurationElement = ConfigurationElementEnum.Motherboard,
+            accessoryNavController,
+            true
         )
     }
 }

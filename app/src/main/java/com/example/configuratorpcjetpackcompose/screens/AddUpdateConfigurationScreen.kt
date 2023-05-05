@@ -4,6 +4,10 @@ import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -15,22 +19,20 @@ import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.components.HeadersTextView
 import com.example.configuratorpcjetpackcompose.components.LargeConfigurationElement
-import com.example.configuratorpcjetpackcompose.components.LargeConfigurationElementLine
 import com.example.configuratorpcjetpackcompose.components.MainButton
 import com.example.configuratorpcjetpackcompose.model.Accessory
 import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
-import com.example.configuratorpcjetpackcompose.navigation.AccessoryNavigation
+import com.example.configuratorpcjetpackcompose.model.dataclass.Cpu
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
-import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
 import com.example.configuratorpcjetpackcompose.viewmodel.AccessoryViewModel
-import com.example.configuratorpcjetpackcompose.viewmodel.AppViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun AddUpdateConfigurationScreen(
     navController: NavController,
-    viewModel: AccessoryViewModel
 ) {
-    val viewModel: AccessoryViewModel = viewModel()
+    val coroutineScope = rememberCoroutineScope()
+    val accessoryViewModel: AccessoryViewModel = viewModel()
 
     Column(
         modifier = Modifier
@@ -65,8 +67,9 @@ fun AddUpdateConfigurationScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     LargeConfigurationElement(
-                        viewModel,
-                        navController = navController
+                        navController = navController,
+                        configuration = accessoryViewModel.configuration.value
+
                     )
                 }
                 Box(
@@ -83,7 +86,11 @@ fun AddUpdateConfigurationScreen(
                 ) {
                     MainButton(
                         stringResource(id = R.string.configurator_text_view_save_configuration),
-                        onClick = {},
+                        onClick = {
+                            coroutineScope.launch {
+                                accessoryViewModel.saveConfiguration(accessoryViewModel.configuration.value)
+                            }
+                        },
                         isDelete = false
                     )
                 }
@@ -97,7 +104,6 @@ fun AddUpdateConfigurationScreen(
 private fun DefaultPreviewDark() {
     AppTheme() {
         val accessoryNavController = rememberNavController()
-        val viewModel: AccessoryViewModel = viewModel()
-        AddUpdateConfigurationScreen(accessoryNavController, viewModel)
+        AddUpdateConfigurationScreen(accessoryNavController)
     }
 }

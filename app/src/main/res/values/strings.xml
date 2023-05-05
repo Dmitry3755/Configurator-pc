@@ -64,5 +64,8 @@
     <string name="error_configuration_motherboard_does_not_support_type_of_ram">Материнская плата не поддерживает тип оперативной памяти</string>
     <string name="error_configuration_pin_cpu_is_not_compatible">Разъем питания для процессора у блока питнания не совместим с разъемами питания процессора</string>
     <string name="error_configuration_case_does_not_support_size_of_video_card">Выбранный корпус не поддерживает размер выбранной видеокарты</string>
+    <string name="ruble_symbol">₽</string>
+    <string name="accessory_description">Описанание</string>
+    <string name="accessory_name">Название</string>
 
 </resources>

@@ -27,10 +27,9 @@ fun AllSelectedComponentsScreen(
 
     val viewModel: AccessoryViewModel = viewModel()
     val coroutineScope = rememberCoroutineScope()
-    var state by remember { mutableStateOf(false) }
     val loadAccessory = viewModel.listAccessory
 
-    LaunchedEffect(state) {
+    LaunchedEffect(coroutineScope) {
         coroutineScope.launch() {
             if(loadAccessory.isEmpty()) {
                 for (accessoriesTypes in lineType.classAccessoriesTypesList) {
@@ -95,8 +94,8 @@ private fun AllSelectedComponentsScreenDefaultPreview() {
     AppTheme() {
         val accessoryNavController = rememberNavController()
         AllSelectedComponentsScreen(
-            ConfigurationElementEnum.Case,
-            accessoryNavController
+            ConfigurationElementEnum.Processor,
+            accessoryNavController,
         )
     }
 }
