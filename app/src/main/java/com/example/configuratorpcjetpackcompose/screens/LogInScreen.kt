@@ -23,12 +23,12 @@ import com.example.configuratorpcjetpackcompose.components.MainButton
 import com.example.configuratorpcjetpackcompose.navigation.Navigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.utils.ViewError
-import com.example.configuratorpcjetpackcompose.viewmodel.AuthenticationViewModel
+import com.example.configuratorpcjetpackcompose.viewmodel.UserViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun LogInScreen(navController: NavController) {
-    val viewModel: AuthenticationViewModel = viewModel()
+    val viewModel: UserViewModel = viewModel()
 
     val coroutineScope = rememberCoroutineScope()
 

@@ -1,14 +1,9 @@
 package com.example.configuratorpcjetpackcompose.services
 
-import android.app.Application
-import android.content.res.Resources
-import android.util.Patterns
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.util.PatternsCompat
 import com.example.configuratorpcjetpackcompose.R
-import com.example.configuratorpcjetpackcompose.model.ConfiguratorRepository
 import com.example.configuratorpcjetpackcompose.utils.AppResources
-import com.example.configuratorpcjetpackcompose.utils.DataResult
 import com.example.configuratorpcjetpackcompose.utils.ViewError
 
 object ValidationService {

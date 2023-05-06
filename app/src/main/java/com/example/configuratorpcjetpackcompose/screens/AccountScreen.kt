@@ -30,14 +30,14 @@ import com.example.configuratorpcjetpackcompose.components.MainButton
 import com.example.configuratorpcjetpackcompose.components.UserNameTextField
 import com.example.configuratorpcjetpackcompose.navigation.AccountSettingsNavigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
-import com.example.configuratorpcjetpackcompose.viewmodel.UserNameViewModel
+import com.example.configuratorpcjetpackcompose.viewmodel.UserViewModel
 import kotlinx.coroutines.launch
 
 
 @Composable
 fun AccountScreen(navController: NavController) {
 
-    val viewModel: UserNameViewModel = viewModel()
+    val viewModel: UserViewModel = viewModel()
     var avatarSize = LocalConfiguration.current.screenWidthDp * 0.5
     var name = remember { mutableStateOf("")}
     val coroutineScope = rememberCoroutineScope()

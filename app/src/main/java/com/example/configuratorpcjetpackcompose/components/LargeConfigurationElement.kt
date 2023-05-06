@@ -18,7 +18,7 @@ import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
 @Composable
 fun LargeConfigurationElement(
     navController: NavController,
-    configuration: com.example.configuratorpcjetpackcompose.model.dataclass.Configuration
+    configuration: com.example.configuratorpcjetpackcompose.model.data_class.Configuration
 ) {
 
     Column(
@@ -50,7 +50,7 @@ private fun DefaultPreviewLight() {
         val accessoryNavController = rememberNavController()
         LargeConfigurationElement(
             accessoryNavController,
-            com.example.configuratorpcjetpackcompose.model.dataclass.Configuration()
+            com.example.configuratorpcjetpackcompose.model.data_class.Configuration()
         )
     }
 }
@@ -62,7 +62,7 @@ private fun DefaultPreviewDark() {
         val accessoryNavController = rememberNavController()
         LargeConfigurationElement(
             accessoryNavController,
-            com.example.configuratorpcjetpackcompose.model.dataclass.Configuration()
+            com.example.configuratorpcjetpackcompose.model.data_class.Configuration()
         )
     }
 }

@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.utils.TextInputTypeEnum
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
+import com.example.configuratorpcjetpackcompose.utils.TagsForTest
 import com.example.configuratorpcjetpackcompose.utils.ViewError
 
 @Composable
@@ -35,7 +36,8 @@ fun AppTextField(
     hintTextField: String,
     textInputType: TextInputTypeEnum,
     value: MutableState<String>,
-    viewError: MutableState<ViewError> = mutableStateOf(ViewError())
+    viewError: MutableState<ViewError> = mutableStateOf(ViewError()),
+    tagForTest: String
 ) {
     val showPassword = remember { mutableStateOf(false) }
     Column(
@@ -55,7 +57,8 @@ fun AppTextField(
             value = value.value,
             textStyle = TextStyle(fontSize = 20.sp),
             modifier = Modifier
-                .fillMaxWidth(1f),
+                .fillMaxWidth(1f)
+                .testTag(tagForTest),
             placeholder = {
                 Text(
                     text = hintTextField,
@@ -134,7 +137,8 @@ private fun DefaultPreview() {
             ), stringResource(
                 id = R.string.authentication_sign_up_edit_text_hint_email
             ), TextInputTypeEnum.Email,
-            remember { mutableStateOf("") }
+            remember { mutableStateOf("") },
+            tagForTest = ""
         )
     }
 }

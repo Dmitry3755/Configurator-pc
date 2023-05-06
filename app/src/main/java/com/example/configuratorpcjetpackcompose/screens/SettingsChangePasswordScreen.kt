@@ -21,13 +21,13 @@ import com.example.configuratorpcjetpackcompose.components.HeadersTextView
 import com.example.configuratorpcjetpackcompose.components.MainButton
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.utils.ViewError
-import com.example.configuratorpcjetpackcompose.viewmodel.ChangePasswordViewModel
+import com.example.configuratorpcjetpackcompose.viewmodel.UserViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun SettingsChangePasswordScreen() {
 
-    val viewModel: ChangePasswordViewModel = viewModel()
+    val viewModel: UserViewModel = viewModel()
     val coroutineScope = rememberCoroutineScope()
     val changePasswordResultViewError = remember { mutableStateOf(ViewError()) }
     val context = LocalContext.current

@@ -3,7 +3,6 @@ package com.example.configuratorpcjetpackcompose.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,7 +15,7 @@ import com.example.configuratorpcjetpackcompose.components.FilterForAccessorySea
 import com.example.configuratorpcjetpackcompose.components.HeadersTextView
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
-import com.example.configuratorpcjetpackcompose.viewmodel.AccessoryViewModel
+import com.example.configuratorpcjetpackcompose.viewmodel.AccessoriesViewModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -25,7 +24,7 @@ fun AllSelectedComponentsScreen(
     navController: NavController
 ) {
 
-    val viewModel: AccessoryViewModel = viewModel()
+    val viewModel: AccessoriesViewModel = viewModel()
     val coroutineScope = rememberCoroutineScope()
     val loadAccessory = viewModel.listAccessory
 

@@ -12,11 +12,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.components.HeadersTextView
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
-import com.example.configuratorpcjetpackcompose.viewmodel.AuthenticationViewModel
+import com.example.configuratorpcjetpackcompose.viewmodel.UserViewModel
 
 @Composable
 fun FavoriteScreen() {
-    val viewModel: AuthenticationViewModel = viewModel()
+    val viewModel: UserViewModel = viewModel()
     Column(
         modifier = Modifier
             .background(

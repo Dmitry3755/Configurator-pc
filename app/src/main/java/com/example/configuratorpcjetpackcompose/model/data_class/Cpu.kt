@@ -1,4 +1,4 @@
-package com.example.configuratorpcjetpackcompose.model.dataclass
+package com.example.configuratorpcjetpackcompose.model.data_class
 
 import com.example.configuratorpcjetpackcompose.model.Accessory
 import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
@@ -32,6 +32,34 @@ data class Cpu(
 ) : Accessory(
     _categoryAccessoryEnum = CategoryAccessoryEnum.PROCESSOR
 ) {
+    constructor(
+        idAccessory: String,
+        nameAccessory: String,
+        priceAccessory: Double,
+        descriptionAccessory: String,
+        uriAccessory: String,
+        cpu: Cpu
+    ) : this(
+        _manufacturer = cpu._manufacturer,
+        _socket = cpu._socket,
+        _family = cpu._family,
+        _productiveCoresCount = cpu._productiveCoresCount,
+        _integratedGraphicsCore = cpu._integratedGraphicsCore,
+        _releaseYear = cpu._releaseYear,
+        _memoryType = cpu._memoryType,
+        _baseFrequency = cpu._baseFrequency,
+        _heatDissipation = cpu._heatDissipation,
+        _technicalProcess = cpu._technicalProcess,
+        _pinConnector = cpu._pinConnector,
+        _maximumSupportedMemoryCapacity = cpu._maximumSupportedMemoryCapacity
+    ) {
+        _idAccessory = idAccessory
+        _nameAccessory = nameAccessory
+        _priceAccessory = priceAccessory
+        _descriptionAccessory = descriptionAccessory
+        _uriAccessory = uriAccessory
+    }
+
     var manufacturer: String
         get() = _manufacturer
         set(value) {

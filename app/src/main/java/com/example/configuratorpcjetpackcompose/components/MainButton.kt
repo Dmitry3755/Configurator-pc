@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
+import com.example.configuratorpcjetpackcompose.utils.TagsForTest
 
 @Composable
 fun MainButton(
@@ -48,7 +49,7 @@ fun MainButton(
     if (!isSmall) {
         buttonModifier = buttonModifier
             .fillMaxWidth(1f)
-            .testTag("Button")
+            .testTag(TagsForTest.BUTTON)
         buttonShape = RoundedCornerShape(AppTheme.dimensions.mainButtonCornerRadius)
     } else {
         buttonShape = RoundedCornerShape(AppTheme.dimensions.mainButtonCornerRadius)

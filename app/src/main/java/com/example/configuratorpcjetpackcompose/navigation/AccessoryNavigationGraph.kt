@@ -1,9 +1,6 @@
 package com.example.configuratorpcjetpackcompose.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,7 +9,6 @@ import com.example.configuratorpcjetpackcompose.screens.AccessoryScreen
 import com.example.configuratorpcjetpackcompose.screens.AddUpdateConfigurationScreen
 import com.example.configuratorpcjetpackcompose.screens.AllSelectedComponentsScreen
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
-import com.example.configuratorpcjetpackcompose.viewmodel.AccessoryViewModel
 
 @Composable
 fun AccessoryNavigationGraph(navController: NavHostController) {

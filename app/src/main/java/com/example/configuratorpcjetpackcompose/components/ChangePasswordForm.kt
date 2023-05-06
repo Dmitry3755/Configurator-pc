@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.utils.TextInputTypeEnum
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
+import com.example.configuratorpcjetpackcompose.utils.TagsForTest
 import com.example.configuratorpcjetpackcompose.utils.ViewError
 
 @Composable
@@ -41,7 +42,8 @@ fun ChangePasswordForm(
             ),
             textInputType = TextInputTypeEnum.Password,
             value = oldPassword,
-            viewError = changePasswordResultViewError
+            viewError = changePasswordResultViewError,
+            tagForTest = TagsForTest.OLD_PASSWORD
         )
         Spacer(Modifier.padding(top = AppTheme.dimensions.verticalElementsPadding))
         AppTextField(
@@ -53,7 +55,8 @@ fun ChangePasswordForm(
             ),
             textInputType = TextInputTypeEnum.Password,
             value = newPassword,
-            viewError = changePasswordResultViewError
+            viewError = changePasswordResultViewError,
+            tagForTest = TagsForTest.NEW_PASSWORD
         )
         Spacer(Modifier.padding(top = AppTheme.dimensions.verticalElementsPadding))
         AppTextField(
@@ -65,7 +68,8 @@ fun ChangePasswordForm(
             ),
             textInputType = TextInputTypeEnum.Password,
             value = repeatedPassword,
-            viewError = changePasswordResultViewError
+            viewError = changePasswordResultViewError,
+            tagForTest = TagsForTest.REPEATED_NEW_PASSWORD
         )
 
         if (changePasswordResultViewError.value.isError.value) {

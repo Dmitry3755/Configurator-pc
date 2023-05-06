@@ -9,11 +9,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.utils.TextInputTypeEnum
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
+import com.example.configuratorpcjetpackcompose.utils.TagsForTest
 import com.example.configuratorpcjetpackcompose.utils.ViewError
 
 @Composable
@@ -38,7 +40,8 @@ fun AuthorizationForm(
             ),
             textInputType = TextInputTypeEnum.Email,
             value = email,
-            viewError = authResultViewError
+            viewError = authResultViewError,
+            tagForTest = TagsForTest.EMAIL
         )
         Spacer(Modifier.padding(top = AppTheme.dimensions.verticalElementsPadding))
         AppTextField(
@@ -50,7 +53,8 @@ fun AuthorizationForm(
             ),
             textInputType = TextInputTypeEnum.Password,
             value = password,
-            viewError = authResultViewError
+            viewError = authResultViewError,
+            tagForTest = TagsForTest.PASSWORD
         )
         if (isRegistration) {
             Spacer(Modifier.padding(top = AppTheme.dimensions.verticalElementsPadding))
@@ -63,7 +67,8 @@ fun AuthorizationForm(
                 ),
                 textInputType = TextInputTypeEnum.Password,
                 value = repeatedPassword,
-                viewError = authResultViewError
+                viewError = authResultViewError,
+                tagForTest = TagsForTest.REPEATED_PASSWORD
             )
         }
         if(authResultViewError.value.isError.value) {

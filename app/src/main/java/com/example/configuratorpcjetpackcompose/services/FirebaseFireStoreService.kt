@@ -1,20 +1,20 @@
 package com.example.configuratorpcjetpackcompose.services
 
 import android.net.Uri
-import android.provider.Contacts.Intents.UI
+import androidx.compose.runtime.snapshotFlow
 import com.example.configuratorpcjetpackcompose.model.Accessory
-import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
-import com.example.configuratorpcjetpackcompose.model.dataclass.Case
-import com.example.configuratorpcjetpackcompose.model.dataclass.Configuration
-import com.example.configuratorpcjetpackcompose.model.dataclass.Cpu
-import com.example.configuratorpcjetpackcompose.model.dataclass.User
+import com.example.configuratorpcjetpackcompose.model.data_class.Configuration
+import com.example.configuratorpcjetpackcompose.model.data_class.Cpu
+import com.example.configuratorpcjetpackcompose.model.data_class.User
+import com.example.configuratorpcjetpackcompose.model.data_class.toFbConfiguration
+import com.example.configuratorpcjetpackcompose.model.firebase_data_class.FbConfiguration
+import com.example.configuratorpcjetpackcompose.model.firebase_data_class.toConfiguration
 import com.example.configuratorpcjetpackcompose.services.AuthenticationService.getCurrentUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
-import org.w3c.dom.Document
 import java.lang.ref.WeakReference
 import kotlin.coroutines.resume
 
@@ -92,22 +92,39 @@ object FirebaseFireStoreService {
         return suspendCancellableCoroutine { cancellableContinuation ->
             fireStoreDatabaseWeakRef.get()!!.collection(classAccessoryType.simpleName)
                 .document(idAccessory).get().addOnSuccessListener { document ->
-                    cancellableContinuation.resume(document.toObject(classAccessoryType)!!.also {accessory ->
-                        accessory._idAccessory = document.id
-                        accessory._nameAccessory = accessory.name
-                        accessory._priceAccessory = accessory.price
-                        accessory._descriptionAccessory = accessory.description
-                        accessory._uriAccessory = accessory.uri
-                    })
+                    cancellableContinuation.resume(
+                        document.toObject(classAccessoryType)!!.also { accessory ->
+                            accessory._idAccessory = document.id
+                            accessory._nameAccessory = accessory.name
+                            accessory._priceAccessory = accessory.price
+                            accessory._descriptionAccessory = accessory.description
+                            accessory._uriAccessory = accessory.uri
+                        })
                 }
         }
     }
 
     suspend fun saveConfiguration(configuration: Configuration) {
         if (fireStoreDatabaseWeakRef.get() != null) {
+
             fireStoreDatabaseWeakRef.get()!!.collection("Users").document(getUserId())
-                .collection("Configurations").document().set(configuration)
+                .collection("Configurations").document().set(configuration.toFbConfiguration())
         }
     }
+
+    suspend fun loadAllConfigurationsForUser(): List<Configuration> {
+        return fireStoreDatabaseWeakRef.get()!!.collection("Users").document(getUserId())
+            .collection("Configurations").get().await().map { snapshot ->
+                snapshot.toObject(FbConfiguration::class.java).let { fbConfiguration ->
+                    fbConfiguration.toConfiguration(
+                        cpu = getAccessory(
+                            fbConfiguration.cpuId,
+                            Cpu::class.java
+                        ) as Cpu
+                    )
+                }
+            }
+    }
+
 }
 

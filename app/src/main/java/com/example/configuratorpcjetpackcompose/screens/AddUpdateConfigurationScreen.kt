@@ -4,9 +4,6 @@ import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,11 +17,8 @@ import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.components.HeadersTextView
 import com.example.configuratorpcjetpackcompose.components.LargeConfigurationElement
 import com.example.configuratorpcjetpackcompose.components.MainButton
-import com.example.configuratorpcjetpackcompose.model.Accessory
-import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
-import com.example.configuratorpcjetpackcompose.model.dataclass.Cpu
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
-import com.example.configuratorpcjetpackcompose.viewmodel.AccessoryViewModel
+import com.example.configuratorpcjetpackcompose.viewmodel.AccessoriesViewModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -32,7 +26,7 @@ fun AddUpdateConfigurationScreen(
     navController: NavController,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val accessoryViewModel: AccessoryViewModel = viewModel()
+    val accessoriesViewModel: AccessoriesViewModel = viewModel()
 
     Column(
         modifier = Modifier
@@ -68,7 +62,7 @@ fun AddUpdateConfigurationScreen(
                 ) {
                     LargeConfigurationElement(
                         navController = navController,
-                        configuration = accessoryViewModel.configuration.value
+                        configuration = accessoriesViewModel.configuration.value
 
                     )
                 }
@@ -88,7 +82,7 @@ fun AddUpdateConfigurationScreen(
                         stringResource(id = R.string.configurator_text_view_save_configuration),
                         onClick = {
                             coroutineScope.launch {
-                                accessoryViewModel.saveConfiguration(accessoryViewModel.configuration.value)
+                                accessoriesViewModel.saveConfiguration(accessoriesViewModel.configuration.value)
                             }
                         },
                         isDelete = false

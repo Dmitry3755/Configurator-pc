@@ -12,6 +12,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.example.configuratorpcjetpackcompose.utils.TagsForTest
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
@@ -31,10 +32,10 @@ class ExampleInstrumentedTest {
 
     @Test
     fun registrationTestWithData1() {
-        composeTestRule.onNodeWithTag("appTextField").performTextInput("")
-        composeTestRule.onNodeWithTag("appTextField").performTextInput("Aa123456")
-        composeTestRule.onNodeWithTag("appTextField").performTextInput("Aa123456")
-        composeTestRule.onNodeWithTag("Button").performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.EMAIL).performTextInput(" ")
+        composeTestRule.onNodeWithTag(TagsForTest.PASSWORD).performTextInput("Aa123456")
+        composeTestRule.onNodeWithTag(TagsForTest.REPEATED_PASSWORD).performTextInput("Aa123456")
+        composeTestRule.onNodeWithTag(TagsForTest.BUTTON).performClick()
     }
     @Test
     fun registrationTestWithData2() {

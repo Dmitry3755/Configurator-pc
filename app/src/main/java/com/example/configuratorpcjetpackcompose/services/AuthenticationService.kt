@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.res.Resources
 import androidx.compose.runtime.mutableStateOf
 import com.example.configuratorpcjetpackcompose.R
-import com.example.configuratorpcjetpackcompose.model.dataclass.User
+import com.example.configuratorpcjetpackcompose.model.data_class.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import java.lang.ref.WeakReference

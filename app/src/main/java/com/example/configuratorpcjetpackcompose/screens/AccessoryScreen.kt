@@ -1,16 +1,12 @@
 package com.example.configuratorpcjetpackcompose.screens
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
-import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
@@ -27,17 +23,13 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.components.AccessoryElement
-import com.example.configuratorpcjetpackcompose.components.HeadersTextView
 import com.example.configuratorpcjetpackcompose.components.InformationAboutAccessory
 import com.example.configuratorpcjetpackcompose.components.MainButton
-import com.example.configuratorpcjetpackcompose.components.NetworkImage
 import com.example.configuratorpcjetpackcompose.model.Accessory
 import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
-import com.example.configuratorpcjetpackcompose.navigation.AccessoryNavigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
-import com.example.configuratorpcjetpackcompose.viewmodel.AccessoryViewModel
-import kotlinx.coroutines.delay
+import com.example.configuratorpcjetpackcompose.viewmodel.AccessoriesViewModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -49,7 +41,7 @@ fun AccessoryScreen(
 ) {
 
     val coroutineScope = rememberCoroutineScope()
-    val accessoryViewModel: AccessoryViewModel = viewModel()
+    val accessoriesViewModel: AccessoriesViewModel = viewModel()
     var accessory: MutableState<Accessory> = remember {
         mutableStateOf(Accessory(_categoryAccessoryEnum = CategoryAccessoryEnum.PROCESSOR))
     }
@@ -59,7 +51,7 @@ fun AccessoryScreen(
         coroutineScope.launch {
             for (accessoriesTypes in lineType.classAccessoriesTypesList) {
                 if (simpleName == accessoriesTypes.simpleName) {
-                    accessory.value = accessoryViewModel.getAccessory(
+                    accessory.value = accessoriesViewModel.getAccessory(
                         idAccessory = idAccessory,
                         classAccessoryType = accessoriesTypes
                     )
@@ -119,9 +111,11 @@ fun AccessoryScreen(
             MainButton(
                 textButton = stringResource(id = R.string.btn_text_add),
                 onClick = {
-                    accessoryViewModel.addAccessoryInConfiguration(accessory.value)
-                    // navController.navigateUp()
-                    navController.navigate(AccessoryNavigation.AddUpdateConfigurationScreen.route)
+                    coroutineScope.launch {
+                        accessoriesViewModel.addAccessoryInConfiguration(accessory.value)
+                    }
+                     navController.navigateUp()
+                  //  navController.navigate(AccessoryNavigation.AddUpdateConfigurationScreen.route)
                 },
                 isDelete = false
             )
