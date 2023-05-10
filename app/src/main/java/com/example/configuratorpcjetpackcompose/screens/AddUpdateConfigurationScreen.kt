@@ -24,9 +24,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun AddUpdateConfigurationScreen(
     navController: NavController,
+    accessoriesViewModel: AccessoriesViewModel = viewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val accessoriesViewModel: AccessoriesViewModel = viewModel()
 
     Column(
         modifier = Modifier
@@ -63,7 +63,6 @@ fun AddUpdateConfigurationScreen(
                     LargeConfigurationElement(
                         navController = navController,
                         configuration = accessoriesViewModel.configuration.value
-
                     )
                 }
                 Box(

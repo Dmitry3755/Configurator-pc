@@ -1,6 +1,7 @@
 package com.example.configuratorpcjetpackcompose.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -9,15 +10,19 @@ import com.example.configuratorpcjetpackcompose.screens.AccessoryScreen
 import com.example.configuratorpcjetpackcompose.screens.AddUpdateConfigurationScreen
 import com.example.configuratorpcjetpackcompose.screens.AllSelectedComponentsScreen
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
+import com.example.configuratorpcjetpackcompose.viewmodel.AccessoriesViewModel
 
 @Composable
 fun AccessoryNavigationGraph(navController: NavHostController) {
+
+    val viewModel: AccessoriesViewModel = viewModel()
+
     NavHost(
         navController = navController,
         startDestination = AccessoryNavigation.AddUpdateConfigurationScreen.route
     ) {
         composable(route = AccessoryNavigation.AddUpdateConfigurationScreen.route) {
-            AddUpdateConfigurationScreen(navController)
+            AddUpdateConfigurationScreen(navController, viewModel)
         }
         composable(route = AccessoryNavigation.AccessoryNavigationScreen.route) {
             AccessoryNavigationScreen()
@@ -45,14 +50,16 @@ fun AccessoryNavigationGraph(navController: NavHostController) {
             if (lineType != null) {
                 AccessoryScreen(
                     idAccessory = idAccessory, lineType = lineType, simpleName = simpleName,
-                    navController = navController
+                    navController = navController,
+                    viewModel
                 )
             } else {
                 AccessoryScreen(
                     idAccessory = "",
                     lineType = ConfigurationElementEnum.Processor,
                     simpleName = "",
-                    navController = navController
+                    navController = navController,
+                    viewModel
                 )
             }
         }

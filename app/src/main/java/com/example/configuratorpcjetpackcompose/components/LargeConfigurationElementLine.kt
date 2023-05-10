@@ -23,18 +23,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.navigation.AccessoryNavigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
+import com.example.configuratorpcjetpackcompose.viewmodel.AccessoriesViewModel
 
 @Composable
 fun LargeConfigurationElementLine(
     configurationElement: ConfigurationElementEnum,
     navController: NavController,
-    isAccessoryAdded: Boolean
+    isAccessoryAdded: Boolean,
+    viewModel: AccessoriesViewModel = viewModel()
 ) {
     val lineColor = AppTheme.colors.backgroundButtonColor
     val isCollapsed = remember {

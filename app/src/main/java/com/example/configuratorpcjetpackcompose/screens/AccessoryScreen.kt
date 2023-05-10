@@ -37,11 +37,11 @@ fun AccessoryScreen(
     idAccessory: String,
     lineType: ConfigurationElementEnum,
     simpleName: String,
-    navController: NavController
+    navController: NavController,
+    accessoriesViewModel: AccessoriesViewModel = viewModel()
 ) {
 
     val coroutineScope = rememberCoroutineScope()
-    val accessoriesViewModel: AccessoriesViewModel = viewModel()
     var accessory: MutableState<Accessory> = remember {
         mutableStateOf(Accessory(_categoryAccessoryEnum = CategoryAccessoryEnum.PROCESSOR))
     }
@@ -113,8 +113,9 @@ fun AccessoryScreen(
                 onClick = {
                     coroutineScope.launch {
                         accessoriesViewModel.addAccessoryInConfiguration(accessory.value)
+                        navController.navigateUp()
+                        navController.navigateUp()
                     }
-                     navController.navigateUp()
                   //  navController.navigate(AccessoryNavigation.AddUpdateConfigurationScreen.route)
                 },
                 isDelete = false
