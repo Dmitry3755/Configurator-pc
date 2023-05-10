@@ -10,6 +10,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -37,11 +38,15 @@ fun LargeConfigurationElementLine(
     configurationElement: ConfigurationElementEnum,
     navController: NavController,
     isAccessoryAdded: Boolean,
+    configuration: com.example.configuratorpcjetpackcompose.model.data_class.Configuration,
     viewModel: AccessoriesViewModel = viewModel()
 ) {
     val lineColor = AppTheme.colors.backgroundButtonColor
     val isCollapsed = remember {
         mutableStateOf(true)
+    }
+    var text = remember {
+        mutableStateOf("")
     }
 
     Column() {
@@ -124,7 +129,7 @@ fun LargeConfigurationElementLine(
                 )
             } else {
                 IconButton(
-                    modifier = Modifier.fillMaxWidth(0.53f), //TODO: Исправить
+                    modifier = Modifier.fillMaxWidth(0.55f), //TODO: Исправить
                     onClick = {
                         isCollapsed.value = !isCollapsed.value
                     }) {
@@ -143,45 +148,40 @@ fun LargeConfigurationElementLine(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     for (item in configurationElement.classAccessoriesTypesList) {
-                        Spacer(modifier = Modifier.height(20.dp))
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(1f)
-                                .height(IntrinsicSize.Max),
-                            horizontalArrangement = Arrangement.SpaceAround,
+                        if (configuration.getListAccessoryFromConfiguration(
+                                item
+                            ).isNotEmpty()
                         ) {
-                            Box(
-                                modifier = Modifier.fillMaxHeight(1f),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    text = item.name,
-                                    textAlign = TextAlign.Center
+                            for (accessoryListItem in configuration.getListAccessoryFromConfiguration(
+                                item
+                            )) {
+                                text.value = accessoryListItem._nameAccessory
+                                AccessoryAddedOnConfiguration(
+                                    configuration = configuration,
+                                    text = text.value,
+                                    accessory = item,
+                                    navController = navController,
+                                    configurationElement = configurationElement
                                 )
                             }
-                            MainButton(
-                                textButton = stringResource(id = R.string.btn_text_delete),
-                                onClick = {
-
-                                },
-                                isDelete = true,
-                                isSmall = true
+                        } else {
+                            text.value =
+                                configuration.getAccessoryFromConfiguration(item)._nameAccessory
+                            AccessoryAddedOnConfiguration(
+                                configuration = configuration,
+                                text = text.value,
+                                accessory = item,
+                                navController = navController,
+                                configurationElement = configurationElement
                             )
                         }
                     }
-                    Spacer(modifier = Modifier.height(20.dp))
-                    Row(modifier = Modifier.fillMaxWidth(0.8f)) {
-                        MainButton(
-                            textButton = stringResource(id = R.string.btn_text_add),
-                            onClick = {}
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(20.dp))
                 }
             }
         }
     }
 }
+
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
@@ -191,7 +191,8 @@ private fun DefaultPreviewLight() {
         LargeConfigurationElementLine(
             configurationElement = ConfigurationElementEnum.Processor,
             accessoryNavController,
-            false
+            configuration = com.example.configuratorpcjetpackcompose.model.data_class.Configuration(),
+            isAccessoryAdded = false
         )
     }
 }
@@ -204,7 +205,8 @@ private fun DefaultPreviewDark() {
         LargeConfigurationElementLine(
             configurationElement = ConfigurationElementEnum.Motherboard,
             accessoryNavController,
-            true
+            configuration = com.example.configuratorpcjetpackcompose.model.data_class.Configuration(),
+            isAccessoryAdded = true
         )
     }
 }

@@ -4,9 +4,9 @@ import android.net.Uri
 import com.google.firebase.firestore.PropertyName
 
 open class Cooler(
-    @PropertyName("manufacturer")
+    @JvmField @PropertyName("manufacturer")
     var _manufacturerCooler: String = "",
-    @PropertyName("type_illumination")
+    @JvmField @PropertyName("type_illumination")
     var _typeOfIlluminationCooler: String = ""
 
 ) : Accessory(

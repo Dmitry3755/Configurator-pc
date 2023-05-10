@@ -23,11 +23,6 @@ fun AccessoryLazyColumn(
     lineType: ConfigurationElementEnum
 ) {
 
-    val lineColor = AppTheme.colors.backgroundButtonColor
-    val isCollapsed = remember {
-        mutableStateOf(true)
-    }
-
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(AppTheme.dimensions.mainButtonCornerRadius),

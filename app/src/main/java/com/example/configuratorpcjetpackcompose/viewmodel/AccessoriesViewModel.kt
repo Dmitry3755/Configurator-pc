@@ -30,6 +30,7 @@ class AccessoriesViewModel() : ViewModel() {
     var configurationPc: MutableList<MutableList<Accessory>> = mutableStateListOf()
     val listAccessory = mutableStateListOf<Accessory>()
     var configuration: MutableState<Configuration> = mutableStateOf(Configuration())
+    val userConfigurationsList = mutableStateListOf<Configuration>()
 
     suspend fun loadAccessory(classAccessoryType: Class<out Accessory>): List<Accessory> {
         return configurationRepository.getListAccessoryFromDB(classAccessoryType)
@@ -57,9 +58,10 @@ class AccessoriesViewModel() : ViewModel() {
         )
     }
 
-    suspend fun loadAllConfigurationsForUser(): List<Configuration> {
-        return configurationRepository.loadAllConfigurationsForUserFormDB()
+    suspend fun loadAllConfigurationsForUser() {
+        userConfigurationsList.addAll(configurationRepository.loadAllConfigurationsForUserFormDB())
     }
+
 
     suspend fun saveConfiguration(configuration: Configuration) {
         configurationRepository.saveConfigurationToDB(configuration)
@@ -82,6 +84,26 @@ class AccessoriesViewModel() : ViewModel() {
             is CoolerForCase -> configuration.value.coolerForCaseList.add(accessory)
             else -> {}
         }
+    }
+
+    fun removeAccessoryInConfiguration(accessory: Accessory) {
+        when (accessory) {
+            is Cpu -> configuration.value.cpu = null
+            is Motherboard -> configuration.value.motherboard = null
+            is PowerSupplyUnit -> configuration.value.powerSupplyUnit = null
+            is SoundCard -> configuration.value.soundCard = null
+            is VideoCard -> configuration.value.videoCardList.remove(accessory)
+            is Case -> configuration.value.case = null
+            is Monitor -> configuration.value.monitorList.remove(accessory)
+            is Ssd -> configuration.value.ssdList.remove(accessory)
+            is HardDrive -> configuration.value.hardDriveList.remove(accessory)
+            is SoDimm -> configuration.value.soDimmList.remove(accessory)
+            is Dimm -> configuration.value.dimmList.remove(accessory)
+            is CoolerForCpu -> configuration.value.coolerForCpu = null
+            is CoolerForCase -> configuration.value.coolerForCaseList.remove(accessory)
+            else -> {}
+        }
+        var a = 0
     }
 
     init {

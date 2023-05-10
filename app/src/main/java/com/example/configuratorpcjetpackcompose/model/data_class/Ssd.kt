@@ -4,25 +4,51 @@ import com.example.configuratorpcjetpackcompose.model.DataStorage
 import com.google.firebase.firestore.PropertyName
 
 data class Ssd(
-    @PropertyName("type")
+    @JvmField @PropertyName("type")
     var _type: String = "",
-    @PropertyName("connection_connector")
+    @JvmField @PropertyName("connection_connector")
     var _connectionConnector: String = "",
-    @PropertyName("maximum_recording_resource")
+    @JvmField @PropertyName("maximum_recording_resource")
     var _maximumRecordingResource: Double = 0.0,
-    @PropertyName("maximum_sequential_read_speed")
+    @JvmField @PropertyName("maximum_sequential_read_speed")
     var _maximumSequentialReadSpeed: Int = 0,
-    @PropertyName("dram_buffer")
+    @JvmField @PropertyName("dram_buffer")
     var _dramBuffer: Boolean = false,
-    @PropertyName("maximum_sequential_write_speed")
+    @JvmField @PropertyName("maximum_sequential_write_speed")
     var _maximumSequentialWriteSpeed: Int = 0,
-    @PropertyName("number_bits_per_cell")
+    @JvmField @PropertyName("number_bits_per_cell")
     var _numberOfBitsPerCell: String = "",
-    @PropertyName("memory_structure")
+    @JvmField @PropertyName("memory_structure")
     var _memoryStructure: String = "",
-    @PropertyName("dwpd")
+    @JvmField @PropertyName("dwpd")
     var _dwpd: Double = 0.0,
 ) : DataStorage() {
+
+    constructor(
+        idAccessory: String,
+        nameAccessory: String,
+        priceAccessory: Double,
+        descriptionAccessory: String,
+        uriAccessory: String,
+        ssd: Ssd
+    ) : this(
+        _type = ssd._type,
+        _connectionConnector = ssd._connectionConnector,
+        _maximumRecordingResource = ssd._maximumRecordingResource,
+        _maximumSequentialReadSpeed = ssd._maximumSequentialReadSpeed,
+        _dramBuffer = ssd._dramBuffer,
+        _maximumSequentialWriteSpeed = ssd._maximumSequentialWriteSpeed,
+        _numberOfBitsPerCell = ssd._numberOfBitsPerCell,
+        _memoryStructure = ssd._memoryStructure,
+        _dwpd = ssd._dwpd
+    ) {
+        _idAccessory = idAccessory
+        _nameAccessory = nameAccessory
+        _priceAccessory = priceAccessory
+        _descriptionAccessory = descriptionAccessory
+        _uriAccessory = uriAccessory
+    }
+
     var type: String
         get() = _type
         set(value) {

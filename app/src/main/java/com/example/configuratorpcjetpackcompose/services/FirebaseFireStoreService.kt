@@ -1,11 +1,22 @@
 package com.example.configuratorpcjetpackcompose.services
 
 import android.net.Uri
-import androidx.compose.runtime.snapshotFlow
 import com.example.configuratorpcjetpackcompose.model.Accessory
+import com.example.configuratorpcjetpackcompose.model.data_class.Case
 import com.example.configuratorpcjetpackcompose.model.data_class.Configuration
+import com.example.configuratorpcjetpackcompose.model.data_class.CoolerForCase
+import com.example.configuratorpcjetpackcompose.model.data_class.CoolerForCpu
 import com.example.configuratorpcjetpackcompose.model.data_class.Cpu
+import com.example.configuratorpcjetpackcompose.model.data_class.Dimm
+import com.example.configuratorpcjetpackcompose.model.data_class.HardDrive
+import com.example.configuratorpcjetpackcompose.model.data_class.Monitor
+import com.example.configuratorpcjetpackcompose.model.data_class.Motherboard
+import com.example.configuratorpcjetpackcompose.model.data_class.PowerSupplyUnit
+import com.example.configuratorpcjetpackcompose.model.data_class.SoDimm
+import com.example.configuratorpcjetpackcompose.model.data_class.SoundCard
+import com.example.configuratorpcjetpackcompose.model.data_class.Ssd
 import com.example.configuratorpcjetpackcompose.model.data_class.User
+import com.example.configuratorpcjetpackcompose.model.data_class.VideoCard
 import com.example.configuratorpcjetpackcompose.model.data_class.toFbConfiguration
 import com.example.configuratorpcjetpackcompose.model.firebase_data_class.FbConfiguration
 import com.example.configuratorpcjetpackcompose.model.firebase_data_class.toConfiguration
@@ -62,7 +73,7 @@ object FirebaseFireStoreService {
         }
     }
 
-    suspend fun getAccessoriesListFromDb(classAccessoryType: Class<out Accessory>): List<Accessory> {
+    suspend fun getAccessoriesCollectionListFromDb(classAccessoryType: Class<out Accessory>): List<Accessory> {
         return fireStoreDatabaseWeakRef.get()!!.collection(classAccessoryType.simpleName).get()
             .await()
             .map { snapshot ->
@@ -104,6 +115,29 @@ object FirebaseFireStoreService {
         }
     }
 
+    suspend fun getAccessoriesList(
+        idAccessoryList: MutableList<String>,
+        classAccessoryType: Class<out Accessory>
+    ): MutableList<out Accessory> {
+        var accessoryList: MutableList<Accessory> = mutableListOf()
+        for (idAccessory in idAccessoryList) {
+            accessoryList.add(suspendCancellableCoroutine { cancellableContinuation ->
+                fireStoreDatabaseWeakRef.get()!!.collection(classAccessoryType.simpleName)
+                    .document(idAccessory).get().addOnSuccessListener { document ->
+                        cancellableContinuation.resume(
+                            document.toObject(classAccessoryType)!!.also { accessory ->
+                                accessory._idAccessory = document.id
+                                accessory._nameAccessory = accessory.name
+                                accessory._priceAccessory = accessory.price
+                                accessory._descriptionAccessory = accessory.description
+                                accessory._uriAccessory = accessory.uri
+                            })
+                    }
+            })
+        }
+        return accessoryList
+    }
+
     suspend fun saveConfiguration(configuration: Configuration) {
         if (fireStoreDatabaseWeakRef.get() != null) {
 
@@ -120,7 +154,50 @@ object FirebaseFireStoreService {
                         cpu = getAccessory(
                             fbConfiguration.cpuId,
                             Cpu::class.java
-                        ) as Cpu
+                        ) as Cpu,
+                        motherboard = getAccessory(
+                            fbConfiguration.motherboardId,
+                            Motherboard::class.java
+                        ) as Motherboard,
+                        case = getAccessory(
+                            fbConfiguration.caseId,
+                            Case::class.java
+                        ) as Case,
+                        soundCard = getAccessory(
+                            fbConfiguration.soundCardId,
+                            SoundCard::class.java
+                        ) as SoundCard,
+                        powerSupplyUnit = getAccessory(
+                            fbConfiguration.powerSupplyUnitId,
+                            PowerSupplyUnit::class.java
+                        ) as PowerSupplyUnit,
+                        coolerForCpu = getAccessory(
+                            fbConfiguration.coolerForCpuId,
+                            CoolerForCpu::class.java
+                        ) as CoolerForCpu,
+                        coolerForCaseIdsList = getAccessoriesList(
+                            fbConfiguration.coolerForCaseIdsList,
+                            CoolerForCase::class.java
+                        ).map { snapshot -> snapshot as CoolerForCase }.toMutableList(),
+                        dimmIdsList = getAccessoriesList(
+                            fbConfiguration.dimmIdsList,
+                            Dimm::class.java
+                        ).map { snapshot -> snapshot as Dimm }.toMutableList(),
+                        soDimmIdsList = getAccessoriesCollectionListFromDb(
+                            SoDimm::class.java
+                        ).map { snapshot -> snapshot as SoDimm }.toMutableList(),
+                        hardDriveIdsList = getAccessoriesCollectionListFromDb(
+                            HardDrive::class.java
+                        ).map { snapshot -> snapshot as HardDrive }.toMutableList(),
+                        ssdIdsList = getAccessoriesCollectionListFromDb(
+                            Ssd::class.java
+                        ).map { snapshot -> snapshot as Ssd }.toMutableList(),
+                        monitorIdsList = getAccessoriesCollectionListFromDb(
+                            Monitor::class.java
+                        ).map { snapshot -> snapshot as Monitor }.toMutableList(),
+                        videoCardIdsList = getAccessoriesCollectionListFromDb(
+                            VideoCard::class.java
+                        ).map { snapshot -> snapshot as VideoCard }.toMutableList()
                     )
                 }
             }

@@ -4,25 +4,51 @@ import com.example.configuratorpcjetpackcompose.model.Cooler
 import com.google.firebase.firestore.PropertyName
 
 data class CoolerForCpu(
-    @PropertyName("type_construction")
+    @JvmField @PropertyName("type_construction")
     val _typeOfConstruction: String = "",
-    @PropertyName("heat_pipes_count")
+    @JvmField @PropertyName("heat_pipes_count")
     var _heatPipesCount: Int = 0,
-    @PropertyName("connector_connecting_fans")
+    @JvmField @PropertyName("connector_connecting_fans")
     var _connectorForConnectingFans: String = "",
-    @PropertyName("adjusting_rotation_speed")
+    @JvmField @PropertyName("adjusting_rotation_speed")
     var _adjustingTheRotationSpeed: String = "",
-    @PropertyName("type_backlight_power_connector")
+    @JvmField @PropertyName("type_backlight_power_connector")
     var _typeOfBacklightPowerConnector: String = "",
-    @PropertyName("socket")
+    @JvmField @PropertyName("socket")
     var _socket: List<String> = listOf(""),
-    @PropertyName("power_dissipation")
+    @JvmField @PropertyName("power_dissipation")
     var _powerDissipation: Int = 0,
-    @PropertyName("height")
+    @JvmField @PropertyName("height")
     var _height: Double = 0.0,
-    @PropertyName("maximum_noise_level")
+    @JvmField @PropertyName("maximum_noise_level")
     var _maximumNoiseLevel: Double = 0.0,
 ) : Cooler() {
+
+    constructor(
+        idAccessory: String,
+        nameAccessory: String,
+        priceAccessory: Double,
+        descriptionAccessory: String,
+        uriAccessory: String,
+        coolerForCpu: CoolerForCpu
+    ) : this(
+        _typeOfConstruction = coolerForCpu._typeOfConstruction,
+        _heatPipesCount = coolerForCpu._heatPipesCount,
+        _connectorForConnectingFans = coolerForCpu._connectorForConnectingFans,
+        _adjustingTheRotationSpeed = coolerForCpu._adjustingTheRotationSpeed,
+        _typeOfBacklightPowerConnector = coolerForCpu._typeOfBacklightPowerConnector,
+        _socket = coolerForCpu._socket,
+        _powerDissipation = coolerForCpu._powerDissipation,
+        _height = coolerForCpu._height,
+        _maximumNoiseLevel = coolerForCpu._maximumNoiseLevel
+    ) {
+        _idAccessory = idAccessory
+        _nameAccessory = nameAccessory
+        _priceAccessory = priceAccessory
+        _descriptionAccessory = descriptionAccessory
+        _uriAccessory = uriAccessory
+    }
+
 
     var heatPipesCount: Int
         get() = _heatPipesCount
@@ -44,7 +70,7 @@ data class CoolerForCpu(
         set(value) {
             _typeOfBacklightPowerConnector = value
         }
-    var socket:  List<String>
+    var socket: List<String>
         get() = _socket
         set(value) {
             _socket = value

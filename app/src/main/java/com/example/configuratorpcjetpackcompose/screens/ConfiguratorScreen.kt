@@ -2,8 +2,11 @@ package com.example.configuratorpcjetpackcompose.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
@@ -31,13 +34,12 @@ import kotlinx.coroutines.launch
 fun ConfiguratorScreen(navController: NavController) {
     val accessoriesViewModel: AccessoriesViewModel = viewModel()
     val coroutineScope = rememberCoroutineScope()
-    var userConfigurationsList: MutableList<Configuration> = mutableListOf()
+    var userConfigurationsList = accessoriesViewModel.userConfigurationsList
 
 
-    SideEffect {
+    LaunchedEffect(coroutineScope) {
         coroutineScope.launch {
-            userConfigurationsList =
-                accessoriesViewModel.loadAllConfigurationsForUser().toMutableList()
+            accessoriesViewModel.loadAllConfigurationsForUser()
         }
     }
 
@@ -61,16 +63,7 @@ fun ConfiguratorScreen(navController: NavController) {
                 .weight(0.85f),
             contentAlignment = Alignment.Center
         ) {
-            if (userConfigurationsList.isEmpty()) {
-                Text(
-                    textAlign = TextAlign.Center,
-                    color = AppTheme.colors.textMainColor,
-                    style = AppTheme.typography.text,
-                    text = stringResource(id = R.string.configurator_text_view_have_not_configurations)
-                )
-            } else {
-                ShortConfigurationElement()
-            }
+            ConfigurationLazyColumn(userConfigurationsList)
         }
     }
 

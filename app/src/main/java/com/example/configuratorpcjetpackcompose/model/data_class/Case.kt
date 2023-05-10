@@ -6,34 +6,64 @@ import com.google.firebase.firestore.PropertyName
 
 data class Case(
     @PropertyName("manufacturer")
-    var _manufacturer: String ="",
-    @PropertyName("form_factor_compatible_boards")
+    var _manufacturer: String = "",
+    @JvmField @PropertyName("form_factor_compatible_boards")
     var _formFactorOfCompatibleBoards: List<String> = listOf(""),
-    @PropertyName("type_size")
-    var _typeSize: String ="",
-    @PropertyName("placement_power_supply_unit")
-    var _placementOfThePowerSupplyUnit: String ="",
-    @PropertyName("window_material")
+    @JvmField @PropertyName("type_size")
+    var _typeSize: String = "",
+    @JvmField @PropertyName("placement_power_supply_unit")
+    var _placementOfThePowerSupplyUnit: String = "",
+    @JvmField @PropertyName("window_material")
     var _windowMaterial: String = "",
-    @PropertyName("main_color")
-    var _mainColor: String="",
-    @PropertyName("fans_included")
-    var _fansIncluded: String="",
-    @PropertyName("presence_window_side_wall")
-    var _thePresenceOfAWindowOnTheSideWall: String="",
-    @PropertyName("maximum_height_processor_cooler")
+    @JvmField @PropertyName("main_color")
+    var _mainColor: String = "",
+    @JvmField @PropertyName("fans_included")
+    var _fansIncluded: String = "",
+    @JvmField @PropertyName("presence_window_side_wall")
+    var _thePresenceOfAWindowOnTheSideWall: String = "",
+    @JvmField @PropertyName("maximum_height_processor_cooler")
     var _maximumHeightOfTheProcessorCooler: Int = 0,
-    @PropertyName("type_illumination")
-    var _typeOfIllumination: String ="",
-    @PropertyName("height")
-    var _height: Int =0,
-    @PropertyName("length_max_video_card")
-    var _lengthMaxOfVideoCard : Int=0,
-    @PropertyName("max_length_power_supply")
-    var _maxLengthOfThePowerSupply : Int =0,
+    @JvmField @PropertyName("type_illumination")
+    var _typeOfIllumination: String = "",
+    @JvmField @PropertyName("height")
+    var _height: Int = 0,
+    @JvmField @PropertyName("length_max_video_card")
+    var _lengthMaxOfVideoCard: Int = 0,
+    @JvmField @PropertyName("max_length_power_supply")
+    var _maxLengthOfThePowerSupply: Int = 0,
 ) : Accessory(
     _categoryAccessoryEnum = CategoryAccessoryEnum.CASE,
 ) {
+
+    constructor(
+        idAccessory: String,
+        nameAccessory: String,
+        priceAccessory: Double,
+        descriptionAccessory: String,
+        uriAccessory: String,
+        case: Case
+    ) : this(
+        _manufacturer = case._manufacturer,
+        _formFactorOfCompatibleBoards = case._formFactorOfCompatibleBoards,
+        _typeSize = case._typeSize,
+        _placementOfThePowerSupplyUnit = case._placementOfThePowerSupplyUnit,
+        _windowMaterial = case._windowMaterial,
+        _mainColor = case._mainColor,
+        _fansIncluded = case._fansIncluded,
+        _thePresenceOfAWindowOnTheSideWall = case._thePresenceOfAWindowOnTheSideWall,
+        _maximumHeightOfTheProcessorCooler = case._maximumHeightOfTheProcessorCooler,
+        _typeOfIllumination = case._typeOfIllumination,
+        _height = case._height,
+        _lengthMaxOfVideoCard = case._lengthMaxOfVideoCard,
+        _maxLengthOfThePowerSupply = case._maxLengthOfThePowerSupply
+    ) {
+        _idAccessory = idAccessory
+        _nameAccessory = nameAccessory
+        _priceAccessory = priceAccessory
+        _descriptionAccessory = descriptionAccessory
+        _uriAccessory = uriAccessory
+    }
+
     var manufacturer: String
         get() = _manufacturer
         set(value) {

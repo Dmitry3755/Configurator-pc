@@ -4,23 +4,48 @@ import com.example.configuratorpcjetpackcompose.model.DataStorage
 import com.google.firebase.firestore.PropertyName
 
 data class HardDrive(
-    @PropertyName("purpose")
+    @JvmField @PropertyName("purpose")
     var _purpose: String = "",
-    @PropertyName("spindle_rotation_speed")
+    @JvmField @PropertyName("spindle_rotation_speed")
     var _spindleRotationSpeed: Int = 0,
-    @PropertyName("recording_technology")
+    @JvmField @PropertyName("recording_technology")
     var _recordingTechnology: String = "",
-    @PropertyName("cache_memory_size")
+    @JvmField @PropertyName("cache_memory_size")
     var _cacheMemorySize: Int = 0,
-    @PropertyName("optimization_for_raid_arrays")
+    @JvmField @PropertyName("optimization_for_raid_arrays")
     var _optimizationForRaidArrays: Boolean = false,
-    @PropertyName("with_helium_filling")
+    @JvmField @PropertyName("with_helium_filling")
     var _withHeliumFilling: Boolean = false,
-    @PropertyName("noise_level_during_operation")
+    @JvmField @PropertyName("noise_level_during_operation")
     var _noiseLevelDuringOperation: Int = 0,
-    @PropertyName("number_positioning_parking_cycles")
+    @JvmField @PropertyName("number_positioning_parking_cycles")
     var _numberOfPositioningParkingCycles: Int = 0,
 ) : DataStorage() {
+
+    constructor(
+        idAccessory: String,
+        nameAccessory: String,
+        priceAccessory: Double,
+        descriptionAccessory: String,
+        uriAccessory: String,
+        hardDrive: HardDrive
+    ) : this(
+        _purpose = hardDrive._purpose,
+        _spindleRotationSpeed = hardDrive._spindleRotationSpeed,
+        _recordingTechnology = hardDrive._recordingTechnology,
+        _cacheMemorySize = hardDrive._cacheMemorySize,
+        _optimizationForRaidArrays = hardDrive._optimizationForRaidArrays,
+        _withHeliumFilling = hardDrive._withHeliumFilling,
+        _noiseLevelDuringOperation = hardDrive._noiseLevelDuringOperation,
+        _numberOfPositioningParkingCycles = hardDrive._numberOfPositioningParkingCycles
+    ) {
+        _idAccessory = idAccessory
+        _nameAccessory = nameAccessory
+        _priceAccessory = priceAccessory
+        _descriptionAccessory = descriptionAccessory
+        _uriAccessory = uriAccessory
+    }
+
     var purpose: String
         get() = _purpose
         set(value) {

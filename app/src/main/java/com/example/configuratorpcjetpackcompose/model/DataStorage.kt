@@ -4,11 +4,11 @@ import android.net.Uri
 import com.google.firebase.firestore.PropertyName
 
 open class DataStorage(
-    @PropertyName("manufacturer")
+    @JvmField @PropertyName("manufacturer")
     var _manufacturerDataStorage: String = "",
-    @PropertyName("thickness")
+    @JvmField @PropertyName("thickness")
     var _thicknessDataStorage: Double = 0.0,
-    @PropertyName("memory_capacity")
+    @JvmField @PropertyName("memory_capacity")
     var _memoryCapacity: Int = 0,
 
     ) : Accessory(

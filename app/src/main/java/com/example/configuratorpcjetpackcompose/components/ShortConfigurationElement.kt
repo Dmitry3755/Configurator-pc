@@ -19,10 +19,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.R
+import com.example.configuratorpcjetpackcompose.model.data_class.Configuration
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
 
 @Composable
-fun ShortConfigurationElement() {
+fun ShortConfigurationElement(configuration: Configuration) {
     val lineColor = AppTheme.colors.backgroundButtonColor
     val configurationItems = listOf(
         ConfigurationElementEnum.Processor to 0,
@@ -124,7 +125,7 @@ fun ShortConfigurationElement() {
 @Composable
 private fun DefaultPreviewLight() {
     AppTheme {
-        ShortConfigurationElement()
+        ShortConfigurationElement(Configuration())
     }
 }
 
@@ -132,6 +133,6 @@ private fun DefaultPreviewLight() {
 @Composable
 private fun DefaultPreviewDark() {
     AppTheme {
-        ShortConfigurationElement()
+        ShortConfigurationElement(Configuration())
     }
 }

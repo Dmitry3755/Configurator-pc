@@ -7,7 +7,7 @@ import com.example.configuratorpcjetpackcompose.model.data_class.Configuration
 object ConfigurationService {
 
     suspend fun getListAccessoryFromDB(classAccessoryType: Class<out Accessory>): List<Accessory> {
-        return FirebaseFireStoreService.getAccessoriesListFromDb(classAccessoryType = classAccessoryType)
+        return FirebaseFireStoreService.getAccessoriesCollectionListFromDb(classAccessoryType = classAccessoryType)
     }
 
     suspend fun getAccessoriesImage(uriAccessory: String): Uri {

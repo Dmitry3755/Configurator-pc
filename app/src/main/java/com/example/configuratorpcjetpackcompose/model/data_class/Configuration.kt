@@ -2,6 +2,7 @@ package com.example.configuratorpcjetpackcompose.model.data_class
 
 import androidx.compose.runtime.mutableStateOf
 import com.example.configuratorpcjetpackcompose.model.Accessory
+import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
 import com.example.configuratorpcjetpackcompose.model.firebase_data_class.FbConfiguration
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationError
 import com.google.firebase.firestore.PropertyName
@@ -13,30 +14,43 @@ data class Configuration(
     @PropertyName("motherboard")
     var motherboard: Motherboard? = null,
     @PropertyName("dimm_list")
-    var dimmList: ArrayList<Dimm> = arrayListOf(),
+    var dimmList: MutableList<Dimm> = mutableListOf(),
     @PropertyName("sodimm_list")
-    var soDimmList: ArrayList<SoDimm> = arrayListOf(),
+    var soDimmList: MutableList<SoDimm> = mutableListOf(),
     @PropertyName("power_supply_unit")
     var powerSupplyUnit: PowerSupplyUnit? = null,
     @PropertyName("sound_card")
     var soundCard: SoundCard? = null,
     @PropertyName("video_card_list")
-    var videoCardList: ArrayList<VideoCard> = arrayListOf(),
+    var videoCardList: MutableList<VideoCard> = mutableListOf(),
     @PropertyName("cooler_for_case_list")
-    var coolerForCaseList: ArrayList<CoolerForCase> = arrayListOf(),
+    var coolerForCaseList: MutableList<CoolerForCase> = mutableListOf(),
     @PropertyName("cooler_for_cpu")
     var coolerForCpu: CoolerForCpu? = null,
     @PropertyName("case")
     var case: Case? = null,
     @PropertyName("monitor_list")
-    var monitorList: ArrayList<Monitor> = arrayListOf(),
+    var monitorList: MutableList<Monitor> = mutableListOf(),
     @PropertyName("hard_drive_list")
-    var hardDriveList: ArrayList<HardDrive> = arrayListOf(),
+    var hardDriveList: MutableList<HardDrive> = mutableListOf(),
     @PropertyName("ssd_list")
-    var ssdList: ArrayList<Ssd> = arrayListOf(),
+    var ssdList: MutableList<Ssd> = mutableListOf(),
     @PropertyName("user_owner")
     var userOwner: User? = null,
 ) {
+
+    fun getListAccessoryFromConfiguration(configurationElementList: Class<out Accessory>) : List<Accessory> {
+        when (configurationElementList) {
+            VideoCard::class.java -> if (videoCardList.isNotEmpty())  return videoCardList
+            Ssd::class.java -> if (ssdList.isNotEmpty()) return ssdList
+            HardDrive::class.java -> if (hardDriveList.isNotEmpty()) return hardDriveList
+            SoDimm::class.java -> if (soDimmList.isNotEmpty())  return soDimmList
+            CoolerForCase::class.java -> if (coolerForCaseList.isNotEmpty())  return coolerForCaseList
+            Monitor::class.java -> if (monitorList.isNotEmpty()) return monitorList
+        }
+        return listOf()
+    }
+
     fun checkAccessoryInConfiguration(configurationElementList: List<Class<out Accessory>>): Boolean {
         for (element in configurationElementList) {
             when (element) {
@@ -55,6 +69,24 @@ data class Configuration(
             }
         }
         return false
+    }
+
+    fun getAccessoryFromConfiguration(configurationElementList: Class<out Accessory>): Accessory {
+        when (configurationElementList) {
+            Cpu::class.java -> if (cpu != null) return cpu!!
+            Motherboard::class.java -> if (motherboard != null) return motherboard!!
+            PowerSupplyUnit::class.java -> if (powerSupplyUnit != null) return powerSupplyUnit!!
+            SoundCard::class.java -> if (soundCard != null) return soundCard!!
+            Case::class.java -> if (case != null) return case!!
+            VideoCard::class.java -> if (videoCardList.isNotEmpty()) { for (videCard in videoCardList) { return videCard}}
+            Ssd::class.java -> if (ssdList.isNotEmpty())  { for (ssd in ssdList) { return ssd}}
+            HardDrive::class.java -> if (hardDriveList.isNotEmpty())  { for (hardDrive in hardDriveList) { return hardDrive}}
+            SoDimm::class.java -> if (soDimmList.isNotEmpty())  { for (soDimm in soDimmList) { return soDimm}}
+            CoolerForCase::class.java -> if (coolerForCaseList.isNotEmpty())  { for (coolerForCase in coolerForCaseList) { return coolerForCase}}
+            CoolerForCpu::class.java -> if (coolerForCpu != null) return coolerForCpu!!
+            Monitor::class.java -> if (monitorList.isNotEmpty())  { for (monitor in monitorList) { return monitor}}
+        }
+        return Accessory(_categoryAccessoryEnum = CategoryAccessoryEnum.VIDEO_CARD)
     }
 
     fun checkingCompatibility(): ConfigurationError {

@@ -36,7 +36,8 @@ fun LargeConfigurationElement(
                 LargeConfigurationElementLine(
                     configurationElement = elementType,
                     navController = navController,
-                   isAccessoryAdded = configuration.checkAccessoryInConfiguration(elementType.classAccessoriesTypesList)
+                    configuration = configuration,
+                    isAccessoryAdded = configuration.checkAccessoryInConfiguration(elementType.classAccessoriesTypesList)
                 )
             }
         }

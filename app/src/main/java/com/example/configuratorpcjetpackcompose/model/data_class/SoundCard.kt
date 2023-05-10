@@ -5,33 +5,62 @@ import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
 import com.google.firebase.firestore.PropertyName
 
 data class SoundCard(
-    @PropertyName("manufacturer")
+    @JvmField @PropertyName("manufacturer")
     var _manufacturer: String = "",
-    @PropertyName("location")
+    @JvmField @PropertyName("location")
     var _location: String = "",
-    @PropertyName("connection_interface")
+    @JvmField @PropertyName("connection_interface")
     var _connectionInterface: String = "",
-    @PropertyName("format")
+    @JvmField @PropertyName("format")
     var _format: Double = 0.0,
-    @PropertyName("dac_bit_rate")
+    @JvmField @PropertyName("dac_bit_rate")
     var _dacBitRate: Int = 0,
-    @PropertyName("professional_adapter_ram")
+    @JvmField @PropertyName("professional_adapter_ram")
     var _professionalAdapterRam: Boolean = false,
-    @PropertyName("support_asio")
+    @JvmField @PropertyName("support_asio")
     var _supportAsio: Boolean = false,
-    @PropertyName("builtIn_headphone_amplifier")
+    @JvmField @PropertyName("builtIn_headphone_amplifier")
     var _builtInHeadphoneAmplifier: Boolean = false,
-    @PropertyName("support_os")
-    var _supportOs: String = "",
-    @PropertyName("phantom_microphone_power")
+    @JvmField @PropertyName("support_os")
+    var _supportOs: List<String> = listOf(""),
+    @JvmField @PropertyName("phantom_microphone_power")
     var _phantomMicrophonePower: Boolean = false,
-    @PropertyName("maximum_dac_frequency")
+    @JvmField @PropertyName("maximum_dac_frequency")
     var _maximumDacFrequency: Double = 0.0,
-    @PropertyName("instrumental_input")
+    @JvmField @PropertyName("instrumental_input")
     var _instrumentalInput: Boolean = false,
 ) : Accessory(
     _categoryAccessoryEnum = CategoryAccessoryEnum.SOUND_CARD,
 ) {
+
+    constructor(
+        idAccessory: String,
+        nameAccessory: String,
+        priceAccessory: Double,
+        descriptionAccessory: String,
+        uriAccessory: String,
+        soundCard: SoundCard
+    ) : this(
+        _manufacturer = soundCard._manufacturer,
+        _location = soundCard._location,
+        _connectionInterface = soundCard._connectionInterface,
+        _format = soundCard._format,
+        _dacBitRate = soundCard._dacBitRate,
+        _professionalAdapterRam = soundCard._professionalAdapterRam,
+        _supportAsio = soundCard._supportAsio,
+        _builtInHeadphoneAmplifier = soundCard._builtInHeadphoneAmplifier,
+        _supportOs = soundCard._supportOs,
+        _phantomMicrophonePower = soundCard._phantomMicrophonePower,
+        _maximumDacFrequency = soundCard._maximumDacFrequency,
+        _instrumentalInput = soundCard._instrumentalInput
+    ) {
+        _idAccessory = idAccessory
+        _nameAccessory = nameAccessory
+        _priceAccessory = priceAccessory
+        _descriptionAccessory = descriptionAccessory
+        _uriAccessory = uriAccessory
+    }
+
     var manufacturer: String
         get() = _manufacturer
         set(value) {
@@ -72,7 +101,7 @@ data class SoundCard(
         set(value) {
             _builtInHeadphoneAmplifier = value
         }
-    var supportOs: String
+    var supportOs: List<String>
         get() = _supportOs
         set(value) {
             _supportOs = value

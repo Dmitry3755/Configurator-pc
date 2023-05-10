@@ -5,33 +5,62 @@ import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
 import com.google.firebase.firestore.PropertyName
 
 data class VideoCard(
-    @PropertyName("manufacturer")
+    @JvmField @PropertyName("manufacturer")
     var _manufacturer: String = "",
-    @PropertyName("graphics_processor")
+    @JvmField @PropertyName("graphics_processor")
     var _graphicsProcessor: String = "",
-    @PropertyName("video_memory_capacity")
+    @JvmField @PropertyName("video_memory_capacity")
     var _videoMemoryCapacity: Int = 0,
-    @PropertyName("gpu_manufacturer")
+    @JvmField @PropertyName("gpu_manufacturer")
     var _gpuManufacturer: String = "",
-    @PropertyName("type_memory")
+    @JvmField @PropertyName("type_memory")
     var _typeOfMemory: String = "",
-    @PropertyName("memory_bus_bit_rate")
+    @JvmField @PropertyName("memory_bus_bit_rate")
     var _memoryBusBitRate: Int = 0,
-    @PropertyName("connection_interface")
+    @JvmField @PropertyName("connection_interface")
     var _connectionInterface: String = "",
-    @PropertyName("type_number_installed_fans")
+    @JvmField @PropertyName("type_number_installed_fans")
     var _typeAndNumberOfInstalledFans: String = "",
-    @PropertyName("lhr")
+    @JvmField @PropertyName("lhr")
     var _lhr: Boolean = false,
-    @PropertyName("monitors_connected_same_time_count")
+    @JvmField @PropertyName("monitors_connected_same_time_count")
     var _monitorsConnectedAtTheSameTimeCount: Int = 0,
-    @PropertyName("length")
+    @JvmField @PropertyName("length")
     var _length: Int = 0,
-    @PropertyName("energy_consumption_max")
+    @JvmField @PropertyName("energy_consumption_max")
     var _energyConsumptionMax: Int = 0,
 ) : Accessory(
     _categoryAccessoryEnum = CategoryAccessoryEnum.VIDEO_CARD,
 ) {
+
+    constructor(
+        idAccessory: String,
+        nameAccessory: String,
+        priceAccessory: Double,
+        descriptionAccessory: String,
+        uriAccessory: String,
+        videoCard: VideoCard
+    ) : this(
+        _manufacturer = videoCard._manufacturer,
+        _graphicsProcessor = videoCard._graphicsProcessor,
+        _videoMemoryCapacity = videoCard._videoMemoryCapacity,
+        _gpuManufacturer = videoCard._gpuManufacturer,
+        _typeOfMemory = videoCard._typeOfMemory,
+        _memoryBusBitRate = videoCard._memoryBusBitRate,
+        _connectionInterface = videoCard._connectionInterface,
+        _typeAndNumberOfInstalledFans = videoCard._typeAndNumberOfInstalledFans,
+        _lhr = videoCard._lhr,
+        _monitorsConnectedAtTheSameTimeCount = videoCard._monitorsConnectedAtTheSameTimeCount,
+        _length = videoCard._length,
+        _energyConsumptionMax = videoCard._energyConsumptionMax
+    ) {
+        _idAccessory = idAccessory
+        _nameAccessory = nameAccessory
+        _priceAccessory = priceAccessory
+        _descriptionAccessory = descriptionAccessory
+        _uriAccessory = uriAccessory
+    }
+
     var manufacturer: String
         get() = _manufacturer
         set(value) {

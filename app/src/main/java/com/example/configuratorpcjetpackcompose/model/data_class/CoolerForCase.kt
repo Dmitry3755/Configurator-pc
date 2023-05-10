@@ -4,23 +4,47 @@ import com.example.configuratorpcjetpackcompose.model.Cooler
 import com.google.firebase.firestore.PropertyName
 
 data class CoolerForCase(
-    @PropertyName("fan_size")
+    @JvmField @PropertyName("fan_size")
     var _fanSize: String = "",
-    @PropertyName("type_power_connector")
+    @JvmField @PropertyName("type_power_connector")
     var _typeOfPowerConnector: List<String> = listOf(""),
-    @PropertyName("maximum_noise_level")
+    @JvmField @PropertyName("maximum_noise_level")
     var _maximumNoiseLevel: Double = 0.0,
-    @PropertyName("speed_adjustment")
+    @JvmField @PropertyName("speed_adjustment")
     var _speedAdjustment: String = "",
-    @PropertyName("type_bearing")
+    @JvmField @PropertyName("type_bearing")
     var _typeOfBearing: String = "",
-    @PropertyName("maximum_rotation_speed")
+    @JvmField @PropertyName("maximum_rotation_speed")
     var _maximumRotationSpeed: Int = 0,
-    @PropertyName("hub_controller_included")
+    @JvmField @PropertyName("hub_controller_included")
     var _hubControllerIncluded: Boolean = false,
-    @PropertyName("type_backlight_power_connector")
+    @JvmField @PropertyName("type_backlight_power_connector")
     var _typeOfBacklightPowerConnector: String = "",
 ) : Cooler() {
+
+    constructor(
+        idAccessory: String,
+        nameAccessory: String,
+        priceAccessory: Double,
+        descriptionAccessory: String,
+        uriAccessory: String,
+        coolerForCase: CoolerForCase
+    ) : this(
+        _fanSize = coolerForCase._fanSize,
+        _typeOfPowerConnector = coolerForCase._typeOfPowerConnector,
+        _maximumNoiseLevel = coolerForCase._maximumNoiseLevel,
+        _speedAdjustment = coolerForCase._speedAdjustment,
+        _typeOfBearing = coolerForCase._typeOfBearing,
+        _hubControllerIncluded = coolerForCase._hubControllerIncluded,
+        _typeOfBacklightPowerConnector = coolerForCase._typeOfBacklightPowerConnector
+    ) {
+        _idAccessory = idAccessory
+        _nameAccessory = nameAccessory
+        _priceAccessory = priceAccessory
+        _descriptionAccessory = descriptionAccessory
+        _uriAccessory = uriAccessory
+    }
+
     var fanSize: String
         get() = _fanSize
         set(value) {
