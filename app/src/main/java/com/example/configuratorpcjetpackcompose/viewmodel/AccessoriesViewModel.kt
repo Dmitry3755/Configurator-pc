@@ -59,9 +59,9 @@ class AccessoriesViewModel() : ViewModel() {
     }
 
     suspend fun loadAllConfigurationsForUser() {
+        userConfigurationsList.clear()
         userConfigurationsList.addAll(configurationRepository.loadAllConfigurationsForUserFormDB())
     }
-
 
     suspend fun saveConfiguration(configuration: Configuration) {
         configurationRepository.saveConfigurationToDB(configuration)
@@ -103,7 +103,6 @@ class AccessoriesViewModel() : ViewModel() {
             is CoolerForCase -> configuration.value.coolerForCaseList.remove(accessory)
             else -> {}
         }
-        var a = 0
     }
 
     init {

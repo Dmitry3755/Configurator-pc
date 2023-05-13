@@ -28,6 +28,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
+import com.example.configuratorpcjetpackcompose.model.data_class.Case
+import com.example.configuratorpcjetpackcompose.model.data_class.CoolerForCpu
+import com.example.configuratorpcjetpackcompose.model.data_class.Cpu
+import com.example.configuratorpcjetpackcompose.model.data_class.Motherboard
+import com.example.configuratorpcjetpackcompose.model.data_class.PowerSupplyUnit
+import com.example.configuratorpcjetpackcompose.model.data_class.SoundCard
 import com.example.configuratorpcjetpackcompose.navigation.AccessoryNavigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
@@ -39,14 +45,12 @@ fun LargeConfigurationElementLine(
     navController: NavController,
     isAccessoryAdded: Boolean,
     configuration: com.example.configuratorpcjetpackcompose.model.data_class.Configuration,
-    viewModel: AccessoriesViewModel = viewModel()
+    viewModel: AccessoriesViewModel = viewModel(),
+    isDeleted: MutableState<Boolean>
 ) {
     val lineColor = AppTheme.colors.backgroundButtonColor
     val isCollapsed = remember {
         mutableStateOf(true)
-    }
-    var text = remember {
-        mutableStateOf("")
     }
 
     Column() {
@@ -110,7 +114,7 @@ fun LargeConfigurationElementLine(
                 modifier = Modifier.height(20.dp),
                 painter = painterResource(
                     if (isAccessoryAdded) {
-                        R.drawable.ic_checkmark //TODO: Заменить иконку в соответствии с дизайном
+                        R.drawable.ic_checkmark
                     } else {
                         R.drawable.ic_circle_outline
                     }
@@ -129,7 +133,7 @@ fun LargeConfigurationElementLine(
                 )
             } else {
                 IconButton(
-                    modifier = Modifier.fillMaxWidth(0.55f), //TODO: Исправить
+                    modifier = Modifier.fillMaxWidth(0.55f),
                     onClick = {
                         isCollapsed.value = !isCollapsed.value
                     }) {
@@ -141,45 +145,55 @@ fun LargeConfigurationElementLine(
             }
         }
 
-        Row {
+        Row() {
             if (isAccessoryAdded && !isCollapsed.value) {
                 Column(
                     modifier = Modifier.background(AppTheme.colors.backgroundFormColor),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    for (item in configurationElement.classAccessoriesTypesList) {
-                        if (configuration.getListAccessoryFromConfiguration(
-                                item
-                            ).isNotEmpty()
-                        ) {
-                            for (accessoryListItem in configuration.getListAccessoryFromConfiguration(
-                                item
-                            )) {
-                                text.value = accessoryListItem._nameAccessory
-                                AccessoryAddedOnConfiguration(
-                                    configuration = configuration,
-                                    text = text.value,
-                                    accessory = item,
-                                    navController = navController,
-                                    configurationElement = configurationElement
-                                )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Box(modifier = Modifier.fillMaxWidth(0.8f)) {
+                        MainButton(
+                            textButton = stringResource(id = R.string.btn_text_add),
+                            onClick = {
+                                navController.navigate(AccessoryNavigation.AllSelectedComponentsScreen.route + "/${configurationElement.name}")
                             }
-                        } else {
-                            text.value =
-                                configuration.getAccessoryFromConfiguration(item)._nameAccessory
+                        )
+                    }
+                for (item in configurationElement.classAccessoriesTypesList) {
+                    var listAccessory = configuration.getListAccessoryFromConfiguration(
+                        item
+                    )
+                    if (listAccessory.isNotEmpty()) {
+                        for (accessoryListItem in listAccessory) {
                             AccessoryAddedOnConfiguration(
-                                configuration = configuration,
-                                text = text.value,
-                                accessory = item,
-                                navController = navController,
-                                configurationElement = configurationElement
+                                text = accessoryListItem._nameAccessory,
+                                accessory = accessoryListItem,
+                                viewModel = viewModel,
+                                isDeleted = isDeleted
                             )
                         }
+                    }
+
+                    if (item == Cpu::class.java ||
+                        item == Motherboard::class.java ||
+                        item == PowerSupplyUnit::class.java ||
+                        item == SoundCard::class.java ||
+                        item == Case::class.java ||
+                        item == CoolerForCpu::class.java
+                    ) {
+                        AccessoryAddedOnConfiguration(
+                            text = configuration.getAccessoryFromConfiguration(item)._nameAccessory,
+                            accessory = configuration.getAccessoryFromConfiguration(item),
+                            viewModel = viewModel,
+                            isDeleted = isDeleted
+                        )
                     }
                 }
             }
         }
     }
+}
 }
 
 
@@ -188,11 +202,15 @@ fun LargeConfigurationElementLine(
 private fun DefaultPreviewLight() {
     AppTheme() {
         val accessoryNavController = rememberNavController()
+        var a = remember {
+            mutableStateOf(false)
+        }
         LargeConfigurationElementLine(
             configurationElement = ConfigurationElementEnum.Processor,
             accessoryNavController,
             configuration = com.example.configuratorpcjetpackcompose.model.data_class.Configuration(),
-            isAccessoryAdded = false
+            isAccessoryAdded = true,
+            isDeleted = a
         )
     }
 }
@@ -202,11 +220,15 @@ private fun DefaultPreviewLight() {
 private fun DefaultPreviewDark() {
     AppTheme() {
         val accessoryNavController = rememberNavController()
+        var a = remember {
+            mutableStateOf(false)
+        }
         LargeConfigurationElementLine(
             configurationElement = ConfigurationElementEnum.Motherboard,
             accessoryNavController,
             configuration = com.example.configuratorpcjetpackcompose.model.data_class.Configuration(),
-            isAccessoryAdded = true
+            isAccessoryAdded = false,
+            isDeleted = a
         )
     }
 }

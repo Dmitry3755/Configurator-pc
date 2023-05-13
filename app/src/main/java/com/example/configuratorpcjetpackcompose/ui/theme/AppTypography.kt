@@ -23,6 +23,12 @@ data class AppTypography (
         fontWeight = FontWeight.Bold,
         fontSize = 32.sp
     ),
+    val errorTitle: TextStyle = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontStyle =  AppFontFamily().PoppinsBold,
+        fontWeight =  FontWeight.Bold,
+        fontSize = 25.sp
+    ),
     val text: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontStyle = AppFontFamily().PoppinsMedium,

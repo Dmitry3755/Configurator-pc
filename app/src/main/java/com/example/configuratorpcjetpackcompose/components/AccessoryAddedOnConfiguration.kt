@@ -10,7 +10,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
+import androidx.compose.material.rememberBackdropScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.currentComposer
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -28,15 +33,16 @@ import com.example.configuratorpcjetpackcompose.viewmodel.AccessoriesViewModel
 @Composable
 fun AccessoryAddedOnConfiguration(
     text: String,
-    configuration: com.example.configuratorpcjetpackcompose.model.data_class.Configuration,
-    accessory: Class<out Accessory>,
+    accessory: Accessory,
     viewModel: AccessoriesViewModel = viewModel(),
-    navController: NavController,
-    configurationElement: ConfigurationElementEnum
+    isDeleted: MutableState<Boolean>
 ) {
     Row(
         modifier = Modifier
-            .padding(top = AppTheme.dimensions.verticalElementsPadding)
+            .padding(
+                top = AppTheme.dimensions.verticalElementsPadding,
+                bottom = AppTheme.dimensions.verticalElementsPadding
+            )
             .fillMaxWidth(1f)
             .fillMaxHeight(0.5f),
         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -59,23 +65,12 @@ fun AccessoryAddedOnConfiguration(
             textButton = stringResource(id = R.string.btn_text_delete),
             onClick = {
                 viewModel.removeAccessoryInConfiguration(
-                    configuration.getAccessoryFromConfiguration(
-                        accessory
-                    )
+                    accessory
                 )
+                isDeleted.value = !isDeleted.value
             },
             isDelete = true,
             isSmall = true
         )
     }
-    Spacer(modifier = Modifier.height(20.dp))
-    Row(modifier = Modifier.fillMaxWidth(0.8f)) {
-        MainButton(
-            textButton = stringResource(id = R.string.btn_text_add),
-            onClick = {
-                navController.navigate(AccessoryNavigation.AllSelectedComponentsScreen.route + "/${configurationElement.name}")
-            }
-        )
-    }
-    Spacer(modifier = Modifier.height(20.dp))
 }

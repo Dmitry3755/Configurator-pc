@@ -29,6 +29,8 @@ data class Motherboard(
     var _energyConsumptionMax: Int = 0,
     @JvmField @PropertyName("memory_frequency_max")
     var _memoryFrequencyMax: Int = 0,
+    @JvmField @PropertyName("all_slots_videocard")
+    var _slotsForVideoCardsList: List<String> = listOf()
 ) : Accessory(
     _categoryAccessoryEnum = CategoryAccessoryEnum.MOTHERBOARD,
 ) {
@@ -120,5 +122,10 @@ data class Motherboard(
         get() = _memoryFrequencyMax
         set(value) {
             _memoryFrequencyMax = value
+        }
+    var slotsForVideoCardsList: List<String>
+        get() = _slotsForVideoCardsList
+        set(value) {
+            _slotsForVideoCardsList = value
         }
 }

@@ -29,6 +29,8 @@ data class VideoCard(
     var _length: Int = 0,
     @JvmField @PropertyName("energy_consumption_max")
     var _energyConsumptionMax: Int = 0,
+    @JvmField @PropertyName("form_factor_connector")
+    var _formFactorConnector: String = "",
 ) : Accessory(
     _categoryAccessoryEnum = CategoryAccessoryEnum.VIDEO_CARD,
 ) {
@@ -65,6 +67,11 @@ data class VideoCard(
         get() = _manufacturer
         set(value) {
             _manufacturer = value
+        }
+    var formFactorConnector: String
+        get() = _formFactorConnector
+        set(value) {
+            _formFactorConnector = value
         }
     var graphicsProcessor: String
         get() = _graphicsProcessor

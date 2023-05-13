@@ -25,6 +25,8 @@ data class Case(
     var _maximumHeightOfTheProcessorCooler: Int = 0,
     @JvmField @PropertyName("type_illumination")
     var _typeOfIllumination: String = "",
+    @JvmField @PropertyName("fans_count")
+    var _fansCount: Int = 0,
     @JvmField @PropertyName("height")
     var _height: Int = 0,
     @JvmField @PropertyName("length_max_video_card")
@@ -50,6 +52,7 @@ data class Case(
         _windowMaterial = case._windowMaterial,
         _mainColor = case._mainColor,
         _fansIncluded = case._fansIncluded,
+        _fansCount = case._fansCount,
         _thePresenceOfAWindowOnTheSideWall = case._thePresenceOfAWindowOnTheSideWall,
         _maximumHeightOfTheProcessorCooler = case._maximumHeightOfTheProcessorCooler,
         _typeOfIllumination = case._typeOfIllumination,
@@ -78,6 +81,11 @@ data class Case(
         get() = _typeSize
         set(value) {
             _typeSize = value
+        }
+    var fansCount: Int
+        get() = _fansCount
+        set(value) {
+            _fansCount = value
         }
     var placementOfThePowerSupplyUnit: String
         get() = _placementOfThePowerSupplyUnit

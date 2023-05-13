@@ -44,6 +44,7 @@
     <string name="btn_text_price_up">↑</string>
     <string name="btn_text_price_down">↓</string>
     <string name="btn_text_price">Цена</string>
+    <string name="error">Ошибка</string>
     <string name="error_authentication_email_is_invalid">Адрес электронной почты введён неверно</string>
     <string name="error_authentication_password_is_too_short">Длина пароля должна быть больше 6 символов</string>
     <string name="error_authentication_password_is_invalid">Пароль введен не верно</string>
@@ -61,11 +62,14 @@
     <string name="error_configuration_cpu_without_integrated_graphics_core">Вы выбрали процессор без встроенного графического ядра. Для работоспособности компьютера нужна видеокарта</string>
     <string name="error_configuration_case_does_not_support_form_factor_of_motherboard">Корпус не поддерживает форм-фактор материнской платы</string>
     <string name="error_configuration_cpu_cooler_does_not_support_motherboard_socket">Кулер для процессора не поддерживает сокет материнской платы</string>
+    <string name="error_configuration_motherboard_doesnt_support_much_RAM">В материнской плате нет столько слотов под оперативную память</string>
+    <string name="error_configuration_motherboard_doesnt_support_much_video_card">В материнской плате нет столько слотов для видеокарт</string>
     <string name="error_configuration_motherboard_does_not_support_type_of_ram">Материнская плата не поддерживает тип оперативной памяти</string>
     <string name="error_configuration_pin_cpu_is_not_compatible">Разъем питания для процессора у блока питнания не совместим с разъемами питания процессора</string>
     <string name="error_configuration_case_does_not_support_size_of_video_card">Выбранный корпус не поддерживает размер выбранной видеокарты</string>
+    <string name="error_configuration_maximum_power_configuration_greater_than_power_supply">Максимальная потребляемая мощность вашей конфигурации больше чем мощность блока питания</string>
     <string name="ruble_symbol">₽</string>
-    <string name="accessory_description">Описанание</string>
+    <string name="accessory_description">Описание</string>
     <string name="accessory_name">Название</string>
 
 </resources>
