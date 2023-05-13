@@ -1,9 +1,11 @@
 package com.example.configuratorpcjetpackcompose.model.data_class
 
 import androidx.compose.runtime.mutableStateOf
+import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.model.Accessory
 import com.example.configuratorpcjetpackcompose.model.CategoryAccessoryEnum
 import com.example.configuratorpcjetpackcompose.model.firebase_data_class.FbConfiguration
+import com.example.configuratorpcjetpackcompose.utils.AppResources
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationError
 import com.google.firebase.firestore.PropertyName
 
@@ -39,13 +41,14 @@ data class Configuration(
     var userOwner: User? = null,
 ) {
 
-    fun getListAccessoryFromConfiguration(configurationElementList: Class<out Accessory>) : List<Accessory> {
+    fun getListAccessoryFromConfiguration(configurationElementList: Class<out Accessory>): List<Accessory> {
         when (configurationElementList) {
-            VideoCard::class.java -> if (videoCardList.isNotEmpty())  return videoCardList
+            VideoCard::class.java -> if (videoCardList.isNotEmpty()) return videoCardList
             Ssd::class.java -> if (ssdList.isNotEmpty()) return ssdList
+            Dimm::class.java -> if (dimmList.isNotEmpty()) return dimmList
             HardDrive::class.java -> if (hardDriveList.isNotEmpty()) return hardDriveList
-            SoDimm::class.java -> if (soDimmList.isNotEmpty())  return soDimmList
-            CoolerForCase::class.java -> if (coolerForCaseList.isNotEmpty())  return coolerForCaseList
+            SoDimm::class.java -> if (soDimmList.isNotEmpty()) return soDimmList
+            CoolerForCase::class.java -> if (coolerForCaseList.isNotEmpty()) return coolerForCaseList
             Monitor::class.java -> if (monitorList.isNotEmpty()) return monitorList
         }
         return listOf()
@@ -78,34 +81,307 @@ data class Configuration(
             PowerSupplyUnit::class.java -> if (powerSupplyUnit != null) return powerSupplyUnit!!
             SoundCard::class.java -> if (soundCard != null) return soundCard!!
             Case::class.java -> if (case != null) return case!!
-            VideoCard::class.java -> if (videoCardList.isNotEmpty()) { for (videCard in videoCardList) { return videCard}}
-            Ssd::class.java -> if (ssdList.isNotEmpty())  { for (ssd in ssdList) { return ssd}}
-            HardDrive::class.java -> if (hardDriveList.isNotEmpty())  { for (hardDrive in hardDriveList) { return hardDrive}}
-            SoDimm::class.java -> if (soDimmList.isNotEmpty())  { for (soDimm in soDimmList) { return soDimm}}
-            CoolerForCase::class.java -> if (coolerForCaseList.isNotEmpty())  { for (coolerForCase in coolerForCaseList) { return coolerForCase}}
+            VideoCard::class.java -> if (videoCardList.isNotEmpty()) {
+                for (videoCard in videoCardList) {
+                    return videoCard
+                }
+            }
+
+            Ssd::class.java -> if (ssdList.isNotEmpty()) {
+                for (ssd in ssdList) {
+                    return ssd
+                }
+            }
+
+            HardDrive::class.java -> if (hardDriveList.isNotEmpty()) {
+                for (hardDrive in hardDriveList) {
+                    return hardDrive
+                }
+            }
+
+            SoDimm::class.java -> if (soDimmList.isNotEmpty()) {
+                for (soDimm in soDimmList) {
+                    return soDimm
+                }
+            }
+
+            CoolerForCase::class.java -> if (coolerForCaseList.isNotEmpty()) {
+                for (coolerForCase in coolerForCaseList) {
+                    return coolerForCase
+                }
+            }
+
             CoolerForCpu::class.java -> if (coolerForCpu != null) return coolerForCpu!!
-            Monitor::class.java -> if (monitorList.isNotEmpty())  { for (monitor in monitorList) { return monitor}}
+            Monitor::class.java -> if (monitorList.isNotEmpty()) {
+                for (monitor in monitorList) {
+                    return monitor
+                }
+            }
         }
         return Accessory(_categoryAccessoryEnum = CategoryAccessoryEnum.VIDEO_CARD)
     }
 
     fun checkingCompatibility(): ConfigurationError {
-        /*TODO: 1) Проверка на совместимость сокетов (cpu  и motherboard) +
-         TODO:  2) Проверка на совместимость форм-фактора мат.платы  и корпуса +
-         TODO:  3) Проверка на совместимость сокетов (motherboard and coolerForCpu) +
-         TODO:  4) Проверка на совместимоть RAM (DIMM and So-DIMM) с мат.платой +
-         TODO:  5) Проверка на совместимость разъемов питания процессора на блоке питания (pin cpu) +
-         TODO:  6) Проверка по габаритам видеокарты и корпуса +
-         TODO:  7)
-         TODO:  8)
-         TODO:  9)
 
-         */
+        if (checkingRequiredComponents().isError.value) {
+            return checkingRequiredComponents()
+        }
+        if (checkingSocketCpuMotherboardCompatibility().isError.value) {
+            return checkingSocketCpuMotherboardCompatibility()
+        }
+        if (checkingFormFactorCompatibility().isError.value) {
+            return checkingFormFactorCompatibility()
+        }
+        if (checkingSocketCoolerMotherboardCompatibility().isError.value) {
+            return checkingSocketCoolerMotherboardCompatibility()
+        }
+        if (checkingDimmMotherboardCompatibility().isError.value) {
+            return checkingDimmMotherboardCompatibility()
+        }
+        if (checkingSoDimmMotherboardCompatibility().isError.value) {
+            return checkingSoDimmMotherboardCompatibility()
+        }
+        if (checkingMaxCountRamSlotsOnMotherboardCompatibility().isError.value) {
+            return checkingMaxCountRamSlotsOnMotherboardCompatibility()
+        }
+        if (checkingMaxLengthVideoCardOnCaseCompatibility().isError.value) {
+            return checkingMaxLengthVideoCardOnCaseCompatibility()
+        }
+        if (checkingMaxCountVideoCardSlotsOnMotherboardCompatibility().isError.value) {
+            return checkingMaxCountVideoCardSlotsOnMotherboardCompatibility()
+        }
+
+        if ((calculateConsumptionEnergy() * 100) / powerSupplyUnit!!._powerCapacity > 90) {
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(
+                    AppResources.getString(R.string.error_configuration_maximum_power_configuration_greater_than_power_supply)
+                )
+            )
+
+        }
+
         return ConfigurationError(
             isError = mutableStateOf(false),
             errorMessage = mutableStateOf("success")
         )
     }
+
+    private fun checkingRequiredComponents(): ConfigurationError {
+        if (cpu == null) {
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_cpu_is_empty))
+            )
+        }
+        if (motherboard == null) {
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_motherboard_is_empty))
+            )
+        }
+        if (case == null) {
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_case_is_empty))
+            )
+        }
+        if (coolerForCpu == null) {
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_cooler_for_cpu_is_empty))
+            )
+        }
+        if ((dimmList.isEmpty()) && (soDimmList.isEmpty())) {
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_ram_is_empty))
+            )
+        }
+        if ((ssdList.isEmpty()) && (hardDriveList.isEmpty())) {
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_data_storage_is_empty))
+            )
+        }
+        if (powerSupplyUnit == null) {
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_power_supply_unit_is_empty))
+            )
+        }
+        if (videoCardList.isEmpty() && cpu?._integratedGraphicsCore == false) {
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_cpu_without_integrated_graphics_core))
+            )
+        }
+        return ConfigurationError(
+            isError = mutableStateOf(false),
+            errorMessage = mutableStateOf("success")
+        )
+    }
+
+    private fun calculateConsumptionEnergy(): Int {
+        var energy = cpu!!._heatDissipation + 5 //энергопотребление процессора и куллера
+        for (videCard in videoCardList) {
+            energy += videCard._energyConsumptionMax
+        }
+        for (ssd in ssdList) {
+            energy += 15 // Ср. потребление ssd диска
+        }
+        for (hardDrive in hardDriveList) {
+            energy += when (hardDrive._spindleRotationSpeed) {
+                in 0..6000 -> 10 // Ср. потребление HDD диска до 6000 rmp
+                in 6001..7200 -> 15 // Ср. потребление HDD диска до 7200 rmp
+                in 7201..15000 -> 20 // Ср. потребление HDD диска до 15000 rmp
+                else -> 20
+            }
+        }
+        for (i in 0..case!!._fansCount) {
+            energy += 5
+        }
+        energy += when (motherboard!!.formFactor) {
+            "Standard-ATX" -> 70
+            "Micro-ATX" -> 60
+            "Mini-ATX" -> 30
+            "Mini-ITX" -> 20
+            "SSI-CEB" -> 150
+            "SSI-EEB" -> 150
+            "XL ATX" -> 130
+            "ATX" -> 70
+            else -> 50
+        }
+        return energy
+    }
+
+    private fun checkingSocketCpuMotherboardCompatibility(): ConfigurationError {
+        if (cpu?._socket != motherboard?.socket) {
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_processor_socket))
+            )
+        }
+        return ConfigurationError(
+            isError = mutableStateOf(false),
+            errorMessage = mutableStateOf("success")
+        )
+    }
+
+    private fun checkingMaxCountVideoCardSlotsOnMotherboardCompatibility(): ConfigurationError {
+        var pin16Connector = 0
+        for (slotsForVideoCardCount in motherboard!!._slotsForVideoCardsList) {
+            if (slotsForVideoCardCount.substring(2, slotsForVideoCardCount.length) == "PCI-E x16") {
+                pin16Connector = slotsForVideoCardCount[0].digitToInt()
+            }
+        }
+        if (videoCardList.size > pin16Connector) {
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_motherboard_doesnt_support_much_video_card))
+            )
+        }
+        return ConfigurationError(
+            isError = mutableStateOf(false),
+            errorMessage = mutableStateOf("success")
+        )
+    }
+
+    private fun checkingMaxCountRamSlotsOnMotherboardCompatibility(): ConfigurationError {
+        if (dimmList.size > motherboard!!.memorySlotsCount) {
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_motherboard_doesnt_support_much_RAM))
+            )
+        }
+        if (soDimmList.size > motherboard!!.memorySlotsCount) {
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_motherboard_doesnt_support_much_RAM))
+            )
+        }
+        return ConfigurationError(
+            isError = mutableStateOf(false),
+            errorMessage = mutableStateOf("success")
+        )
+    }
+
+    private fun checkingFormFactorCompatibility(): ConfigurationError {
+        for (caseFormFactor in case?.formFactorOfCompatibleBoards!!) {
+            if (motherboard?.formFactor == caseFormFactor) {
+                return ConfigurationError(
+                    isError = mutableStateOf(false),
+                    errorMessage = mutableStateOf("success")
+                )
+            }
+        }
+        return ConfigurationError(
+            isError = mutableStateOf(true),
+            errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_case_does_not_support_form_factor_of_motherboard))
+        )
+    }
+
+    private fun checkingSocketCoolerMotherboardCompatibility(): ConfigurationError {
+        for (coolerSocket in coolerForCpu?.socket!!) {
+            if (coolerSocket == motherboard?.socket) {
+                return ConfigurationError(
+                    isError = mutableStateOf(false),
+                    errorMessage = mutableStateOf("success")
+                )
+
+            }
+        }
+        return ConfigurationError(
+            isError = mutableStateOf(true),
+            errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_cpu_cooler_does_not_support_motherboard_socket))
+        )
+    }
+
+    private fun checkingDimmMotherboardCompatibility(): ConfigurationError {
+        for (ram in dimmList) {
+            if (motherboard?.typeOfSupportedMemory != ram.memoryType) {
+                return ConfigurationError(
+                    isError = mutableStateOf(true),
+                    errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_motherboard_does_not_support_type_of_ram))
+                )
+            }
+        }
+        return ConfigurationError(
+            isError = mutableStateOf(false),
+            errorMessage = mutableStateOf("success")
+        )
+    }
+
+    private fun checkingSoDimmMotherboardCompatibility(): ConfigurationError {
+        for (ram in soDimmList) {
+            if (motherboard?.typeOfSupportedMemory != ram.memoryType) {
+                return ConfigurationError(
+                    isError = mutableStateOf(true),
+                    errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_motherboard_does_not_support_type_of_ram))
+                )
+            }
+        }
+        return ConfigurationError(
+            isError = mutableStateOf(false),
+            errorMessage = mutableStateOf("success")
+        )
+    }
+
+    private fun checkingMaxLengthVideoCardOnCaseCompatibility(): ConfigurationError {
+        for (videoCard in videoCardList) {
+            if (videoCard.length > case?.lengthMaxOfVideoCard!!) {
+                return ConfigurationError(
+                    isError = mutableStateOf(true),
+                    errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_case_does_not_support_size_of_video_card))
+                )
+            }
+        }
+        return ConfigurationError(
+            isError = mutableStateOf(false),
+            errorMessage = mutableStateOf("success")
+        )
+    }
+
 }
 
 fun Configuration.toFbConfiguration(): FbConfiguration {
@@ -126,145 +402,4 @@ fun Configuration.toFbConfiguration(): FbConfiguration {
     )
 }
 
-/*    if (checkingTheRequiredComponents().isError.value) {
-        return checkingTheRequiredComponents()
-    }
 
-    var energy = calcEnergy()
-
-    if (cpu?._socket!= motherboard?.socket) {
-        DataResult.Error(
-            exception = Exception(
-                AppResources.getString(R.string.error_configuration_processor_socket)
-            )
-        )
-    }
-   /* for (caseFormFactor in case?.formFactorOfCompatibleBoards!!) {
-        if (motherboard?.formFactor != caseFormFactor) {
-            DataResult.Error(
-                exception = Exception(
-                    AppResources.getString(R.string.error_configuration_case_does_not_support_form_factor_of_motherboard)
-                )
-            )
-        }
-    }*/
-    for (coolerSocket in coolerForCpu?.socket!!) {
-        if (coolerSocket != motherboard?.socket) {
-            DataResult.Error(
-                exception = Exception(
-                    AppResources.getString(R.string.error_configuration_cpu_cooler_does_not_support_motherboard_socket)
-                )
-            )
-        }
-    }
-
-    for (ram in dimmRamList) {
-        if (motherboard?.typeOfSupportedMemory != ram.memoryType) {
-            DataResult.Error(
-                exception = Exception(
-                    AppResources.getString(R.string.error_configuration_motherboard_does_not_support_type_of_ram)
-                )
-            )
-        }
-    }
-    for (ram in soDimmRamList) {
-        if (motherboard?.typeOfSupportedMemory != ram.memoryType) {
-            DataResult.Error(
-                exception = Exception(
-                    AppResources.getString(R.string.error_configuration_motherboard_does_not_support_type_of_ram)
-                )
-            )
-        }
-    }
-    if (powerSupplyUnit?.connectorsForCpu != cpu?._pinConnector) {
-        DataResult.Error(
-            exception = Exception(
-                AppResources.getString(R.string.error_configuration_pin_cpu_is_not_compatible)
-            )
-        )
-    }
-    for (videoCard in videoCardList) {
-        if (videoCard.length > case?.lengthMaxOfVideoCard!!) {
-            DataResult.Error(
-                exception = Exception(
-                    AppResources.getString(R.string.error_configuration_case_does_not_support_size_of_video_card)
-                )
-            )
-        }
-        energy += videoCard.energyConsumptionMax
-        if (energy >= powerSupplyUnit?.powerCapacity!!) {
-            DataResult.Error(
-                exception = Exception(
-                    AppResources.getString(R.string.error_configuration_case_does_not_support_size_of_video_card)
-                )
-            )
-        }
-    }
-    return ConfigurationError(
-        isError = mutableStateOf(false),
-        errorMessage = mutableStateOf("success")
-    )
-}
-
-fun calcEnergy(): Int {
-    var energy = 0
-    energy = cpu?._heatDissipation!! + motherboard?.energyConsumptionMax!! + 50
-    return energy
-}
-
-fun checkingTheRequiredComponents(): ConfigurationError {
-    if (cpu == null) {
-        return ConfigurationError(
-            isError = mutableStateOf(true),
-            errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_cpu_is_empty))
-        )
-    }
-    if (motherboard == null) {
-        return ConfigurationError(
-            isError = mutableStateOf(true),
-            errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_cpu_is_empty))
-        )
-    }
-    if (case == null) {
-        return ConfigurationError(
-            isError = mutableStateOf(true),
-            errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_case_is_empty))
-        )
-    }
-    if (coolerForCpu == null) {
-        return ConfigurationError(
-            isError = mutableStateOf(true),
-            errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_cooler_for_cpu_is_empty))
-        )
-    }
-    if ((dimmRamList.isEmpty()) && (soDimmRamList.isEmpty())) {
-        return ConfigurationError(
-            isError = mutableStateOf(true),
-            errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_ram_is_empty))
-        )
-    }
-    if ((ssdStoreList.isEmpty()) && (hardDriveList.isEmpty())) {
-        return ConfigurationError(
-            isError = mutableStateOf(true),
-            errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_data_storage_is_empty))
-        )
-    }
-    if (powerSupplyUnit == null) {
-        return ConfigurationError(
-            isError = mutableStateOf(true),
-            errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_power_supply_unit_is_empty))
-        )
-    }
-    if (videoCardList.isEmpty()) {
-        if (cpu?._integratedGraphicsCore == false) {
-            return ConfigurationError(
-                isError = mutableStateOf(true),
-                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_cpu_without_integrated_graphics_core))
-            )
-        }
-    }
-    return ConfigurationError(
-        isError = mutableStateOf(false),
-        errorMessage = mutableStateOf("success")
-    )
-} */
