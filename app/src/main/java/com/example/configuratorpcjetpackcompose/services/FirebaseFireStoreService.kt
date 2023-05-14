@@ -135,12 +135,25 @@ object FirebaseFireStoreService {
                     }
             })
         }
+        var a= 0
         return accessoryList
+    }
+
+    suspend fun updateConfiguration(configuration: Configuration) {
+        if (fireStoreDatabaseWeakRef.get() != null) {
+            var fbConfiguration = configuration.toFbConfiguration()
+            val userFire = hashMapOf(
+                "caseId" to fbConfiguration.caseId,
+                "coolerForCaseIdsList" to fbConfiguration.coolerForCaseIdsList
+            )
+
+            fireStoreDatabaseWeakRef.get()!!.collection("Users").document(getUserId())
+                .collection("Configurations").document().update(userFire)
+        }
     }
 
     suspend fun saveConfiguration(configuration: Configuration) {
         if (fireStoreDatabaseWeakRef.get() != null) {
-
             fireStoreDatabaseWeakRef.get()!!.collection("Users").document(getUserId())
                 .collection("Configurations").document().set(configuration.toFbConfiguration())
         }
@@ -151,6 +164,7 @@ object FirebaseFireStoreService {
             .collection("Configurations").get().await().map { snapshot ->
                 snapshot.toObject(FbConfiguration::class.java).let { fbConfiguration ->
                     fbConfiguration.toConfiguration(
+                        nameConfiguration = snapshot.get("name").toString(),
                         cpu = getAccessory(
                             fbConfiguration.cpuId,
                             Cpu::class.java
@@ -163,10 +177,14 @@ object FirebaseFireStoreService {
                             fbConfiguration.caseId,
                             Case::class.java
                         ) as Case,
-                        soundCard = getAccessory(
-                            fbConfiguration.soundCardId,
-                            SoundCard::class.java
-                        ) as SoundCard,
+                        soundCard = if (fbConfiguration.soundCardId != "") {
+                            getAccessory(
+                                fbConfiguration.soundCardId,
+                                SoundCard::class.java
+                            ) as SoundCard
+                        } else {
+                            SoundCard()
+                        },
                         powerSupplyUnit = getAccessory(
                             fbConfiguration.powerSupplyUnitId,
                             PowerSupplyUnit::class.java
@@ -175,27 +193,57 @@ object FirebaseFireStoreService {
                             fbConfiguration.coolerForCpuId,
                             CoolerForCpu::class.java
                         ) as CoolerForCpu,
-                        coolerForCaseIdsList = getAccessoriesList(
-                            fbConfiguration.coolerForCaseIdsList,
-                            CoolerForCase::class.java
-                        ).map { snapshot -> snapshot as CoolerForCase }.toMutableList(),
-                        dimmIdsList = getAccessoriesList(
-                            fbConfiguration.dimmIdsList,
-                            Dimm::class.java
-                        ).map { snapshot -> snapshot as Dimm }.toMutableList(),
-                        soDimmIdsList = getAccessoriesCollectionListFromDb(
-                            SoDimm::class.java
-                        ).map { snapshot -> snapshot as SoDimm }.toMutableList(),
-                        hardDriveIdsList = getAccessoriesCollectionListFromDb(
-                            HardDrive::class.java
-                        ).map { snapshot -> snapshot as HardDrive }.toMutableList(),
-                        ssdIdsList = getAccessoriesCollectionListFromDb(
-                            Ssd::class.java
-                        ).map { snapshot -> snapshot as Ssd }.toMutableList(),
-                        monitorIdsList = getAccessoriesCollectionListFromDb(
-                            Monitor::class.java
-                        ).map { snapshot -> snapshot as Monitor }.toMutableList(),
-                        videoCardIdsList = getAccessoriesCollectionListFromDb(
+                        coolerForCaseIdsList = if (fbConfiguration.coolerForCaseIdsList.isNotEmpty()) {
+                            getAccessoriesList(
+                                fbConfiguration.coolerForCaseIdsList,
+                                CoolerForCase::class.java
+                            ).map { snapshot -> snapshot as CoolerForCase }.toMutableList()
+                        } else {
+                            mutableListOf()
+                        },
+                        dimmIdsList = if (fbConfiguration.dimmIdsList.isNotEmpty()) {
+                            getAccessoriesList(
+                                fbConfiguration.dimmIdsList,
+                                Dimm::class.java
+                            ).map { snapshot -> snapshot as Dimm }.toMutableList()
+                        } else {
+                            mutableListOf()
+                        },
+                        soDimmIdsList = if (fbConfiguration.soDimmIdsList.isNotEmpty()) {
+                            getAccessoriesList(
+                                fbConfiguration.soDimmIdsList,
+                                SoDimm::class.java
+                            ).map { snapshot -> snapshot as SoDimm }.toMutableList()
+                        } else {
+                            mutableListOf()
+                        },
+                        hardDriveIdsList = if (fbConfiguration.hardDriveIdsList.isNotEmpty()) {
+                            getAccessoriesList(
+                                fbConfiguration.hardDriveIdsList,
+                                HardDrive::class.java
+                            ).map { snapshot -> snapshot as HardDrive }.toMutableList()
+                        } else {
+                            mutableListOf()
+                        },
+                        ssdIdsList = if (fbConfiguration.ssdIdsList.isNotEmpty()) {
+                            getAccessoriesList(
+                                fbConfiguration.ssdIdsList,
+                                Ssd::class.java
+                            ).map { snapshot -> snapshot as Ssd }.toMutableList()
+                        } else {
+                            mutableListOf()
+                        },
+                        monitorIdsList = if (fbConfiguration.monitorIdsList.isNotEmpty()) {
+                            getAccessoriesList(
+                                fbConfiguration.monitorIdsList,
+                                Monitor::class.java
+                            ).map { snapshot -> snapshot as Monitor }.toMutableList()
+                        } else {
+                            mutableListOf()
+                        },
+                        videoCardIdsList =
+                        getAccessoriesList(
+                            fbConfiguration.videoCardIdsList,
                             VideoCard::class.java
                         ).map { snapshot -> snapshot as VideoCard }.toMutableList()
                     )

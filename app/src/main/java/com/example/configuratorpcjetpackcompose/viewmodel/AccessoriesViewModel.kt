@@ -31,6 +31,7 @@ class AccessoriesViewModel() : ViewModel() {
     val listAccessory = mutableStateListOf<Accessory>()
     var configuration: MutableState<Configuration> = mutableStateOf(Configuration())
     val userConfigurationsList = mutableStateListOf<Configuration>()
+    var selectedConfiguration = mutableStateOf(Configuration())
 
     suspend fun loadAccessory(classAccessoryType: Class<out Accessory>): List<Accessory> {
         return configurationRepository.getListAccessoryFromDB(classAccessoryType)
@@ -38,6 +39,10 @@ class AccessoriesViewModel() : ViewModel() {
 
     suspend fun getAccessoriesUri(uriAccessory: String): Uri {
         return configurationRepository.getAccessoriesImage(uriAccessory)
+    }
+
+    fun selectConfiguration(configuration: Configuration) {
+        selectedConfiguration.value = configuration
     }
 
     fun filterPriceAccessories(list: List<Accessory>, filterPriceUpDown: Boolean) {
@@ -65,6 +70,10 @@ class AccessoriesViewModel() : ViewModel() {
 
     suspend fun saveConfiguration(configuration: Configuration) {
         configurationRepository.saveConfigurationToDB(configuration)
+    }
+
+    suspend fun updateConfiguration() {
+        configurationRepository.updateConfigurationOnDB(selectedConfiguration.value)
     }
 
     fun addAccessoryInConfiguration(accessory: Accessory) {
@@ -111,69 +120,4 @@ class AccessoriesViewModel() : ViewModel() {
         }
     }
 }
-
-/*suspend fun testWriteConfigurationInDb() {
-    configuration.value.motherboard = Motherboard(
-        _manufacturer = "Asrock",
-        _socket = "LGA 1700",
-        _chipset = "Intel Z690",
-        _memorySlotsCount = 0,
-        _forProcesses = "",
-        _typeOfSupportedMemory = "",
-        _builtInWiFiAdapter = "",
-        _pciExpressVersion = 0,
-        _m2ConnectorsCount = 0,
-        _formFactor = "",
-        _energyConsumptionMax = 0,
-        _memoryFrequencyMax = 0,
-    ).apply {
-        _idAccessory = "xVAbuSqpPB1i0mfPZsqu"
-        _nameAccessory = "Материнская плата ASRock Z690 Steel Legend"
-        _descriptionAccessory = ""
-        _priceAccessory = 0.0
-        _uriAccessory = ""
-    }
-    configuration.value.powerSupplyUnit = PowerSupplyUnit(
-        _manufacturer = "be quiet !",
-        _powerCapacity = 0,
-        _certificate80Plus = "",
-        _detachableCables = "",
-        _formFactor = "",
-        _connectorsForVideoCard = "",
-        _connectorsForCpu = "",
-        _coolingSystem = "",
-        _powerFactorCorrector = "",
-        _typeOfIllumination = "",
-        _pin15SataConnectorsCounts = 0
-    ).apply {
-        _idAccessory = "c6Eb6yAxkmx5F5Xf8eS2"
-        _nameAccessory = "Блок питания be quiet! DARK POWER PRO 12 1500W"
-        _descriptionAccessory = ""
-        _priceAccessory = 0.0
-        _uriAccessory = ""
-    }
-    configuration.value.soundCard = SoundCard().apply { _idAccessory = "pkFxZCV5AnXsZFnpB8Fm" }
-    configuration.value.videoCardList.add(VideoCard().apply {
-        _idAccessory = "ZbpxTyJveS5BW4zJr8OW"
-    })
-    configuration.value.case = Case().apply { _idAccessory = "VLoHACxHg771v0YVl8P6" }
-    configuration.value.monitorList.add(Monitor().apply {
-        _idAccessory = "92MxcYjqmx1IiJHxk0Mt"
-    })
-    configuration.value.ssdList.add(Ssd().apply { _idAccessory = "gVsIlFsOfC7BLn2F01w0" })
-    configuration.value.hardDriveList.add(HardDrive().apply {
-        _idAccessory = "j8ZQVUyUFYAN1jOrxLW9"
-    })
-    configuration.value.hardDriveList.add(HardDrive().apply {
-        _idAccessory = "voeZEkDYukGNAZdd6nQU"
-    })
-    configuration.value.soDimmList.add(SoDimm().apply { _idAccessory = "aINK4yqjPdd4suWMGrRo" })
-    configuration.value.dimmList.add(Dimm().apply { _idAccessory = "ebKdfp19aRnOeQ2YyjJK" })
-    configuration.value.coolerForCpu =
-        CoolerForCpu().apply { _idAccessory = "dgiDLJm4sa64fmioJGn0" }
-    configuration.value.coolerForCaseList.add(CoolerForCase().apply {
-        _idAccessory = "iYB0T5cpGfpxnxIp1a3B"
-    })
-    saveConfigurationToDB(configuration.value)
-}*/
 

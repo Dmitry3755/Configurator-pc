@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -21,8 +22,7 @@ import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
 
 @Composable
-fun ElementPC(configurationItem: ConfigurationElementEnum) {
-    val selectedItem = remember { mutableStateOf(true) }
+fun ElementPC(configurationItem: ConfigurationElementEnum, selectedItem: Boolean) {
 
     Column(
         modifier = Modifier.padding(
@@ -47,13 +47,13 @@ fun ElementPC(configurationItem: ConfigurationElementEnum) {
             tint = Color.Unspecified
         )
         IconToggleButton(
-            checked = selectedItem.value,
+            checked = selectedItem,
             onCheckedChange = { },
             modifier = Modifier.size(15.dp)
         ) {
             Icon(
                 painter = painterResource(
-                    if (selectedItem.value) {
+                    if (selectedItem) {
                         R.drawable.ic_checkmark
                     } else {
                         R.drawable.ic_circle_outline
@@ -70,6 +70,7 @@ fun ElementPC(configurationItem: ConfigurationElementEnum) {
 @Composable
 private fun DefaultPreviewLight() {
     AppTheme {
-        ElementPC(ConfigurationElementEnum.Processor)
+        val selectedItem = remember { mutableStateOf(true) }
+        ElementPC(ConfigurationElementEnum.Processor,true)
     }
 }

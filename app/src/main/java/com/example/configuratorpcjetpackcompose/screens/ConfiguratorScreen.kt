@@ -2,13 +2,9 @@ package com.example.configuratorpcjetpackcompose.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -23,23 +19,28 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.components.*
-import com.example.configuratorpcjetpackcompose.model.data_class.Configuration
 import com.example.configuratorpcjetpackcompose.navigation.ConfigurationNavigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.viewmodel.AccessoriesViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun ConfiguratorScreen(navController: NavController) {
-    val accessoriesViewModel: AccessoriesViewModel = viewModel()
+fun ConfiguratorScreen(
+    navController: NavController,
+    accessoriesViewModel: AccessoriesViewModel = viewModel()
+) {
     val coroutineScope = rememberCoroutineScope()
     var userConfigurationsList = accessoriesViewModel.userConfigurationsList
-
+    val stateLoadingUserConfiguration = remember {
+        mutableStateOf(false)
+    }
 
     LaunchedEffect(coroutineScope) {
         coroutineScope.launch {
             accessoriesViewModel.loadAllConfigurationsForUser()
+            if (userConfigurationsList.isNotEmpty()) {
+                stateLoadingUserConfiguration.value = true
+            }
         }
     }
 
@@ -63,7 +64,16 @@ fun ConfiguratorScreen(navController: NavController) {
                 .weight(0.85f),
             contentAlignment = Alignment.Center
         ) {
-            ConfigurationLazyColumn(userConfigurationsList)
+            if (stateLoadingUserConfiguration.value) {
+                ConfigurationLazyColumn(userConfigurationsList, navController, accessoriesViewModel)
+            } else {
+                Text(
+                    textAlign = TextAlign.Center,
+                    color = AppTheme.colors.textMainColor,
+                    style = AppTheme.typography.text,
+                    text = stringResource(id = R.string.configurator_text_view_have_not_configurations)
+                )
+            }
         }
     }
 

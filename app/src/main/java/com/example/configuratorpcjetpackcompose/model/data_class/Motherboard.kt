@@ -29,8 +29,10 @@ data class Motherboard(
     var _energyConsumptionMax: Int = 0,
     @JvmField @PropertyName("memory_frequency_max")
     var _memoryFrequencyMax: Int = 0,
-    @JvmField @PropertyName("all_slots_videocard")
-    var _slotsForVideoCardsList: List<String> = listOf()
+    @JvmField @PropertyName("all_slots")
+    var _allSlots: List<String> = listOf(),
+    @JvmField @PropertyName("supported_memory_form_factor")
+    var _supportedMemoryFormFactor: String = ""
 ) : Accessory(
     _categoryAccessoryEnum = CategoryAccessoryEnum.MOTHERBOARD,
 ) {
@@ -67,6 +69,11 @@ data class Motherboard(
         get() = _manufacturer
         set(value) {
             _manufacturer = value
+        }
+    var supportedMemoryFormFactor: String
+        get() = _supportedMemoryFormFactor
+        set(value) {
+            _supportedMemoryFormFactor = value
         }
     var socket: String
         get() = _socket
@@ -124,8 +131,8 @@ data class Motherboard(
             _memoryFrequencyMax = value
         }
     var slotsForVideoCardsList: List<String>
-        get() = _slotsForVideoCardsList
+        get() = _allSlots
         set(value) {
-            _slotsForVideoCardsList = value
+            _allSlots = value
         }
 }

@@ -17,6 +17,8 @@ import com.example.configuratorpcjetpackcompose.model.data_class.VideoCard
 import com.google.firebase.firestore.PropertyName
 
 data class FbConfiguration(
+    @PropertyName("name_configuration")
+    var name: String = "",
     @PropertyName("cpu_id")
     var cpuId: String = "",
     @PropertyName("motherboard_id")
@@ -46,6 +48,7 @@ data class FbConfiguration(
 )
 
 fun FbConfiguration.toConfiguration(
+    nameConfiguration: String,
     cpu: Cpu,
     motherboard: Motherboard,
     powerSupplyUnit: PowerSupplyUnit,
@@ -160,20 +163,8 @@ fun FbConfiguration.toConfiguration(
         )
     }
 
-    dimmIdsList.forEach { dimmId ->
-        dimmList.add(
-            Dimm(
-                idAccessory = dimmId._idAccessory,
-                nameAccessory = dimmId._nameAccessory,
-                priceAccessory = dimmId._priceAccessory,
-                descriptionAccessory = dimmId._descriptionAccessory,
-                uriAccessory = dimmId._uriAccessory,
-                dimm = dimmId
-            )
-        )
-    }
-
     return Configuration(
+        nameConfiguration = this.name,
         cpu = Cpu(
             idAccessory = this.cpuId,
             nameAccessory = cpu._nameAccessory,

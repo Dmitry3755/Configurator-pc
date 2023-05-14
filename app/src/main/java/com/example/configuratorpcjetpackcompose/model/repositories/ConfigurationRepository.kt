@@ -26,6 +26,10 @@ class ConfigurationRepository {
         )
     }
 
+    suspend fun updateConfigurationOnDB(configuration: Configuration) {
+        ConfigurationService.updateConfigurationOnDB(configuration)
+    }
+
     suspend fun saveConfigurationToDB(configuration: Configuration) {
         ConfigurationService.saveConfigurationToDB(configuration)
     }

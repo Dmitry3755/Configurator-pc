@@ -1,5 +1,6 @@
 package com.example.configuratorpcjetpackcompose.model
 
+import com.example.configuratorpcjetpackcompose.model.data_class.Case
 import com.google.firebase.firestore.PropertyName
 
 open class Accessory(

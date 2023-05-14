@@ -11,6 +11,8 @@ import com.google.firebase.firestore.PropertyName
 
 data class Configuration(
     val id: String = "",
+    @PropertyName("name_configuration")
+    var nameConfiguration: String = "",
     @PropertyName("cpu")
     var cpu: Cpu? = null,
     @PropertyName("motherboard")
@@ -54,17 +56,39 @@ data class Configuration(
         return listOf()
     }
 
+    fun isNotEmptyAccessoryInConfiguration(configurationElementList: List<Class<out Accessory>>): Boolean {
+        for (element in configurationElementList) {
+            when (element) {
+                Cpu::class.java -> if (cpu!!._idAccessory != "") return true
+                Motherboard::class.java -> if (motherboard!!._idAccessory != "") return true
+                PowerSupplyUnit::class.java -> if (powerSupplyUnit!!._idAccessory != "") return true
+                SoundCard::class.java -> if (soundCard!!._idAccessory != "") return true
+                Case::class.java -> if (case!!._idAccessory != "") return true
+                CoolerForCpu::class.java -> if (coolerForCpu!!._idAccessory != "" || coolerForCaseList.isNotEmpty()) return true
+                VideoCard::class.java -> if (videoCardList.isNotEmpty()) return true
+                Ssd::class.java -> if (ssdList.isNotEmpty() || hardDriveList.isNotEmpty()) return true
+                HardDrive::class.java -> if (hardDriveList.isNotEmpty() || ssdList.isNotEmpty()) return true
+                Dimm::class.java -> if (dimmList.isNotEmpty() || soDimmList.isNotEmpty()) return true
+                SoDimm::class.java -> if (dimmList.isNotEmpty() || soDimmList.isNotEmpty()) return true
+                CoolerForCase::class.java -> if (coolerForCaseList.isNotEmpty() || coolerForCpu!!._idAccessory != "") return true
+                Monitor::class.java -> if (monitorList.isNotEmpty()) return true
+            }
+        }
+        return false
+    }
+
     fun checkAccessoryInConfiguration(configurationElementList: List<Class<out Accessory>>): Boolean {
         for (element in configurationElementList) {
             when (element) {
                 Cpu::class.java -> if (cpu != null) return true
                 Motherboard::class.java -> if (motherboard != null) return true
                 PowerSupplyUnit::class.java -> if (powerSupplyUnit != null) return true
-                SoundCard::class.java -> if (soundCard != null) return true
+                SoundCard::class.java -> if (soundCard != null && soundCard!!._idAccessory != "") return true
                 Case::class.java -> if (case != null) return true
                 VideoCard::class.java -> if (videoCardList.isNotEmpty()) return true
                 Ssd::class.java -> if (ssdList.isNotEmpty()) return true
                 HardDrive::class.java -> if (hardDriveList.isNotEmpty()) return true
+                Dimm::class.java -> if (dimmList.isNotEmpty()) return true
                 SoDimm::class.java -> if (soDimmList.isNotEmpty()) return true
                 CoolerForCase::class.java -> if (coolerForCaseList.isNotEmpty()) return true
                 CoolerForCpu::class.java -> if (coolerForCpu != null) return true
@@ -79,8 +103,9 @@ data class Configuration(
             Cpu::class.java -> if (cpu != null) return cpu!!
             Motherboard::class.java -> if (motherboard != null) return motherboard!!
             PowerSupplyUnit::class.java -> if (powerSupplyUnit != null) return powerSupplyUnit!!
-            SoundCard::class.java -> if (soundCard != null) return soundCard!!
+            SoundCard::class.java -> if (soundCard != null && soundCard!!._idAccessory != "") return soundCard!!
             Case::class.java -> if (case != null) return case!!
+            CoolerForCpu::class.java -> if (coolerForCpu != null) return coolerForCpu!!
             VideoCard::class.java -> if (videoCardList.isNotEmpty()) {
                 for (videoCard in videoCardList) {
                     return videoCard
@@ -111,7 +136,6 @@ data class Configuration(
                 }
             }
 
-            CoolerForCpu::class.java -> if (coolerForCpu != null) return coolerForCpu!!
             Monitor::class.java -> if (monitorList.isNotEmpty()) {
                 for (monitor in monitorList) {
                     return monitor
@@ -135,11 +159,8 @@ data class Configuration(
         if (checkingSocketCoolerMotherboardCompatibility().isError.value) {
             return checkingSocketCoolerMotherboardCompatibility()
         }
-        if (checkingDimmMotherboardCompatibility().isError.value) {
-            return checkingDimmMotherboardCompatibility()
-        }
-        if (checkingSoDimmMotherboardCompatibility().isError.value) {
-            return checkingSoDimmMotherboardCompatibility()
+        if (checkingRamMotherboardCompatibility().isError.value) {
+            return checkingRamMotherboardCompatibility()
         }
         if (checkingMaxCountRamSlotsOnMotherboardCompatibility().isError.value) {
             return checkingMaxCountRamSlotsOnMotherboardCompatibility()
@@ -270,7 +291,7 @@ data class Configuration(
 
     private fun checkingMaxCountVideoCardSlotsOnMotherboardCompatibility(): ConfigurationError {
         var pin16Connector = 0
-        for (slotsForVideoCardCount in motherboard!!._slotsForVideoCardsList) {
+        for (slotsForVideoCardCount in motherboard!!._allSlots) {
             if (slotsForVideoCardCount.substring(2, slotsForVideoCardCount.length) == "PCI-E x16") {
                 pin16Connector = slotsForVideoCardCount[0].digitToInt()
             }
@@ -337,29 +358,19 @@ data class Configuration(
         )
     }
 
-    private fun checkingDimmMotherboardCompatibility(): ConfigurationError {
-        for (ram in dimmList) {
-            if (motherboard?.typeOfSupportedMemory != ram.memoryType) {
-                return ConfigurationError(
-                    isError = mutableStateOf(true),
-                    errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_motherboard_does_not_support_type_of_ram))
-                )
-            }
-        }
-        return ConfigurationError(
-            isError = mutableStateOf(false),
-            errorMessage = mutableStateOf("success")
-        )
-    }
+    private fun checkingRamMotherboardCompatibility(): ConfigurationError {
 
-    private fun checkingSoDimmMotherboardCompatibility(): ConfigurationError {
-        for (ram in soDimmList) {
-            if (motherboard?.typeOfSupportedMemory != ram.memoryType) {
-                return ConfigurationError(
-                    isError = mutableStateOf(true),
-                    errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_motherboard_does_not_support_type_of_ram))
-                )
-            }
+        if (dimmList.isNotEmpty() && (motherboard!!._supportedMemoryFormFactor != "Dimm")) {
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_motherboard_does_not_support_type_of_ram))
+            )
+        }
+        if (soDimmList.isNotEmpty() && (motherboard!!._supportedMemoryFormFactor != "SoDimm")) {
+            return ConfigurationError(
+                isError = mutableStateOf(true),
+                errorMessage = mutableStateOf(AppResources.getString(R.string.error_configuration_motherboard_does_not_support_type_of_ram))
+            )
         }
         return ConfigurationError(
             isError = mutableStateOf(false),
@@ -381,17 +392,21 @@ data class Configuration(
             errorMessage = mutableStateOf("success")
         )
     }
-
 }
 
 fun Configuration.toFbConfiguration(): FbConfiguration {
     return FbConfiguration(
+        name = this.nameConfiguration,
         cpuId = this.cpu!!._idAccessory,
         motherboardId = this.motherboard!!._idAccessory,
         powerSupplyUnitId = this.powerSupplyUnit!!._idAccessory,
         dimmIdsList = this.dimmList.map { it._idAccessory }.toMutableList(),
         soDimmIdsList = this.soDimmList.map { it._idAccessory }.toMutableList(),
-        soundCardId = this.soundCard!!._idAccessory,
+        soundCardId = if (this.soundCard == null) {
+            ""
+        } else {
+            this.soundCard!!._idAccessory
+        },
         videoCardIdsList = this.videoCardList.map { it._idAccessory }.toMutableList(),
         coolerForCaseIdsList = this.coolerForCaseList.map { it._idAccessory }.toMutableList(),
         coolerForCpuId = this.coolerForCpu!!._idAccessory,

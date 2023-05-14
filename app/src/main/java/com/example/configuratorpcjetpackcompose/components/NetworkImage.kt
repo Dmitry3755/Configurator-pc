@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
@@ -26,6 +27,7 @@ import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.example.configuratorpcjetpackcompose.R
@@ -42,17 +44,24 @@ fun NetworkImage(url: MutableState<Uri>, imageSize: Double) {
             .size(imageSize.dp),
         alignment = Alignment.Center,
         model = url.value,
-        contentDescription = null,
+        contentDescription = null
     ) {
         val state = painter.state
-        if (state is AsyncImagePainter.State.Loading || state is AsyncImagePainter.State.Error) {
-            SubcomposeAsyncImageContent(painter = painterResource(id = R.drawable.placeholder_image))
-        } else {
-            SubcomposeAsyncImage(model = url.value, contentDescription = "")
+        when (state) {
+            is AsyncImagePainter.State.Loading -> CircularProgressIndicator(
+                modifier = Modifier
+                    .padding(AppTheme.dimensions.verticalElementsPadding),
+                color = AppTheme.colors.backgroundButtonColor
+            )
+            is AsyncImagePainter.State.Error -> SubcomposeAsyncImageContent(
+                painter = painterResource(
+                    id = R.drawable.placeholder_image
+                )
+            )
+            else -> SubcomposeAsyncImage(model = url.value, contentDescription = "")
         }
     }
 }
-
 
 @Preview
 @Composable

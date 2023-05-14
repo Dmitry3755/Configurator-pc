@@ -5,6 +5,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -17,13 +18,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.model.data_class.Configuration
+import com.example.configuratorpcjetpackcompose.model.data_class.SoundCard
+import com.example.configuratorpcjetpackcompose.navigation.ConfigurationNavigation
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationElementEnum
+import com.example.configuratorpcjetpackcompose.viewmodel.AccessoriesViewModel
 
 @Composable
-fun ShortConfigurationElement(configuration: Configuration) {
+fun ShortConfigurationElement(
+    configuration: Configuration,
+    navController: NavController,
+    accessoriesViewModel: AccessoriesViewModel = viewModel()
+) {
     val lineColor = AppTheme.colors.backgroundButtonColor
     val configurationItems = listOf(
         ConfigurationElementEnum.Processor to 0,
@@ -42,6 +53,10 @@ fun ShortConfigurationElement(configuration: Configuration) {
         modifier = Modifier
             .fillMaxWidth(1f)
             .height(IntrinsicSize.Min)
+            .clickable {
+                accessoriesViewModel.selectConfiguration(configuration)
+                navController.navigate(ConfigurationNavigation.SelectedConfigurationScreen.route)
+            }
     ) {
         Box(
             modifier = Modifier
@@ -55,7 +70,7 @@ fun ShortConfigurationElement(configuration: Configuration) {
                 .height(IntrinsicSize.Min)
                 .fillMaxWidth(1f)
         ) {
-            Column  {
+            Column {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(1f)
@@ -81,7 +96,7 @@ fun ShortConfigurationElement(configuration: Configuration) {
                                 top = 5.dp,
                                 start = 15.dp
                             ),
-                        text = "Name",
+                        text = configuration.nameConfiguration,
                         style = AppTheme.typography.text,
                         color = AppTheme.colors.textMainColor
                     )
@@ -92,8 +107,10 @@ fun ShortConfigurationElement(configuration: Configuration) {
                                 bottom = 1.dp,
                                 end = 15.dp
                             ),
+
                         painter = painterResource(id = R.drawable.ic_favorite),
                         contentDescription = "",
+
                         tint = AppTheme.colors.backgroundButtonColor
                     )
                 }
@@ -103,7 +120,10 @@ fun ShortConfigurationElement(configuration: Configuration) {
                 ) {
                     configurationItems.filter { (item, value) -> value < 5 }
                         .forEach { item ->
-                            ElementPC(configurationItem = item.first)
+                            ElementPC(
+                                configurationItem = item.first,
+                                selectedItem = configuration.isNotEmptyAccessoryInConfiguration(item.first.classAccessoriesTypesList)
+                            )
                         }
                 }
                 Row(
@@ -112,7 +132,10 @@ fun ShortConfigurationElement(configuration: Configuration) {
                 ) {
                     configurationItems.filter { (item, value) -> value > 4 }
                         .forEach { item ->
-                            ElementPC(configurationItem = item.first)
+                            ElementPC(
+                                configurationItem = item.first,
+                                selectedItem = configuration.isNotEmptyAccessoryInConfiguration(item.first.classAccessoriesTypesList)
+                            )
                         }
                 }
             }
@@ -120,12 +143,12 @@ fun ShortConfigurationElement(configuration: Configuration) {
     }
 }
 
-
 @Preview(uiMode = UI_MODE_NIGHT_NO)
 @Composable
 private fun DefaultPreviewLight() {
     AppTheme {
-        ShortConfigurationElement(Configuration())
+        val navController: NavController = rememberNavController()
+        ShortConfigurationElement(Configuration(), navController)
     }
 }
 
@@ -133,6 +156,7 @@ private fun DefaultPreviewLight() {
 @Composable
 private fun DefaultPreviewDark() {
     AppTheme {
-        ShortConfigurationElement(Configuration())
+        val navController: NavController = rememberNavController()
+        ShortConfigurationElement(Configuration(), navController)
     }
 }

@@ -160,40 +160,41 @@ fun LargeConfigurationElementLine(
                             }
                         )
                     }
-                for (item in configurationElement.classAccessoriesTypesList) {
-                    var listAccessory = configuration.getListAccessoryFromConfiguration(
-                        item
-                    )
-                    if (listAccessory.isNotEmpty()) {
-                        for (accessoryListItem in listAccessory) {
+                    for (item in configurationElement.classAccessoriesTypesList) {
+                        var listAccessory = configuration.getListAccessoryFromConfiguration(
+                            item
+                        )
+                        if (listAccessory.isNotEmpty()) {
+                            for (accessoryListItem in listAccessory) {
+                                AccessoryAddedOnConfiguration(
+                                    text = accessoryListItem._nameAccessory,
+                                    accessory = accessoryListItem,
+                                    viewModel = viewModel,
+                                    isDeleted = isDeleted
+                                )
+                            }
+                        }
+
+                        if ((item == Cpu::class.java ||
+                                    item == Motherboard::class.java ||
+                                    item == PowerSupplyUnit::class.java ||
+                                    item == SoundCard::class.java ||
+                                    item == Case::class.java ||
+                                    item == CoolerForCpu::class.java
+                                    ) && configuration.getAccessoryFromConfiguration(item)._idAccessory != ""
+                        ) {
                             AccessoryAddedOnConfiguration(
-                                text = accessoryListItem._nameAccessory,
-                                accessory = accessoryListItem,
+                                text = configuration.getAccessoryFromConfiguration(item)._nameAccessory,
+                                accessory = configuration.getAccessoryFromConfiguration(item),
                                 viewModel = viewModel,
                                 isDeleted = isDeleted
                             )
                         }
                     }
-
-                    if (item == Cpu::class.java ||
-                        item == Motherboard::class.java ||
-                        item == PowerSupplyUnit::class.java ||
-                        item == SoundCard::class.java ||
-                        item == Case::class.java ||
-                        item == CoolerForCpu::class.java
-                    ) {
-                        AccessoryAddedOnConfiguration(
-                            text = configuration.getAccessoryFromConfiguration(item)._nameAccessory,
-                            accessory = configuration.getAccessoryFromConfiguration(item),
-                            viewModel = viewModel,
-                            isDeleted = isDeleted
-                        )
-                    }
                 }
             }
         }
     }
-}
 }
 
 

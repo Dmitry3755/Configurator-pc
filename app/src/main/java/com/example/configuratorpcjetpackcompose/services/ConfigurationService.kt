@@ -24,6 +24,10 @@ object ConfigurationService {
         )
     }
 
+    suspend fun updateConfigurationOnDB(configuration: Configuration) {
+        FirebaseFireStoreService.updateConfiguration(configuration)
+    }
+
     suspend fun saveConfigurationToDB(configuration: com.example.configuratorpcjetpackcompose.model.data_class.Configuration) {
         FirebaseFireStoreService.saveConfiguration(configuration)
     }

@@ -116,7 +116,6 @@ fun AccessoryScreen(
                         navController.navigateUp()
                         navController.navigateUp()
                     }
-                  //  navController.navigate(AccessoryNavigation.AddUpdateConfigurationScreen.route)
                 },
                 isDelete = false
             )
