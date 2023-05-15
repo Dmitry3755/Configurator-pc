@@ -16,7 +16,7 @@ fun BottomNavigationGraph(navController: NavHostController) {
             ConfigurationNavigationScreen()
         }
         composable(route = BottomNavigationItem.FavoriteScreen.route) {
-            FavoriteScreen()
+            FavoriteScreen(navController)
         }
         composable(route = BottomNavigationItem.SearchScreen.route) {
             SearchScreen()

@@ -165,6 +165,7 @@ object FirebaseFireStoreService {
                 snapshot.toObject(FbConfiguration::class.java).let { fbConfiguration ->
                     fbConfiguration.toConfiguration(
                         nameConfiguration = snapshot.get("name").toString(),
+                        isFavorite = snapshot.get("is_favorite").toString().toBoolean(),
                         cpu = getAccessory(
                             fbConfiguration.cpuId,
                             Cpu::class.java

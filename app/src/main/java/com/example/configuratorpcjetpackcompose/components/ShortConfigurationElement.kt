@@ -106,11 +106,16 @@ fun ShortConfigurationElement(
                                 top = 1.dp,
                                 bottom = 1.dp,
                                 end = 15.dp
-                            ),
+                            )
+                            .clickable {
 
-                        painter = painterResource(id = R.drawable.ic_favorite),
+                            },
+                        painter = if (configuration.isFavorite) {
+                            painterResource(id = R.drawable.ic_favorite)
+                        } else {
+                            painterResource(id = R.drawable.ic_not_favorite)
+                        },
                         contentDescription = "",
-
                         tint = AppTheme.colors.backgroundButtonColor
                     )
                 }

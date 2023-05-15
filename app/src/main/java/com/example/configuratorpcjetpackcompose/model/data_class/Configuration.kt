@@ -41,6 +41,8 @@ data class Configuration(
     var ssdList: MutableList<Ssd> = mutableListOf(),
     @PropertyName("user_owner")
     var userOwner: User? = null,
+    @PropertyName("is_favorite")
+    var isFavorite: Boolean = false
 ) {
 
     fun getListAccessoryFromConfiguration(configurationElementList: Class<out Accessory>): List<Accessory> {
@@ -397,6 +399,7 @@ data class Configuration(
 fun Configuration.toFbConfiguration(): FbConfiguration {
     return FbConfiguration(
         name = this.nameConfiguration,
+        isFavorite = this.isFavorite,
         cpuId = this.cpu!!._idAccessory,
         motherboardId = this.motherboard!!._idAccessory,
         powerSupplyUnitId = this.powerSupplyUnit!!._idAccessory,

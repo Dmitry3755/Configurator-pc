@@ -45,6 +45,8 @@ data class FbConfiguration(
     var hardDriveIdsList: MutableList<String> = mutableListOf(),
     @PropertyName("ssd_ids_list")
     var ssdIdsList: MutableList<String> = mutableListOf(),
+    @PropertyName("is_favorite")
+    var isFavorite: Boolean = false
 )
 
 fun FbConfiguration.toConfiguration(
@@ -61,7 +63,8 @@ fun FbConfiguration.toConfiguration(
     coolerForCaseIdsList: MutableList<CoolerForCase>,
     monitorIdsList: MutableList<Monitor>,
     hardDriveIdsList: MutableList<HardDrive>,
-    ssdIdsList: MutableList<Ssd>
+    ssdIdsList: MutableList<Ssd>,
+    isFavorite: Boolean
 ): Configuration {
 
     var dimmList = mutableListOf<Dimm>()
