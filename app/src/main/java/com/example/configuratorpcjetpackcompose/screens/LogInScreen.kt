@@ -68,8 +68,8 @@ fun LogInScreen(navController: NavController) {
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                viewModel.email.value = "dsaa8354@gmail.com"
-                viewModel.password.value = "123456"
+                viewModel.email.value
+                viewModel.password.value
                 AuthorizationForm(
                     isRegistration = false,
                     email = viewModel.email,
