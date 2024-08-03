@@ -20,11 +20,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
+import com.example.configuratorpcjetpackcompose.utils.TagsForTest
 import kotlinx.coroutines.flow.collect
 
 @Composable
@@ -50,6 +53,7 @@ fun LogInOrSingUp(text: String, textButton: String, onClick: () -> Unit) {
         )
         TextButton(
             onClick = onClick,
+            Modifier.testTag(TagsForTest.ENTER_BUTTON),
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color.Transparent,
                 contentColor = AppTheme.colors.textLinkColor,

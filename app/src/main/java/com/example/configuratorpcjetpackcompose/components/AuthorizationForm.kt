@@ -74,6 +74,7 @@ fun AuthorizationForm(
         if(authResultViewError.value.isError.value) {
             Spacer(Modifier.padding(top = AppTheme.dimensions.verticalElementsPadding))
             Text(
+                modifier = Modifier.testTag(TagsForTest.RESULT),
                 text = authResultViewError.value.errorMessage.value,
                 color = AppTheme.colors.errorTextColor
             )

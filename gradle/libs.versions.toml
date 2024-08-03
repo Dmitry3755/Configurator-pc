@@ -1,0 +1,81 @@
+[versions]
+kotlin = "2.0.0"
+activityCompose = "1.9.1"
+androidJunit5 = "1.7.1.1"
+coilCompose = "2.3.0"
+coreKtx = "1.13.1"
+espressoCore = "3.6.1"
+archExtensions = "1.1.1"
+firebaseAuthKtx = "23.0.0"
+firebaseBom = "33.1.2"
+firebaseFirestore = "25.0.0"
+firebaseUiStorage = "7.2.0"
+foundationAndroid = "1.6.8"
+fragmentKtx = "1.8.2"
+googleServices = "4.4.2"
+gson = "2.10.1"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+kotlinxCoroutinesAndroid = "1.8.1"
+lifecycleViewmodelCompose = "2.8.4"
+materialIconsExtended = "1.6.8"
+mockitoCore = "5.3.1"
+mockitoInline = "5.2.0"
+navigationCompose = "2.7.7"
+picasso = "2.8"
+rules = "1.6.1"
+runtimeLivedata = "1.6.8"
+runtimeRxjava2 = "1.6.8"
+ui = "1.6.8"
+androidGradlePlugin = "8.5.1"
+androidLibrary = "8.5.1"
+jetbrainsKotlinAndroid = "2.0.0"
+
+[libraries]
+
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+android-junit5 = { module = "de.mannodermaus.gradle.plugins:android-junit5", version.ref = "androidJunit5" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
+arch-extensions = { module = "android.arch.lifecycle:extensions", version.ref = "archExtensions" }
+ext-junit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
+firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
+firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuthKtx" }
+firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
+firebase-ui-storage = { module = "com.firebaseui:firebase-ui-storage", version.ref = "firebaseUiStorage" }
+foundation-android = { module = "androidx.compose.foundation:foundation-android", version.ref = "foundationAndroid" }
+fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+junit = { module = "junit:junit", version.ref = "junit" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
+kotlinx-coroutines-core-jvm = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm", version.ref = "kotlinxCoroutinesAndroid" }
+lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleViewmodelCompose" }
+lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleViewmodelCompose" }
+lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
+material = { module = "androidx.compose.material:material", version.ref = "materialIconsExtended" }
+material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
+mockito-android = { module = "org.mockito:mockito-android", version.ref = "mockitoCore" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
+mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockitoInline" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
+rules = { module = "androidx.test:rules", version.ref = "rules" }
+runner = { module = "androidx.test:runner", version.ref = "rules" }
+runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "runtimeLivedata" }
+runtime-rxjava2 = { module = "androidx.compose.runtime:runtime-rxjava2", version.ref = "runtimeRxjava2" }
+runtime-rxjava3 = { module = "androidx.compose.runtime:runtime-rxjava3", version.ref = "runtimeRxjava2" }
+ui = { module = "androidx.compose.ui:ui", version.ref = "ui" }
+ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "ui" }
+ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "ui" }
+ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "ui" }
+ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "ui" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidLibrary" }
+jetbrains-android = { id = "org.jetbrains.kotlin.android", version.ref = "jetbrainsKotlinAndroid" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

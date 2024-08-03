@@ -73,7 +73,7 @@ fun AccessoryElement(
                 } else {
                     BorderStroke(0.dp, Color.Transparent)
                 },
-                shape = RoundedCornerShape(10.dp)
+                shape = RoundedCornerShape(10.dp) 
             )
             .fillMaxWidth(),
         onClick = {

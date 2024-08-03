@@ -1,19 +1,20 @@
 package com.example.configuratorpcjetpackcompose
 
-import android.R
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.core.content.MimeTypeFilter.matches
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.replaceText
-import androidx.test.espresso.matcher.ViewMatchers.hasErrorText
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.lifecycle.Lifecycle
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.rule.ActivityTestRule
+import com.example.configuratorpcjetpackcompose.screens.SingUpScreen
+import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.utils.TagsForTest
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,32 +31,70 @@ class ExampleInstrumentedTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
-    @Test
+
+   @Test
     fun registrationTestWithData1() {
-        composeTestRule.onNodeWithTag(TagsForTest.EMAIL).performTextInput(" ")
-        composeTestRule.onNodeWithTag(TagsForTest.PASSWORD).performTextInput("Aa123456")
-        composeTestRule.onNodeWithTag(TagsForTest.REPEATED_PASSWORD).performTextInput("Aa123456")
-        composeTestRule.onNodeWithTag(TagsForTest.BUTTON).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.MAIN_SCREEN, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.ENTER_BUTTON, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.EMAIL, useUnmergedTree = true).performTextInput("")
+        composeTestRule.onNodeWithTag(TagsForTest.BUTTON, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.RESULT, useUnmergedTree = true).assert(hasText("Адрес электронной почты введён неверно"))
     }
+
     @Test
     fun registrationTestWithData2() {
-        composeTestRule.onNodeWithTag("appTextField").performTextInput("123456")
-        composeTestRule.onNodeWithTag("appTextField").performTextInput("")
-        composeTestRule.onNodeWithTag("appTextField").performTextInput("Aa123456")
-        composeTestRule.onNodeWithTag("Button").performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.MAIN_SCREEN, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.ENTER_BUTTON, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.EMAIL, useUnmergedTree = true).performTextInput("qwe")
+        composeTestRule.onNodeWithTag(TagsForTest.BUTTON, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.RESULT, useUnmergedTree = true).assert(hasText("Адрес электронной почты введён неверно"))
     }
     @Test
     fun registrationTestWithData3() {
-        composeTestRule.onNodeWithTag("appTextField").performTextInput("123456")
-        composeTestRule.onNodeWithTag("appTextField").performTextInput("Aa123456")
-        composeTestRule.onNodeWithTag("appTextField").performTextInput("")
-        composeTestRule.onNodeWithTag("Button").performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.MAIN_SCREEN, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.ENTER_BUTTON, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.EMAIL, useUnmergedTree = true).performTextInput("qwertygmail.com")
+        composeTestRule.onNodeWithTag(TagsForTest.BUTTON, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.RESULT, useUnmergedTree = true).assert(hasText("Адрес электронной почты введён неверно"))
     }
     @Test
     fun registrationTestWithData4() {
-        composeTestRule.onNodeWithTag("appTextField").performTextInput("123456")
-        composeTestRule.onNodeWithTag("appTextField").performTextInput("Aa123456")
-        composeTestRule.onNodeWithTag("appTextField").performTextInput("Aa123456")
-        composeTestRule.onNodeWithTag("Button").performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.MAIN_SCREEN, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.ENTER_BUTTON, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.EMAIL, useUnmergedTree = true).performTextInput("qwerty@gmail.com")
+        composeTestRule.onNodeWithTag(TagsForTest.PASSWORD, useUnmergedTree = true).performTextInput("123456Aa")
+        composeTestRule.onNodeWithTag(TagsForTest.REPEATED_PASSWORD, useUnmergedTree = true).performTextInput("123456")
+        composeTestRule.onNodeWithTag(TagsForTest.BUTTON, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.RESULT, useUnmergedTree = true).assert(hasText("Пароли не совпадают"))
+    }
+    @Test
+    fun registrationTestWithData5() {
+        composeTestRule.onNodeWithTag(TagsForTest.MAIN_SCREEN, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.ENTER_BUTTON, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.EMAIL, useUnmergedTree = true).performTextInput("qwerty@gmail.com")
+        composeTestRule.onNodeWithTag(TagsForTest.PASSWORD, useUnmergedTree = true).performTextInput("123")
+        composeTestRule.onNodeWithTag(TagsForTest.REPEATED_PASSWORD, useUnmergedTree = true).performTextInput("123")
+        composeTestRule.onNodeWithTag(TagsForTest.BUTTON, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.RESULT, useUnmergedTree = true).assert(hasText("Длина пароля должна быть больше 6 символов"))
+    }
+    @Test
+    fun registrationTestWithData6() {
+        composeTestRule.onNodeWithTag(TagsForTest.MAIN_SCREEN, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.ENTER_BUTTON, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.EMAIL, useUnmergedTree = true).performTextInput("qwerty@gmail.com")
+        composeTestRule.onNodeWithTag(TagsForTest.PASSWORD, useUnmergedTree = true).performTextInput("")
+        composeTestRule.onNodeWithTag(TagsForTest.REPEATED_PASSWORD, useUnmergedTree = true).performTextInput("")
+        composeTestRule.onNodeWithTag(TagsForTest.BUTTON, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.RESULT, useUnmergedTree = true).assert(hasText("Длина пароля должна быть больше 6 символов"))
+    }
+    @Test
+    fun registrationTestWithData7() {
+        composeTestRule.onNodeWithTag(TagsForTest.MAIN_SCREEN, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.ENTER_BUTTON, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.EMAIL, useUnmergedTree = true).performTextInput("qwerty@gmail.com")
+        composeTestRule.onNodeWithTag(TagsForTest.PASSWORD, useUnmergedTree = true).performTextInput("1234567")
+        composeTestRule.onNodeWithTag(TagsForTest.REPEATED_PASSWORD, useUnmergedTree = true).performTextInput("1234567")
+        composeTestRule.onNodeWithTag(TagsForTest.BUTTON, useUnmergedTree = true).performClick()
+        composeTestRule.onNodeWithTag(TagsForTest.CONFIGURATION_SCREEN, useUnmergedTree = true)
     }
 }

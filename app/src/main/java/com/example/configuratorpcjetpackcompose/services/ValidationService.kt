@@ -12,10 +12,10 @@ object ValidationService {
         email: String,
         password: String,
         repeatedPassword: String
-    ): ViewError {
+    ): ViewError { //1
 
-        if ((email.isEmpty()) || (!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches())) {
-            return ViewError(
+        if ((email.isEmpty()) || (!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches())) { //2 //3
+            return ViewError( //7
                 isError = mutableStateOf(true),
                 errorMessage = mutableStateOf(
                     AppResources.getString(R.string.error_authentication_email_is_invalid)
@@ -23,8 +23,8 @@ object ValidationService {
             )
         }
 
-        if (password.isEmpty() || (password.length < 6)) {
-            return ViewError(
+        if (password.isEmpty() || (password.length < 6)) { //4 //5
+            return ViewError(//7
                 isError = mutableStateOf(true),
                 errorMessage = mutableStateOf(
                     AppResources.getString(R.string.error_authentication_password_is_too_short)
@@ -32,15 +32,15 @@ object ValidationService {
             )
         }
 
-        if (password != repeatedPassword) {
-            return ViewError(
+        if (password != repeatedPassword) { //6
+            return ViewError( //7
                 isError = mutableStateOf(true),
                 errorMessage = mutableStateOf(
                     AppResources.getString(R.string.error_authentication_password_does_not_match)
                 )
             )
         }
-        return ViewError(isError = mutableStateOf(false))
+        return ViewError(isError = mutableStateOf(false)) //7
     }
 
     fun isUserChangePassword(

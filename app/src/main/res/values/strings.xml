@@ -15,19 +15,23 @@
     <string name="authentication_log_in_text_view_have_not_account">У вас нет аккаунта?</string>
     <string name="authentication_log_in_text_view_forgot_password">Забыли пароль?</string>
     <string name="authentication_log_in_button_text_sing_up"><u>Создать</u></string>
+
     <string name="configurator_text_view_title_configurator">Конфигуратор</string>
     <string name="configurator_text_view_have_not_configurations">У вас пока что нет\nготовых конфигураций (</string>
     <string name="configurator_text_view_create_configuration">Создать конфигурацию</string>
     <string name="configurator_text_view_new_configuration">Новая конфигурация</string>
     <string name="configurator_text_view_save_configuration">Сохранить конфигурацию</string>
-    <string name="configurator_text_view_smart_advisor">Умный советник</string>
+    <string name="configurator_text_view_smart_advisor">Умный конфигуратор</string>
+
     <string name="navigation_bar_text_view_configuration">Конфигуратор</string>
     <string name="navigation_bar_text_view_favorite">Избранное</string>
     <string name="navigation_bar_text_view_search">Поиск</string>
     <string name="navigation_bar_text_view_settings">Настройки</string>
     <string name="navigation_bar_text_view_account">Аккаунт</string>
+
     <string name="account_text_view_exit_from_account">Выйти из аккаунта</string>
     <string name="account_text_view_name">Name</string>
+
     <string name="settings_button_setting_theme">Настройка темы</string>
     <string name="settings_button_change_name">Сменить имя</string>
     <string name="settings_button_change_password">Изменить пароль</string>
@@ -37,13 +41,16 @@
     <string name="settings_text_view_new_password">Новый пароль</string>
     <string name="settings_text_view_old_password">Старый пароль</string>
     <string name="settings_text_view_confirm_new_password">Повторите новый пароль</string>
+
     <string name="text">Текст</string>
+
     <string name="btn_text_add">Добавить</string>
     <string name="btn_text_accept_changes">Принять изменения</string>
     <string name="btn_text_delete">Удалить</string>
     <string name="btn_text_price_up">↑</string>
     <string name="btn_text_price_down">↓</string>
     <string name="btn_text_price">Цена</string>
+
     <string name="error">Ошибка</string>
     <string name="error_authentication_email_is_invalid">Адрес электронной почты введён неверно</string>
     <string name="error_authentication_password_is_too_short">Длина пароля должна быть больше 6 символов</string>
@@ -65,9 +72,10 @@
     <string name="error_configuration_motherboard_doesnt_support_much_RAM">В материнской плате нет столько слотов под оперативную память</string>
     <string name="error_configuration_motherboard_doesnt_support_much_video_card">В материнской плате нет столько слотов для видеокарт</string>
     <string name="error_configuration_motherboard_does_not_support_type_of_ram">Материнская плата не поддерживает тип оперативной памяти</string>
-    <string name="error_configuration_pin_cpu_is_not_compatible">Разъем питания для процессора у блока питнания не совместим с разъемами питания процессора</string>
+    <string name="error_configuration_pin_cpu_is_not_compatible">Разъем питания для процессора у блока питания не совместим с разъемами питания процессора</string>
     <string name="error_configuration_case_does_not_support_size_of_video_card">Выбранный корпус не поддерживает размер выбранной видеокарты</string>
     <string name="error_configuration_maximum_power_configuration_greater_than_power_supply">Максимальная потребляемая мощность вашей конфигурации больше чем мощность блока питания</string>
+
     <string name="ruble_symbol">₽</string>
     <string name="accessory_description">Описание</string>
     <string name="accessory_name">Название</string>

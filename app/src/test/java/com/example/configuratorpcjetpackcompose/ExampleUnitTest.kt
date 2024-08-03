@@ -1,9 +1,12 @@
 package com.example.configuratorpcjetpackcompose
 
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.configuratorpcjetpackcompose.model.data_class.Configuration
 import com.example.configuratorpcjetpackcompose.model.data_class.User
 import com.example.configuratorpcjetpackcompose.services.ValidationService
 import com.example.configuratorpcjetpackcompose.utils.ConfigurationError
+import com.example.configuratorpcjetpackcompose.viewmodel.AccessoriesViewModel
 import org.junit.After
 import org.junit.Assert
 import org.junit.Assert.*
@@ -23,104 +26,34 @@ class ExampleUnitTest {
     private var mockConfiguration: Configuration? = Mockito.mock(Configuration::class.java)
     private var configuration: Configuration? = null
 
-    @Before
-    fun setUp() {
-        var user: User = User(
-            _name = "User1",
-            _avatarPath = "",
-            _email = "qwe@mail.com"
-        )
-    configuration = Configuration(userOwner = user)
-    }
-
-    @Test
-    fun testBlackBox1() {
-        validation.isUserCredentialsValid("", "Aa123__", "Aa123__").isError.let {
-            assertTrue(
-                it.value
-            )
-        }
-    }
-
-    @Test
-    fun testBlackBox2() {
-        validation.isUserCredentialsValid(
-            "qwe",
-            "Aa123__",
-            "Aa123__"
-        ).isError.let {
-            assertTrue(
-                it.value
-            )
-        }
-    }
-
-    @Test
-    fun testBlackBox3() {
-        validation.isUserCredentialsValid(
-            "qwe@mail.com",
-            "",
-            "Aa123__"
-        ).isError.let {
-            assertTrue(
-                it.value
-            )
-        }
-    }
-
-    @Test
-    fun testBlackBox4() {
-        validation.isUserCredentialsValid("qwe@mail.com", "1", "1").isError.let {
-            assertTrue(
-                it.value
-            )
-        }
-    }
-
-    @Test
-    fun testBlackBox5() {
-        validation.isUserCredentialsValid(
-            "qwe@mail.com",
-            "Aa123__",
-            "456789Aa"
-        ).isError.let {
-            assertTrue(
-                it.value
-            )
-        }
-    }
-
-    @Test
-    fun testBlackBox6() {
-        validation.isUserCredentialsValid(
-            "qwe@mail.com",
-            "Aa123__",
-            "Aa123__"
-        ).isError.let {
-            assertFalse(
-                it.value
-            )
-        }
-    }
-
     @Test
     fun testBasePath1() {
-        Assert.assertTrue(validation.isUserChangePassword("","","").isError.value)
+        Assert.assertTrue(validation.isUserCredentialsValid("", "", "").isError.value)
     }
 
     @Test
     fun testBasePath2() {
-        Assert.assertTrue(validation.isUserChangePassword("12356","","").isError.value)
+        Assert.assertTrue(validation.isUserCredentialsValid("1","","").isError.value)
     }
 
     @Test
     fun testBasePath3() {
-        Assert.assertTrue(validation.isUserChangePassword("123456","123","").isError.value)
+        Assert.assertTrue(validation.isUserCredentialsValid("dsaa@gmail.com","","").isError.value)
     }
 
     @Test
     fun testBasePath4() {
-        Assert.assertFalse(validation.isUserChangePassword("123456","12345678","12345678").isError.value)
+        Assert.assertTrue(validation.isUserCredentialsValid("dsaa@gmail.com","123","").isError.value)
+    }
+
+    @Test
+    fun testBasePath5() {
+        Assert.assertTrue(validation.isUserCredentialsValid("dsaa@gmail.com","12345678","1234567").isError.value)
+    }
+    @Test
+    fun testBasePath6() {
+        Assert.assertFalse(validation.isUserCredentialsValid("dsaa@gmail.com","12345678","12345678").isError.value)
+
     }
 
    /* @Test

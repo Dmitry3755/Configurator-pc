@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,6 +22,7 @@ import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.components.*
 import com.example.configuratorpcjetpackcompose.navigation.ConfigurationNavigation
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
+import com.example.configuratorpcjetpackcompose.utils.TagsForTest
 import com.example.configuratorpcjetpackcompose.viewmodel.AccessoriesViewModel
 import kotlinx.coroutines.launch
 

@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -27,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.configuratorpcjetpackcompose.R
 import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
 import com.example.configuratorpcjetpackcompose.navigation.Navigation
+import com.example.configuratorpcjetpackcompose.utils.TagsForTest
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -40,6 +42,7 @@ fun StartMainScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize(1f)
+            .testTag(TagsForTest.MAIN_SCREEN)
             .background(color = AppTheme.colors.startBackgroundScreen)
             .clickable(
                 indication = null,
