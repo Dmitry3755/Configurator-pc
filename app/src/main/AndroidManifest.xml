@@ -13,10 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ConfiguratorPCJetpackCompose"
-        android:name=".ConfiguratorApplication"
+        android:name=".dependency_injection.application.ConfiguratorApplication"
         tools:targetApi="32">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.ConfiguratorPCJetpackCompose">
             <intent-filter>

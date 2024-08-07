@@ -1,25 +1,24 @@
 package com.example.configuratorpcjetpackcompose.services
 
 import android.net.Uri
-import com.example.configuratorpcjetpackcompose.model.Accessory
-import com.example.configuratorpcjetpackcompose.model.data_class.Case
-import com.example.configuratorpcjetpackcompose.model.data_class.Configuration
-import com.example.configuratorpcjetpackcompose.model.data_class.CoolerForCase
-import com.example.configuratorpcjetpackcompose.model.data_class.CoolerForCpu
-import com.example.configuratorpcjetpackcompose.model.data_class.Cpu
-import com.example.configuratorpcjetpackcompose.model.data_class.Dimm
-import com.example.configuratorpcjetpackcompose.model.data_class.HardDrive
-import com.example.configuratorpcjetpackcompose.model.data_class.Monitor
-import com.example.configuratorpcjetpackcompose.model.data_class.Motherboard
-import com.example.configuratorpcjetpackcompose.model.data_class.PowerSupplyUnit
-import com.example.configuratorpcjetpackcompose.model.data_class.SoDimm
-import com.example.configuratorpcjetpackcompose.model.data_class.SoundCard
-import com.example.configuratorpcjetpackcompose.model.data_class.Ssd
-import com.example.configuratorpcjetpackcompose.model.data_class.User
-import com.example.configuratorpcjetpackcompose.model.data_class.VideoCard
-import com.example.configuratorpcjetpackcompose.model.data_class.toFbConfiguration
-import com.example.configuratorpcjetpackcompose.model.firebase_data_class.FbConfiguration
-import com.example.configuratorpcjetpackcompose.model.firebase_data_class.toConfiguration
+import com.example.data.model.entities.Case
+import com.example.data.model.entities.data_class.Configuration
+import com.example.data.model.entities.CoolerForCase
+import com.example.data.model.entities.CoolerForCpu
+import com.example.data.model.entities.Cpu
+import com.example.data.model.entities.Dimm
+import com.example.data.model.entities.HardDrive
+import com.example.data.model.entities.Monitor
+import com.example.data.model.entities.Motherboard
+import com.example.data.model.entities.PowerSupplyUnit
+import com.example.data.model.entities.SoDimm
+import com.example.data.model.entities.SoundCard
+import com.example.data.model.entities.Ssd
+import com.example.data.model.entities.User
+import com.example.data.model.entities.VideoCard
+import com.example.data.model.entities.data_class.toFbConfiguration
+import com.example.data.entities.FbConfiguration
+import com.example.data.entities.toConfiguration
 import com.example.configuratorpcjetpackcompose.services.AuthenticationService.getCurrentUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -35,7 +34,7 @@ object FirebaseFireStoreService {
     private val fireStorageRef = FirebaseStorage.getInstance().getReference()
     private val firebaseAuthWeakRef = WeakReference(FirebaseAuth.getInstance())
 
-    suspend fun addUserInDb(user: User) {
+    suspend fun addUserInDb(user: com.example.data.model.entities.User) {
         val userFire = hashMapOf(
             "name" to "User: " + getCurrentUser()!!.uid.substring(0, 7),
             "email" to user.email,
@@ -68,12 +67,12 @@ object FirebaseFireStoreService {
             fireStoreDatabaseWeakRef.get()!!.collection("Users")
                 .whereEqualTo("email", firebaseAuthWeakRef.get()!!.currentUser!!.email!!).get()
                 .addOnSuccessListener {
-                    cancellableContinuation.resume(it.documents[0].toObject(User::class.java)!!._name)
+                    cancellableContinuation.resume(it.documents[0].toObject(com.example.data.model.entities.User::class.java)!!._name)
                 }
         }
     }
 
-    suspend fun getAccessoriesCollectionListFromDb(classAccessoryType: Class<out Accessory>): List<Accessory> {
+    suspend fun getAccessoriesCollectionListFromDb(classAccessoryType: Class<out com.example.data.entities.AccessoryApiResponse>): List<com.example.data.entities.AccessoryApiResponse> {
         return fireStoreDatabaseWeakRef.get()!!.collection(classAccessoryType.simpleName).get()
             .await()
             .map { snapshot ->
@@ -98,8 +97,8 @@ object FirebaseFireStoreService {
 
     suspend fun getAccessory(
         idAccessory: String,
-        classAccessoryType: Class<out Accessory>
-    ): Accessory {
+        classAccessoryType: Class<out com.example.data.entities.AccessoryApiResponse>
+    ): com.example.data.entities.AccessoryApiResponse {
         return suspendCancellableCoroutine { cancellableContinuation ->
             fireStoreDatabaseWeakRef.get()!!.collection(classAccessoryType.simpleName)
                 .document(idAccessory).get().addOnSuccessListener { document ->
@@ -117,9 +116,9 @@ object FirebaseFireStoreService {
 
     suspend fun getAccessoriesList(
         idAccessoryList: MutableList<String>,
-        classAccessoryType: Class<out Accessory>
-    ): MutableList<out Accessory> {
-        var accessoryList: MutableList<Accessory> = mutableListOf()
+        classAccessoryType: Class<out com.example.data.entities.AccessoryApiResponse>
+    ): MutableList<out com.example.data.entities.AccessoryApiResponse> {
+        var accessoryList: MutableList<com.example.data.entities.AccessoryApiResponse> = mutableListOf()
         for (idAccessory in idAccessoryList) {
             accessoryList.add(suspendCancellableCoroutine { cancellableContinuation ->
                 fireStoreDatabaseWeakRef.get()!!.collection(classAccessoryType.simpleName)
@@ -139,7 +138,7 @@ object FirebaseFireStoreService {
         return accessoryList
     }
 
-    suspend fun updateConfiguration(configuration: Configuration) {
+    suspend fun updateConfiguration(configuration: com.example.data.model.entities.data_class.Configuration) {
         if (fireStoreDatabaseWeakRef.get() != null) {
             var fbConfiguration = configuration.toFbConfiguration()
             val userFire = hashMapOf(
@@ -152,14 +151,14 @@ object FirebaseFireStoreService {
         }
     }
 
-    suspend fun saveConfiguration(configuration: Configuration) {
+    suspend fun saveConfiguration(configuration: com.example.data.model.entities.data_class.Configuration) {
         if (fireStoreDatabaseWeakRef.get() != null) {
             fireStoreDatabaseWeakRef.get()!!.collection("Users").document(getUserId())
                 .collection("Configurations").document().set(configuration.toFbConfiguration())
         }
     }
 
-    suspend fun loadAllConfigurationsForUser(): List<Configuration> {
+    suspend fun loadAllConfigurationsForUser(): List<com.example.data.model.entities.data_class.Configuration> {
         return fireStoreDatabaseWeakRef.get()!!.collection("Users").document(getUserId())
             .collection("Configurations").get().await().map { snapshot ->
                 snapshot.toObject(FbConfiguration::class.java).let { fbConfiguration ->
@@ -168,85 +167,85 @@ object FirebaseFireStoreService {
                         isFavorite = snapshot.get("is_favorite").toString().toBoolean(),
                         cpu = getAccessory(
                             fbConfiguration.cpuId,
-                            Cpu::class.java
-                        ) as Cpu,
+                            com.example.data.model.entities.Cpu::class.java
+                        ) as com.example.data.model.entities.Cpu,
                         motherboard = getAccessory(
                             fbConfiguration.motherboardId,
-                            Motherboard::class.java
-                        ) as Motherboard,
+                            com.example.data.model.entities.Motherboard::class.java
+                        ) as com.example.data.model.entities.Motherboard,
                         case = getAccessory(
                             fbConfiguration.caseId,
-                            Case::class.java
-                        ) as Case,
+                            com.example.data.model.entities.Case::class.java
+                        ) as com.example.data.model.entities.Case,
                         soundCard = if (fbConfiguration.soundCardId != "") {
                             getAccessory(
                                 fbConfiguration.soundCardId,
-                                SoundCard::class.java
-                            ) as SoundCard
+                                com.example.data.model.entities.SoundCard::class.java
+                            ) as com.example.data.model.entities.SoundCard
                         } else {
-                            SoundCard()
+                            com.example.data.model.entities.SoundCard()
                         },
                         powerSupplyUnit = getAccessory(
                             fbConfiguration.powerSupplyUnitId,
-                            PowerSupplyUnit::class.java
-                        ) as PowerSupplyUnit,
+                            com.example.data.model.entities.PowerSupplyUnit::class.java
+                        ) as com.example.data.model.entities.PowerSupplyUnit,
                         coolerForCpu = getAccessory(
                             fbConfiguration.coolerForCpuId,
-                            CoolerForCpu::class.java
-                        ) as CoolerForCpu,
+                            com.example.data.model.entities.CoolerForCpu::class.java
+                        ) as com.example.data.model.entities.CoolerForCpu,
                         coolerForCaseIdsList = if (fbConfiguration.coolerForCaseIdsList.isNotEmpty()) {
                             getAccessoriesList(
                                 fbConfiguration.coolerForCaseIdsList,
-                                CoolerForCase::class.java
-                            ).map { snapshot -> snapshot as CoolerForCase }.toMutableList()
+                                com.example.data.model.entities.CoolerForCase::class.java
+                            ).map { snapshot -> snapshot as com.example.data.model.entities.CoolerForCase }.toMutableList()
                         } else {
                             mutableListOf()
                         },
                         dimmIdsList = if (fbConfiguration.dimmIdsList.isNotEmpty()) {
                             getAccessoriesList(
                                 fbConfiguration.dimmIdsList,
-                                Dimm::class.java
-                            ).map { snapshot -> snapshot as Dimm }.toMutableList()
+                                com.example.data.model.entities.Dimm::class.java
+                            ).map { snapshot -> snapshot as com.example.data.model.entities.Dimm }.toMutableList()
                         } else {
                             mutableListOf()
                         },
                         soDimmIdsList = if (fbConfiguration.soDimmIdsList.isNotEmpty()) {
                             getAccessoriesList(
                                 fbConfiguration.soDimmIdsList,
-                                SoDimm::class.java
-                            ).map { snapshot -> snapshot as SoDimm }.toMutableList()
+                                com.example.data.model.entities.SoDimm::class.java
+                            ).map { snapshot -> snapshot as com.example.data.model.entities.SoDimm }.toMutableList()
                         } else {
                             mutableListOf()
                         },
                         hardDriveIdsList = if (fbConfiguration.hardDriveIdsList.isNotEmpty()) {
                             getAccessoriesList(
                                 fbConfiguration.hardDriveIdsList,
-                                HardDrive::class.java
-                            ).map { snapshot -> snapshot as HardDrive }.toMutableList()
+                                com.example.data.model.entities.HardDrive::class.java
+                            ).map { snapshot -> snapshot as com.example.data.model.entities.HardDrive }.toMutableList()
                         } else {
                             mutableListOf()
                         },
                         ssdIdsList = if (fbConfiguration.ssdIdsList.isNotEmpty()) {
                             getAccessoriesList(
                                 fbConfiguration.ssdIdsList,
-                                Ssd::class.java
-                            ).map { snapshot -> snapshot as Ssd }.toMutableList()
+                                com.example.data.model.entities.Ssd::class.java
+                            ).map { snapshot -> snapshot as com.example.data.model.entities.Ssd }.toMutableList()
                         } else {
                             mutableListOf()
                         },
                         monitorIdsList = if (fbConfiguration.monitorIdsList.isNotEmpty()) {
                             getAccessoriesList(
                                 fbConfiguration.monitorIdsList,
-                                Monitor::class.java
-                            ).map { snapshot -> snapshot as Monitor }.toMutableList()
+                                com.example.data.model.entities.Monitor::class.java
+                            ).map { snapshot -> snapshot as com.example.data.model.entities.Monitor }.toMutableList()
                         } else {
                             mutableListOf()
                         },
                         videoCardIdsList =
                         getAccessoriesList(
                             fbConfiguration.videoCardIdsList,
-                            VideoCard::class.java
-                        ).map { snapshot -> snapshot as VideoCard }.toMutableList()
+                            com.example.data.model.entities.VideoCard::class.java
+                        ).map { snapshot -> snapshot as com.example.data.model.entities.VideoCard }.toMutableList()
                     )
                 }
             }

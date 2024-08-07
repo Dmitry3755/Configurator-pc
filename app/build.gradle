@@ -3,7 +3,8 @@ plugins {
     alias(libs.plugins.jetbrains.android)
     alias(libs.plugins.google.services)
     alias(libs.plugins.compose.compiler)
-    id 'kotlin-kapt'
+    alias(libs.plugins.hilt)
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -46,19 +47,14 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    kapt {
+        useBuildCache = true
+        correctErrorTypes = true
+    }
     namespace 'com.example.configuratorpcjetpackcompose'
 }
 
 dependencies {
-    constraints {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
-            because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
-        }
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0") {
-            because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
-        }
-    }
-
     implementation libs.coil.compose
     implementation libs.kotlinx.coroutines.android
     implementation libs.core.ktx
@@ -70,10 +66,7 @@ dependencies {
     implementation libs.material
     implementation libs.ui.tooling.preview
     implementation libs.lifecycle.runtime.ktx
-    implementation libs.runtime.rxjava2
-    implementation libs.runtime.rxjava3
     implementation libs.activity.compose
-    implementation libs.firebase.auth.ktx
     implementation libs.fragment.ktx
     implementation libs.arch.extensions
     implementation libs.kotlinx.coroutines.core.jvm
@@ -89,15 +82,20 @@ dependencies {
     androidTestImplementation libs.ui.test.junit4
     debugImplementation libs.ui.tooling
     debugImplementation libs.ui.test.manifest
-    implementation platform(libs.firebase.bom)
     implementation libs.activity.compose
     implementation libs.lifecycle.viewmodel.compose
-    implementation libs.firebase.auth
-    implementation libs.firebase.firestore
-    implementation libs.firebase.analytics.ktx
     implementation libs.runtime.livedata
     implementation libs.gson
-    implementation libs.firebase.ui.storage
     implementation libs.picasso
     implementation libs.foundation.android
+    //Modules
+    implementation(project(':domain'))
+    implementation(project(':data'))
+    //DI
+    implementation(libs.javax.inject)
+    //DI(hilt)
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    kapt(libs.hilt.compiler)
+
 }

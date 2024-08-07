@@ -1,20 +1,10 @@
 package com.example.configuratorpcjetpackcompose
 
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.lifecycle.Lifecycle
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.rule.ActivityTestRule
-import com.example.configuratorpcjetpackcompose.screens.SingUpScreen
-import com.example.configuratorpcjetpackcompose.ui.theme.AppTheme
+import com.example.configuratorpcjetpackcompose.ui.activity.MainActivity
 import com.example.configuratorpcjetpackcompose.utils.TagsForTest
-import org.junit.Assert.*
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.res.Resources
 import androidx.compose.runtime.mutableStateOf
 import com.example.configuratorpcjetpackcompose.R
-import com.example.configuratorpcjetpackcompose.model.data_class.User
+import com.example.data.model.entities.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import java.lang.ref.WeakReference
@@ -26,7 +26,10 @@ object AuthenticationService {
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
                             GlobalScope.launch(Dispatchers.IO) {
-                                FirebaseFireStoreService.addUserInDb(user = User(_email = email))
+                                FirebaseFireStoreService.addUserInDb(user = com.example.data.model.entities.User(
+                                    _email = email
+                                )
+                                )
                             }
                             cancellableContinuation.resume(ViewError(isError = mutableStateOf(false)))
                         } else {
